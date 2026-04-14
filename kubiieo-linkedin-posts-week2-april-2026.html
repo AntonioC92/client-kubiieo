@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo: LinkedIn Content Week 2 April 2026</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* HEADER */
+.site-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  padding: 0;
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 40px 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+.header-text { flex: 1; }
+.brand-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.header-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.header-title span { color: rgba(255,255,255,0.7); }
+.header-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 10px;
+}
+.header-meta { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+.meta-value { font-size: 14px; color: #fff; font-weight: 600; }
+.gold-bar { height: 4px; background: rgba(255,255,255,0.2); width: 100%; }
+
+/* LAYOUT */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+/* SECTION */
+.section { margin-bottom: 64px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  margin-top: 8px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+/* INTRO CARD */
+.intro-card {
+  background: var(--white);
+  border-radius: 6px;
+  padding: 24px 28px;
+  border: 1px solid var(--neutral);
+  border-left: 4px solid var(--primary);
+}
+.intro-card p { font-size: 14px; color: var(--charcoal); line-height: 1.75; margin-bottom: 10px; }
+.intro-card p:last-child { margin-bottom: 0; }
+
+/* POST CARD */
+.post-card {
+  background: var(--white);
+  border-radius: 6px;
+  border: 1px solid var(--neutral);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.post-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--neutral);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--primary-lt);
+}
+.post-header-left { flex: 1; }
+.post-number {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 700;
+}
+.post-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  line-height: 1.3;
+}
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-aws { background: #fff3e0; color: #b35c00; border: 1px solid #ffd0a0; }
+
+.post-header-badges { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.status-review {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff8e1; color: #8a6000;
+  border: 1.5px solid #f0c040; border-radius: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 12px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+/* VISUAL BLOCKS - no text overlay, clean gradient only */
+.visual-block {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--neutral);
+  position: relative;
+  overflow: hidden;
+}
+.visual-block-1 {
+  background: linear-gradient(135deg, #3d2a75 0%, #5B3FA8 55%, #7B5FCC 100%);
+}
+.visual-block-2 {
+  background: linear-gradient(135deg, #2d1f5e 0%, #4a3090 50%, #5B3FA8 100%);
+}
+.visual-block-3 {
+  background: linear-gradient(135deg, #1a1040 0%, #3d2a75 50%, #5B3FA8 100%);
+}
+.visual-service-label {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.visual-pill-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+.visual-inner-wrap {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.vpill {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.vpill-aws   { background: rgba(255,153,0,0.15); color: #FF9900; border: 1px solid rgba(255,153,0,0.3); }
+.vpill-white { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+
+/* POST BODY */
+.post-body { padding: 24px 28px 0; }
+.post-copy {
+  font-size: 14px;
+  color: var(--charcoal);
+  line-height: 1.85;
+  white-space: pre-line;
+  border-left: 3px solid var(--primary);
+  padding-left: 18px;
+  margin-bottom: 20px;
+}
+
+/* META ROW */
+.post-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 16px 28px;
+  border-top: 1px solid var(--neutral);
+  background: var(--primary-lt);
+  align-items: center;
+}
+.meta-tag {
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--neutral);
+  color: var(--primary-dk);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.meta-tag-aws { background: #fff3e0; color: #b35c00; }
+
+/* COMMENT BLOCK */
+.comment-block {
+  margin: 0 28px 24px;
+  background: #fffbe6;
+  border: 1px solid #f0c040;
+  border-radius: 4px;
+  padding: 14px 18px;
+}
+.comment-label {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #7a5800;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+.comment-text { font-size: 14px; color: var(--charcoal); line-height: 1.65; }
+
+/* LINK BLOCK */
+.post-link-block { padding: 16px 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+.link-label-col { min-width: 110px; }
+.link-label {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+.link-desc { font-size: 12px; color: var(--muted); }
+.link-url { flex: 1; font-size: 13px; color: var(--primary-dk); font-weight: 500; word-break: break-all; }
+.link-url a { color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--neutral); padding-bottom: 1px; }
+
+/* NOTES BOX */
+.notes-box {
+  background: var(--white);
+  border-radius: 6px;
+  padding: 24px 28px;
+  border: 1px solid var(--neutral);
+  border-left: 4px solid var(--primary);
+}
+.notes-box ul { list-style: none; padding: 0; }
+.notes-box ul li {
+  font-size: 14px;
+  color: var(--charcoal);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--neutral);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.notes-box ul li:last-child { border-bottom: none; }
+.notes-box ul li::before { content: 'x'; content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* FOOTER */
+.site-footer {
+  background: var(--primary-dk);
+  padding: 20px 40px;
+  text-align: center;
+}
+.site-footer p {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .header-inner { flex-direction: column; padding: 36px 24px 28px; }
+  .main { padding: 28px 16px 60px; }
+  .post-header { flex-direction: column; gap: 10px; }
+  .post-body, .post-link-block, .comment-block { padding-left: 16px; padding-right: 16px; }
+  .post-meta { padding-left: 16px; padding-right: 16px; }
+  .link-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <span class="brand-eyebrow">Kubiieo &nbsp;·&nbsp; Content</span>
+      <h1 class="header-title">LinkedIn Posts<br><span>Week 2, April 2026</span></h1>
+      <p class="header-sub">3 new posts: AWS platform updates</p>
+      <div class="header-meta">
+        <div class="meta-item">
+          <span class="meta-label">Posts</span>
+          <span class="meta-value">3 to review</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Platform</span>
+          <span class="meta-value">AWS</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Prepared</span>
+          <span class="meta-value">14 April 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">00</span>
+      <h2 class="section-title">Overview</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="intro-card">
+      <p>Three new posts covering this week's AWS announcements. All three are AWS-only, mapped to Kubiieo's managed services, Generative AI, and security service lines.</p>
+      <p>Each post includes a first comment with the relevant Kubiieo service page link, posted immediately after publishing to keep the main copy clean and avoid LinkedIn reach penalties on external links.</p>
+    </div>
+  </section>
+
+  <!-- POST 1: OpenSearch Serverless -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Amazon OpenSearch Serverless: Derived Source</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 01 of 03</span>
+          <div class="post-title">Less storage overhead on OpenSearch, no trade-offs</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-1">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon OpenSearch Serverless</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Derived Source</span>
+            <span class="vpill vpill-white">Storage Optimisation</span>
+            <span class="vpill vpill-white">Serverless</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">Amazon OpenSearch Serverless now supports Derived Source, and it is a useful one for teams managing data-heavy workloads.
+
+The problem it solves is straightforward. OpenSearch has historically stored a separate copy of each document's source fields alongside the indexed data. That duplication adds up fast on large collections, and you end up paying for storage of data you already have in the index.
+
+Derived Source changes that. Instead of maintaining a separate source copy, OpenSearch reconstructs the _source field on the fly from the values already stored in the index. Same query behaviour, same results, less storage.
+
+For most workloads the performance impact is negligible. For collections with large documents or high cardinality fields, the storage savings can be significant, and on Serverless where you pay for what you use, that feeds directly into cost.
+
+This is worth reviewing if you are running OpenSearch Serverless for log analytics, search, or observability pipelines. The efficiency gain is real and the setup change is minimal.
+
+#AWS #AmazonOpenSearch #CloudStorage #DataEngineering #AWSManaged</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">OpenSearch Serverless</span>
+        <span class="meta-tag">Storage Optimisation</span>
+        <span class="meta-tag">Generally Available</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If your OpenSearch or data infrastructure costs are growing faster than your usage, we can review the architecture and find where the savings are: <strong>kubiieo.com/managed-services-2</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/04/amazon-opensearch-serverless-derived-source-storage-optimization/" target="_blank">aws.amazon.com / OpenSearch Serverless Derived Source</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/managed-services-2" target="_blank">kubiieo.com/managed-services-2</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 2: AWS Agent Registry -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">AWS Agent Registry: Governing AI at Scale</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 02 of 03</span>
+          <div class="post-title">AWS Agent Registry is in preview and it is worth paying attention to</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-2">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">AWS Agent Registry · Amazon Bedrock AgentCore</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Public Preview</span>
+            <span class="vpill vpill-white">AI Governance</span>
+            <span class="vpill vpill-white">MCP + A2A</span>
+            <span class="vpill vpill-white">Sydney Available</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">AWS launched Agent Registry in preview this week. It is part of Amazon Bedrock AgentCore and it addresses a problem that is becoming very real for teams scaling AI workloads.
+
+The problem is agent sprawl. As organisations deploy more AI agents across teams, the questions get harder to answer fast. What agents are actually running? Who owns them? Has this capability already been built somewhere else in the org? Without a central system, teams rebuild things that exist, compliance gaps grow, and nobody has full visibility into what is running in production.
+
+Agent Registry gives you a governed catalog for every agent, tool, MCP server, and agent skill across your organisation. It works across AWS and non-AWS environments, so it covers the full picture rather than just what sits inside one platform. Every record goes through an approval workflow before it becomes discoverable. Search is hybrid, so a query for one term will surface related capabilities even if they are named differently.
+
+The audit layer is worth calling out. CloudTrail covers all registry access and admin actions, which matters for any organisation with compliance requirements around AI systems.
+
+It is available now in preview in Sydney, which is relevant for Australian teams.
+
+For companies deploying agents beyond a handful of use cases, getting governance in place early is considerably easier than dealing with it after the fact.
+
+#AWS #GenerativeAI #AmazonBedrock #AIAgents #AgentCore #CloudAI</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Agent Registry</span>
+        <span class="meta-tag">Amazon Bedrock</span>
+        <span class="meta-tag">AgentCore</span>
+        <span class="meta-tag">Public Preview</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">Building or scaling AI agents on AWS and need a governance layer? We can help you set up the right foundations from the start: <strong>kubiieo.com/generative-ai</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS Machine Learning Blog</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/blogs/machine-learning/the-future-of-managing-agents-at-scale-aws-agent-registry-now-in-preview/" target="_blank">aws.amazon.com / AWS Agent Registry now in preview</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/generative-ai" target="_blank">kubiieo.com/generative-ai</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 3: AWS AI Defenses -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">AWS Security: AI-Powered Defense at Scale</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 03 of 03</span>
+          <div class="post-title">How AWS is using AI to defend customers before threats emerge</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-3">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">AWS Security · AI-Powered SecOps</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Threat Intelligence</span>
+            <span class="vpill vpill-white">Security Automation</span>
+            <span class="vpill vpill-white">Log Analysis</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">AWS published a detailed look at how they use AI to defend customers at scale, and there is a lot in it worth understanding beyond the headline.
+
+The part that stands out most: their AI-powered log analysis system has meaningfully reduced the time their SecOps engineers spend on manual triage. Log analysis is one of the biggest drains on any security team. When volume is high, human review becomes the bottleneck and things get missed. Automating the first pass is not a luxury, it is a requirement for running security at scale.
+
+The broader principle in the post is one we apply with clients. Waiting for an incident to understand your security posture is the wrong approach. The organisations that handle this well have shifted from reactive to continuous: automated monitoring running in the background, anomaly detection surfacing the signals that matter, and response playbooks that trigger without someone needing to notice first.
+
+Most of the teams we work with on AWS are not starting from zero on security. The gap is usually not the tools, it is whether those tools are configured to actually catch the right things and whether anyone is watching when they do.
+
+If your AWS environment does not have that monitoring and automation layer working properly yet, this is a good moment to address it.
+
+#AWS #CloudSecurity #SecurityAutomation #DevSecOps #AWSPartner</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Security</span>
+        <span class="meta-tag">AI Automation</span>
+        <span class="meta-tag">SecOps</span>
+        <span class="meta-tag">Threat Intelligence</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If your AWS security monitoring is not running continuously in the background, we offer a free cloud security review to show you where the gaps are: <strong>kubiieo.com/security-compliance</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS Security Blog</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/blogs/security/building-ai-defenses-at-scale-before-the-threats-emerge/" target="_blank">aws.amazon.com / Building AI defenses at scale</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/security-compliance" target="_blank">kubiieo.com/security-compliance</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING NOTES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Publishing notes</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="notes-box">
+      <ul>
+        <li>Suggested cadence: Post 1 Monday, Post 2 Wednesday, Post 3 Friday. One post per day keeps reach consistent without flooding the feed.</li>
+        <li>Drop the first comment within 2 minutes of publishing. LinkedIn's algorithm rewards early engagement on comments.</li>
+        <li>For images: screenshot the announcement banner from the source article for a native feel, or use the gradient visual from this document.</li>
+        <li>Tagging AWS official pages in the post body tends to increase reach. Use @AWSCloud or tag the article author where available.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Content &nbsp;·&nbsp; Week 2 April 2026 &nbsp;·&nbsp; Prepared by Antonio Caruso</p>
+</footer>
+
+</body>
+</html>
