@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo - GTM &amp; GA4 Progress Report</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+  --danger-bd:   #e0b0b0;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary-dk);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.toolbar-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-btn {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-download { background: var(--primary); color: #fff; }
+.btn-download:hover { opacity: 0.9; }
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--neutral);
+}
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.warn-box .warn-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warn-text);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.warn-box p { margin-bottom: 10px; line-height: 1.75; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.block-done, .block-inprog, .block-blocked {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.block-done .block-head { background: #2E7D32; color: #fff; }
+.block-inprog .block-head { background: #C87E00; color: #fff; }
+.block-blocked .block-head { background: #8b3333; color: #fff; }
+
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 10px; }
+.block-body p:last-child { margin-bottom: 0; }
+.block-body ul { list-style: none; padding: 0; margin-top: 10px; }
+.block-body ul li {
+  padding: 5px 0 5px 18px;
+  position: relative;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--neutral);
+  line-height: 1.6;
+}
+.block-body ul li:last-child { border-bottom: none; }
+.block-done .block-body ul li::before { content: "✓"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+.block-inprog .block-body ul li::before { content: "⟳"; position: absolute; left: 0; color: #C87E00; font-weight: 700; }
+.block-blocked .block-body ul li::before { content: "▲"; position: absolute; left: 0; color: var(--danger); font-weight: 700; }
+
+.evidence-card {
+  background: var(--white);
+  border-left: 3px solid var(--primary);
+  padding: 14px 18px;
+  margin-bottom: 10px;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.07);
+  font-size: 13.5px;
+}
+.evidence-card strong { color: var(--primary-dk); }
+.evidence-card .evidence-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--primary);
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.badge-done    { background: #d4edda; color: #155724; }
+.badge-inprog  { background: #ffe0b2; color: #7a4b00; }
+.badge-blocked { background: #f8d7da; color: #721c24; }
+.badge-live    { background: #2E7D32; color: #fff; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.baz-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-bd);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.baz-box h3 {
+  color: var(--danger);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.baz-box p { margin-bottom: 10px; line-height: 1.7; }
+.baz-box ul { list-style: none; padding: 0; margin: 10px 0 0; }
+.baz-box ul li {
+  padding: 6px 0 6px 18px;
+  position: relative;
+  font-size: 13.5px;
+  border-bottom: 1px dashed rgba(139,51,51,0.2);
+}
+.baz-box ul li:last-child { border-bottom: none; }
+.baz-box ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.presenter-box {
+  background: var(--primary-lt);
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+.presenter-box .presenter-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.presenter-box p { margin-bottom: 10px; line-height: 1.75; }
+.presenter-box p:last-child { margin-bottom: 0; }
+.presenter-box ol { margin: 10px 0 0 20px; }
+.presenter-box ol li { padding: 4px 0; line-height: 1.7; }
+
+.doc-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.55);
+  padding: 24px 40px;
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.doc-footer strong { color: rgba(255,255,255,0.9); }
+
+.muted { color: var(--muted); font-size: 13px; }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo, GTM &amp; GA4 Progress Report</span>
+  <button class="toolbar-btn btn-download" onclick="window.print()">⬇ Download / Print</button>
+</div>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Google Tag Manager &amp; Google Analytics 4, Implementation Progress</div>
+    <h1>Kubiieo, Tracking &amp; Conversion Stack</h1>
+    <div class="subtitle">The tracking and measurement setup the Google Ads campaigns need before they can launch. This report covers what I've built, what I've tested, what's still in progress, and the two items on Baz's side that unblock the final stretch of work.</div>
+    <div class="header-tags">
+      <span class="header-tag">April 2026</span>
+      <span class="header-tag live">GTM container live (v3)</span>
+      <span class="header-tag">GA4 G-CJS11Q3Y3Y</span>
+      <span class="header-tag">Prepared by Antonio Caruso</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── EXECUTIVE SUMMARY ────────────────────────────────────── -->
+  <div class="note-box">
+    <div class="note-label">Summary for Baz</div>
+    <p class="lead-paragraph">I've built the tracking setup that the Google Ads campaigns depend on. The job of this work is simple to state. Before we put real money into ads, we need to know which ad clicks actually turn into enquiries. Without that, we'd be guessing, and the ads would keep bringing traffic that never converts. So the stack I've built has three jobs: respect the visitor's cookie consent, track which ad each visitor came from, and count it when someone fills in the contact form or clicks the phone number.</p>
+    <p class="lead-paragraph">Three pieces are already live on the site right now. A consent default (sets analytics and ads to denied by default, so nothing fires before the visitor says yes), a Google Ads attribution link (remembers which ad a visitor clicked on across pages), and a form-submit listener (catches every contact form submission and sends the details into our analytics pipeline). Six more tags are fully built and sitting paused inside Google Tag Manager. They are ready to go, waiting only on two small unlocks from Baz's side.</p>
+    <p class="lead-paragraph">What's left is not technical difficulty, it is two external things Baz controls. First, an admin login to the WordPress site so I can turn off an old piece of tracking code that would cause our numbers to double if I left it running. Second, resolving the Google Ads account situation so I can create the two conversion actions that the paused tags are waiting to send data to. Once those two things are cleared, I can finish the build in about 90 minutes and we are ready to launch the campaigns laid out in the March strategy document.</p>
+  </div>
+
+  <!-- ── AT A GLANCE ─────────────────────────────────────────── -->
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">9</span>
+      <span class="stat-label">GTM Tags Built</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Live on Site</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">2</span>
+      <span class="stat-label">Versions Published</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">6</span>
+      <span class="stat-label">GA4 Settings Updated</span>
+    </div>
+  </div>
+
+  <!-- ── SECTION 01 - WHERE WE STARTED ───────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Where we started, the audit findings</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Before building anything, I checked what was already in place on kubiieo.com. The short answer was that if we had launched the Google Ads campaigns on the existing setup, Google would have had no way of knowing which ad clicks actually became enquiries. It would have kept sending traffic based on who was clicking, not on who was converting. That is exactly the risk the strategy document flagged in March.</p>
+
+  <div class="subsection-title">What the baseline looked like</div>
+
+  <table>
+    <thead>
+      <tr><th style="width:220px">Layer</th><th>State when I started</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-label">Google Tag Manager</td><td>Container <code>GTM-TV9VXWHD</code> was installed correctly but <strong>completely empty</strong>. zero tags, zero triggers, zero rules. It loaded on every page and did nothing.</td></tr>
+      <tr><td class="td-label">Google Analytics 4</td><td>Firing via a hardcoded <code>gtag.js</code> snippet injected by the HFCM (Head Footer Code Manager) WordPress plugin, running outside of GTM. Basic event tracking only, no custom conversions, no key events marked.</td></tr>
+      <tr><td class="td-label">Google Ads tracking</td><td>No <code>AW-…</code> conversion tag anywhere on the site, no Conversion Linker, no Enhanced Conversions wiring.</td></tr>
+      <tr><td class="td-label">Consent Mode v2</td><td>Not implemented. No default consent state set. No CMP banner installed.</td></tr>
+      <tr><td class="td-label">Form conversion tracking</td><td>The contact page uses Elementor Pro Forms which submit via AJAX, the standard GTM form submit trigger doesn't fire on these. No data was being captured on form submissions at all.</td></tr>
+      <tr><td class="td-label">GA4 data retention</td><td>Default 2 months. Reports older than 8 weeks would have been lost.</td></tr>
+      <tr><td class="td-label">Google signals &amp; Enhanced Conversions</td><td>Off. Demographic insights and modelled conversions unavailable.</td></tr>
+    </tbody>
+  </table>
+
+  <p>In plain terms, we would have been paying Google for clicks without telling it which of those clicks actually led to a real consultation request. At the $10 to $18 AUD per click the strategy projected for the main keywords, the budget would have run out before we could learn which ads were working.</p>
+
+  <!-- ── SECTION 02 - WHAT I BUILT (GTM) ─────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">What I built in Google Tag Manager</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>I built the full Google Tag Manager container from scratch. It went from completely empty to nine tags, across two published versions, both live on kubiieo.com. These tags cover the three jobs the campaigns need done: respecting cookie consent, tracking which ad brought each visitor, and counting enquiries when they happen.</p>
+
+  <div class="subsection-title">Container inventory, 9 tags, 4 triggers, 23 variables</div>
+
+  <table>
+    <thead>
+      <tr><th>Tag</th><th style="width:180px">Type</th><th style="width:110px">State</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Consent - Default v2</strong><br><span class="muted">Sets Consent Mode v2 defaults, ads and analytics denied by default. Priority 100 so it fires first.</span></td><td>Custom HTML</td><td><span class="badge badge-live">LIVE</span></td></tr>
+      <tr><td><strong>Ads - Conversion Linker</strong><br><span class="muted">Bridges <code>gclid</code> into a first-party cookie for Google Ads attribution.</span></td><td>Conversion Linker</td><td><span class="badge badge-live">LIVE</span></td></tr>
+      <tr><td><strong>DL - Elementor Form Bridge</strong><br><span class="muted">jQuery listener that converts Elementor form submits into a <code>kubiieo_form_submit</code> dataLayer event.</span></td><td>Custom HTML</td><td><span class="badge badge-live">LIVE</span></td></tr>
+      <tr><td><strong>GA4 - Configuration</strong><br><span class="muted">Google Tag wired to <code>G-CJS11Q3Y3Y</code>. Paused until the HFCM legacy snippet is removed in WordPress.</span></td><td>Google Tag</td><td><span class="badge badge-inprog">PAUSED</span></td></tr>
+      <tr><td><strong>GA4 - Event - generate_lead</strong><br><span class="muted">Fires on form submit. Pushes <code>form_name</code>, <code>form_id</code>, <code>form_location</code>.</span></td><td>GA4 Event</td><td><span class="badge badge-inprog">PAUSED</span></td></tr>
+      <tr><td><strong>GA4 - Event - click_to_call</strong><br><span class="muted">Fires on <code>tel:</code> link clicks. Captures phone_number and link_text.</span></td><td>GA4 Event</td><td><span class="badge badge-inprog">PAUSED</span></td></tr>
+      <tr><td><strong>GA4 - Event - click_to_email</strong><br><span class="muted">Fires on <code>mailto:</code> link clicks.</span></td><td>GA4 Event</td><td><span class="badge badge-inprog">PAUSED</span></td></tr>
+      <tr><td><strong>Ads - Conversion - Consultation Request</strong><br><span class="muted">Fires on form submit. Needs real AW- conversion ID + label.</span></td><td>Google Ads Conv</td><td><span class="badge badge-blocked">NEEDS ADS ID</span></td></tr>
+      <tr><td><strong>Ads - Conversion - Phone Call Click</strong><br><span class="muted">Fires on <code>tel:</code> link clicks. Secondary conversion. Needs real AW- conversion ID + label.</span></td><td>Google Ads Conv</td><td><span class="badge badge-blocked">NEEDS ADS ID</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Supporting infrastructure inside the container</div>
+
+  <table>
+    <thead>
+      <tr><th style="width:200px">Component</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="td-label">4 Triggers</td><td>All Pages (pageview), Trigger - Custom - <code>kubiieo_form_submit</code>, Trigger - Link - <code>click_to_call</code> (matches <code>^tel:</code> URLs), Trigger - Link - <code>click_to_email</code> (matches <code>^mailto:</code> URLs).</td></tr>
+      <tr><td class="td-label">6 Data Layer Variables</td><td><code>DLV - form_name</code>, <code>DLV - form_id</code>, <code>DLV - form_location</code>, <code>DLV - user_email</code>, <code>DLV - user_phone</code> plus a constant <code>Const - GA4_MEASUREMENT_ID</code> as the single source of truth for the property ID.</td></tr>
+      <tr><td class="td-label">17 Built-in Variables</td><td>Page URL / Path / Hostname, Referrer, Event, Click Element / Classes / ID / Target / URL / Text, Form Element / Classes / ID / Target / URL / Text. Powers the click-tracking triggers.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title">Published versions</div>
+
+  <p><strong>Version 2</strong>. "Initial tracking build (consent, linker, form bridge)", published 21 April 2026 at 18:38. Landed Consent Default, Conversion Linker, Form Bridge as live tags plus the 4 triggers and 6 variables.</p>
+  <p><strong>Version 3</strong>. "Added 6 paused tags (GA4 Config, 3 GA4 events, 2 Ads conversions)", published 21 April 2026 at 19:20. Landed the paused GA4 Configuration tag, the three GA4 event tags with full event parameter mappings, and the two Google Ads conversion tags wired to the right triggers.</p>
+
+  <!-- ── SECTION 03 - WHAT I BUILT (GA4) ─────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">What I built in Google Analytics 4</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Alongside the tag manager work, I made six changes to the Google Analytics 4 settings so the data is kept long enough, made richer, and kept clean of personal information. These are standard hygiene items that were not in place before.</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:280px">Setting</th><th style="width:150px">Before</th><th style="width:150px">After</th><th>Why it matters</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Event data retention</strong></td><td>2 months</td><td>14 months</td><td>Year-over-year reporting and campaign look-back windows longer than 60 days.</td></tr>
+      <tr><td><strong>Google signals data collection</strong></td><td>Off</td><td>On (307 of 307 regions)</td><td>Enables demographic insights and Google Ads remarketing audiences.</td></tr>
+      <tr><td><strong>User-provided data collection</strong></td><td>Off</td><td>On (policy acknowledged)</td><td>Powers Enhanced Conversions for Leads, recovers attribution on cookie-restricted users.</td></tr>
+      <tr><td><strong>Email redaction</strong></td><td>Already on</td><td>On (verified)</td><td>Prevents submitted email addresses from being captured in GA4 event data.</td></tr>
+      <tr><td><strong>URL query parameter redaction</strong></td><td>Off</td><td>On</td><td>Prevents PII from query strings (form success URLs, etc.) from landing in reports.</td></tr>
+      <tr><td><strong>Enhanced Measurement, Form interactions</strong></td><td>On</td><td>Off</td><td>The built-in event fires unreliably on Elementor forms. Disabling it means our custom <code>generate_lead</code> event is the single canonical form-submit signal.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ── SECTION 04 - WHAT I TESTED AND VERIFIED ─────────────── -->
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">What I tested and confirmed working</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>I did not just build this and hope for the best. I ran live tests against kubiieo.com to confirm each piece does exactly what it should. Here is what I verified in those tests.</p>
+
+  <div class="evidence-card">
+    <span class="evidence-label">Page load</span>
+    On both <code>kubiieo.com/</code> and <code>kubiieo.com/contact/</code>, all three live tags fire correctly on every page view: <strong>Consent - Default v2</strong>, <strong>Ads - Conversion Linker</strong>, and <strong>DL - Elementor Form Bridge</strong>. Tags not fired: none.
+  </div>
+  <div class="evidence-card">
+    <span class="evidence-label">Consent ordering</span>
+    The Consent - Default v2 tag fires on the <strong>Consent Initialization</strong> event, before any other tag. That ordering is load-bearing, it means when the Google Ads and GA4 tags eventually go live, they already see the consent defaults (denied) rather than running unconstrained.
+  </div>
+  <div class="evidence-card">
+    <span class="evidence-label">Form submit end-to-end</span>
+    Simulated a full form submission on <code>/contact/</code> with test email and phone. The dataLayer received a <code>kubiieo_form_submit</code> event with a populated payload: <code>form_name: "elementor_form"</code>, <code>form_id: "New Form"</code>, <code>form_location: "/contact/"</code>, <code>user_email: "antonio.test@kubiieo.com"</code>, <code>user_phone: "+61412345678"</code>. The downstream GA4 and Ads conversion tags are correctly wired to fire off this exact event, they just need their unpause conditions cleared.
+  </div>
+  <div class="evidence-card">
+    <span class="evidence-label">PII hygiene</span>
+    Email addresses are captured by the form bridge but trimmed and lowercased before dataLayer push. Phone numbers are stripped of non-digit characters. This is the format Google Ads Enhanced Conversions for Leads expects.
+  </div>
+  <div class="evidence-card">
+    <span class="evidence-label">Tag Assistant debug session</span>
+    Two separate debug sessions (home page and contact page) confirmed identical behaviour, the same three tags fire on every page view, with no unexpected tags, no missing tags, no console errors.
+  </div>
+
+  <!-- ── SECTION 05 - STATE BREAKDOWN ────────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Everything at a glance, done, in progress, and not started</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Here is the full status table in one place. Green means finished and working on the live site. Amber means built but switched off until one specific condition is met. Red means waiting on an access issue that only Baz can resolve.</p>
+
+  <!-- DONE -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">DONE &amp; VERIFIED</span>
+      <span class="block-tag">8 items shipped</span>
+    </div>
+    <div class="block-body">
+      <ul>
+        <li><strong>GTM container built, populated and published to v3</strong>. 9 tags, 4 triggers, 6 variables, 17 built-in variables, fully documented changelog on both v2 and v3.</li>
+        <li><strong>Consent Mode v2 defaults deployed</strong>. ads / analytics / personalisation all default to denied, priority 100, fires on Consent Initialization before anything else.</li>
+        <li><strong>Google Ads Conversion Linker live</strong>. preserves <code>gclid</code> across pages so attribution will work the moment the Ads conversion tags unpause.</li>
+        <li><strong>Elementor form bridge live and tested</strong>. AJAX form submits are correctly translated into a <code>kubiieo_form_submit</code> dataLayer event with full payload.</li>
+        <li><strong>GA4 data retention extended to 14 months</strong> (was 2).</li>
+        <li><strong>Google signals and user-provided data collection enabled</strong> with policies acknowledged.</li>
+        <li><strong>PII redaction configured</strong>. email redaction on, URL query parameter redaction on.</li>
+        <li><strong>Enhanced Measurement cleaned up</strong>. form interactions disabled so the custom <code>generate_lead</code> is the single form signal.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- IN PROGRESS -->
+  <div class="block-inprog">
+    <div class="block-head">
+      <span class="block-title">IN PROGRESS, CONFIGURED, AWAITING UNPAUSE</span>
+      <span class="block-tag">6 tags paused in GTM</span>
+    </div>
+    <div class="block-body">
+      <p>These tags are built, wired to the correct triggers, and ship as paused in v3. Each has an explicit unpause condition documented inside the tag itself (in the GTM Notes field):</p>
+      <ul>
+        <li><strong>GA4 Configuration tag</strong>. unpauses once the HFCM legacy <code>gtag.js</code> snippet is removed in WordPress. Cannot run in parallel to it or page_views will double-count.</li>
+        <li><strong>GA4 - Event - generate_lead</strong>. unpauses as soon as GA4 Configuration is live. Parameters (form_name, form_id, form_location) already wired to the data layer variables.</li>
+        <li><strong>GA4 - Event - click_to_call</strong>. unpauses with GA4 Configuration. Captures phone_number and link_text.</li>
+        <li><strong>GA4 - Event - click_to_email</strong>. unpauses with GA4 Configuration. Captures email_link.</li>
+        <li><strong>Ads Conversion, Consultation Request</strong>. needs the real AW- conversion ID and label from the Google Ads account. Fires off the form submit custom event.</li>
+        <li><strong>Ads Conversion, Phone Call Click</strong>. needs the real AW- conversion ID and label from the Google Ads account. Fires off the tel: click trigger.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BLOCKED -->
+  <div class="block-blocked">
+    <div class="block-head">
+      <span class="block-title">BLOCKED, DEPENDS ON BAZ'S SIDE</span>
+      <span class="block-tag">See section 06</span>
+    </div>
+    <div class="block-body">
+      <p>These items are not started because they require access or accounts that sit outside what I currently have. Each one is a short task once the dependency clears:</p>
+      <ul>
+        <li><strong>Remove HFCM legacy GA4 snippet</strong>. needs WordPress admin access.</li>
+        <li><strong>Install and configure a CMP</strong> (CookieYes, Complianz, or Cookiebot), needs WordPress admin access.</li>
+        <li><strong>Decide the fate of Site Kit by Google</strong> (either disconnect or uninstall), needs WordPress admin access.</li>
+        <li><strong>Add reCAPTCHA v3 to Elementor forms</strong>. needs WordPress admin access.</li>
+        <li><strong>Confirm or fix the US-format <code>tel:</code> number</strong> on home and contact templates, needs WordPress admin access + confirmation from Baz that it's placeholder content.</li>
+        <li><strong>Create two Google Ads conversion actions</strong> (Consultation Request, Phone Call Click), needs Google Ads account access and the fixes Baz mentioned were outstanding on his side.</li>
+        <li><strong>Link GA4 ↔ Google Ads</strong> and import <code>generate_lead</code> as the primary conversion, needs Ads account access.</li>
+        <li><strong>Enable Enhanced Conversions for Leads</strong> in the Ads account, needs Ads account access.</li>
+        <li><strong>Plug the AW- conversion ID and labels</strong> into the two paused Ads conversion tags in GTM, needs the conversion actions to exist first.</li>
+        <li><strong>Create the three remarketing audiences in GA4</strong> (Form submitters, Engaged visitors, Services page viewers), these will be empty until <code>generate_lead</code> starts flowing, so dependent on the GA4 Configuration unpause.</li>
+        <li><strong>Set up the internal traffic filter</strong>. needs Baz's and the team's IP addresses.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── SECTION 06 - WHAT NEEDS BAZ ─────────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">What's blocking progress, Baz's next actions</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Two things are currently blocking the last piece of the build. Both sit on Baz's side. As soon as either one is cleared, everything it unlocks gets done quickly.</p>
+
+  <div class="baz-box">
+    <h3>1. WordPress admin access for kubiieo.com</h3>
+    <p>An administrator account on the WordPress backend. This unlocks five items in one go:</p>
+    <ul>
+      <li>Disabling the HFCM legacy GA4 snippet, which then lets me unpause the GA4 Configuration tag in GTM and start proper conversion event flow into GA4.</li>
+      <li>Installing a Consent Management Platform (I recommend Complianz for AU + EU coverage), essential for Consent Mode v2 to have anything to update defaults against, and required for GDPR compliance on any EU traffic from Sean's LinkedIn outreach.</li>
+      <li>Disconnecting or uninstalling the dormant Site Kit by Google plugin, currently a latent risk of triple-injection if anyone connects it to Analytics or Ads.</li>
+      <li>Adding reCAPTCHA v3 to the Elementor contact form, prevents bot submissions from polluting Smart Bidding once paid traffic arrives.</li>
+      <li>Fixing or confirming the US-format <code>1-800-356-8933</code> phone number that appears on every page, worth sanity-checking against the AU positioning the ads will establish.</li>
+    </ul>
+    <p style="margin-top:12px"><strong>Estimated time once access is granted:</strong> about 60 minutes of my time to complete all five WordPress-side items plus the corresponding GTM unpauses and a follow-up smoke test.</p>
+  </div>
+
+  <div class="baz-box">
+    <h3>2. Google Ads account, fixes on Baz's side and account access</h3>
+    <p>Baz mentioned there are issues on his side with the Google Ads account that need to be resolved before we can progress. Once those are cleared, what I need to complete the Ads-side integration is:</p>
+    <ul>
+      <li><strong>Access to the Kubiieo Google Ads account</strong> at Standard or higher permission level so I can create conversion actions, manage auto-tagging, and link it to GA4.</li>
+      <li><strong>Confirmation that auto-tagging is enabled</strong> in the Ads account settings, so <code>gclid</code> populates on every ad click. Without this, Enhanced Conversions and offline conversion imports don't work.</li>
+      <li><strong>Permission to create two conversion actions</strong>. <em>Consultation Request</em> (category: Submit lead form, count: One) and <em>Phone Call Click</em> (category: Phone call lead, count: One). Both pointing at the events the GTM tags are already wired to send.</li>
+      <li><strong>Enabling Enhanced Conversions for Leads</strong> in the Ads goal settings so the hashed email and phone we're already collecting on form submit get mapped to conversions.</li>
+      <li><strong>Linking the Google Ads account to the GA4 property</strong> (this enables audience sharing for remarketing and imports key events as conversion signals).</li>
+    </ul>
+    <p style="margin-top:12px"><strong>Estimated time once access lands:</strong> about 30 minutes of my time to create the two conversion actions, copy the AW- IDs into the paused GTM tags, unpause them, and run a conversion diagnostics check in the Ads UI.</p>
+  </div>
+
+  <div class="baz-box">
+    <h3>3. IP addresses for internal traffic filter (minor)</h3>
+    <p>A short list of IPs, Kubiieo office, Baz's home, anyone at the team who's regularly on the site, so I can configure a GA4 internal-traffic filter and stop internal browsing from inflating the numbers Sean and I will be judging campaign performance against.</p>
+    <p style="margin-top:12px"><strong>Estimated time:</strong> 10 minutes once the IPs are supplied.</p>
+  </div>
+
+  <!-- ── SECTION 07 - AFTER THE UNBLOCKS ─────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">What happens the moment these unlocks land</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Here is exactly what I will do as soon as Baz gives me the WordPress login and the Google Ads account situation is sorted.</p>
+
+  <div class="note-box">
+    <div class="note-label">Phase 1, WordPress side (about 45 minutes)</div>
+    <ol style="margin-left:20px">
+      <li style="padding:4px 0">Log into WordPress, disable the HFCM <em>Google Analytics</em> snippet.</li>
+      <li style="padding:4px 0">Verify in GA4 DebugView that <code>page_view</code> events stop arriving from the hardcoded snippet.</li>
+      <li style="padding:4px 0">In GTM, unpause the <strong>GA4 Configuration</strong> tag and all three <strong>GA4 Event</strong> tags (generate_lead, click_to_call, click_to_email). Publish as v4.</li>
+      <li style="padding:4px 0">Confirm in DebugView that events resume flowing, now from GTM, at equivalent volume.</li>
+      <li style="padding:4px 0">Mark <code>generate_lead</code> as a <strong>Key Event</strong> in GA4 Admin so Google Ads can import it.</li>
+      <li style="padding:4px 0">Install Complianz (or CookieYes), configure Consent Mode v2 with denied defaults, test that consent acceptance correctly updates the defaults set by our GTM tag.</li>
+      <li style="padding:4px 0">Disconnect Site Kit (or uninstall). Enable reCAPTCHA v3 on the Elementor form. Confirm / fix the phone number.</li>
+    </ol>
+  </div>
+
+  <div class="note-box">
+    <div class="note-label">Phase 2, Google Ads side (about 30 minutes)</div>
+    <ol style="margin-left:20px">
+      <li style="padding:4px 0">In the Ads account, confirm auto-tagging is on.</li>
+      <li style="padding:4px 0">Create the <strong>Consultation Request</strong> conversion action (category: Submit lead form, count: one, attribution: data-driven).</li>
+      <li style="padding:4px 0">Create the <strong>Phone Call Click</strong> conversion action (category: Phone call lead, count: one).</li>
+      <li style="padding:4px 0">Enable Enhanced Conversions for Leads in Goals → Settings → Customer data.</li>
+      <li style="padding:4px 0">Link Google Ads to GA4 via GA4 Admin → Product Links.</li>
+      <li style="padding:4px 0">Copy the AW- conversion IDs and labels back into the two paused Ads conversion tags in GTM. Unpause them. Publish v5.</li>
+      <li style="padding:4px 0">Create the three remarketing audiences in GA4 (Form submitters, Engaged visitors, Services page viewers), they'll start populating within 24 hours.</li>
+      <li style="padding:4px 0">Run conversion diagnostics in Google Ads to confirm conversions are recording and Enhanced Conversions are matching.</li>
+    </ol>
+  </div>
+
+  <p>Total time once unblocked is roughly <strong>75 to 90 minutes</strong> of focused work. After that the setup is complete and the campaigns from the March strategy can go live with full visibility into which ads are generating real enquiries.</p>
+
+  <!-- ── SECTION 08 - HOW TO PRESENT THIS ────────────────────── -->
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2 class="section-title">How Sean can walk Baz through this</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="presenter-box">
+    <div class="presenter-label">A five-minute presentation outline</div>
+    <p><strong>Open with the why.</strong> "Before any Ads money gets spent, we need the measurement stack to actually measure. Antonio audited what we had and the short version was: a paid-media launch on the current setup would have optimised on clicks, not conversions. That's what the strategy document flagged as the single biggest risk."</p>
+    <p><strong>Show what's built and live.</strong> Share the GTM container screen, point at the list of 9 tags with three marked live (green), six marked paused (amber). "These are built and shipped. Three are firing on every page of kubiieo.com right now. Six are configured, waiting on specific unlocks."</p>
+    <p><strong>Show the smoke test.</strong> Optional, open Tag Assistant and submit a test form, show the <code>kubiieo_form_submit</code> event landing with populated email and phone. "End-to-end verified. When the conversion tags unpause, this is the event they'll fire on."</p>
+    <p><strong>Show this document's section 05.</strong> Point at the three coloured blocks. "Everything green is done. Everything amber is built and waiting on a specific condition. Everything red depends on two things from your side."</p>
+    <p><strong>Land on section 06.</strong> "Here's what we need from you: WordPress admin access, and the Google Ads account situation sorted. Once both are cleared Antonio finishes the build in about 90 minutes. Then we launch the campaigns from the March strategy doc with full conversion visibility."</p>
+    <p><strong>Close with the number.</strong> "The measurement side of this engagement is substantively complete. What's left is dependencies, not work."</p>
+  </div>
+
+  <!-- ── SECTION 09 - QUESTIONS I STILL NEED ANSWERED ────────── -->
+  <div class="section-header">
+    <span class="section-num">09</span>
+    <h2 class="section-title">Open questions I still need answered</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="note-box">
+    <div class="note-label">For Baz when you get the chance</div>
+    <ul style="list-style:none;padding:0">
+      <li style="padding:6px 0 6px 18px;position:relative;font-size:13.5px;border-bottom:1px solid var(--neutral)"><span style="position:absolute;left:0;color:var(--primary)">?</span>Who installed the HFCM plugin originally, and why, was it a prior agency recommendation before Site Kit was added? Knowing this tells us whether to trust HFCM for the GTM snippet going forward or migrate to a cleaner plugin like GTM4WP.</li>
+      <li style="padding:6px 0 6px 18px;position:relative;font-size:13.5px;border-bottom:1px solid var(--neutral)"><span style="position:absolute;left:0;color:var(--primary)">?</span>Is <code>G-CJS11Q3Y3Y</code> the only GA4 property under the Kubiieo Analytics account, or is there a parallel test property I should be aware of?</li>
+      <li style="padding:6px 0 6px 18px;position:relative;font-size:13.5px;border-bottom:1px solid var(--neutral)"><span style="position:absolute;left:0;color:var(--primary)">?</span>What specifically are the issues you're working through on the Google Ads account side? Depending on what they are I can help unblock them, some (like MCC access, billing setup, suspended account) have specific remediation paths.</li>
+      <li style="padding:6px 0 6px 18px;position:relative;font-size:13.5px;border-bottom:1px solid var(--neutral)"><span style="position:absolute;left:0;color:var(--primary)">?</span>Is <code>1-800-356-8933</code> a live US-facing number for Kubiieo, or leftover demo content from the Vamtam <code>tecnologia</code> theme? Either answer is fine, I just need to know before we start running AU-targeted ads to a page with a US phone number.</li>
+      <li style="padding:6px 0 6px 18px;position:relative;font-size:13.5px"><span style="position:absolute;left:0;color:var(--primary)">?</span>Who owns the GTM account itself, Kubiieo directly, or has it been sitting under a prior vendor's MCC? If it's vendor-owned, moving it into a Kubiieo-owned account is a clean prerequisite before we scale campaigns.</li>
+    </ul>
+  </div>
+
+
+</div>
+
+<div class="doc-footer">
+  <div><strong>Kubiieo, GTM &amp; GA4 Progress Report</strong> · 21 April 2026 · Prepared by Antonio Caruso</div>
+  <div>Companion to the March 2026 Google Ads Strategy</div>
+</div>
+
+</body>
+</html>
