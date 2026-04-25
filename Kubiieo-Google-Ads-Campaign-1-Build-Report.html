@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo — Google Ads Campaign 1 — Build Report</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --success:     #2E7D32;
+  --success-bg:  #e8f5e9;
+  --warn:        #7a5800;
+  --warn-bg:     #fffbe6;
+  --warn-border: #f0c040;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary-dk);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.toolbar-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-btn {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--primary);
+  color: #fff;
+  transition: opacity 0.15s;
+}
+.toolbar-btn:hover { opacity: 0.85; }
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 56px 40px 48px;
+}
+.doc-header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 12px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 28px;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.92);
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.green {
+  background: rgba(46,125,50,0.85);
+  border-color: rgba(46,125,50,1);
+  color: #fff;
+  font-weight: 600;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 56px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--neutral);
+}
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 12px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 11px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+.td-kw { font-family: Helvetica, Arial, sans-serif; font-size: 12.5px; color: var(--primary-dk); }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 13.5px;
+}
+.note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.note-box p { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child { margin-bottom: 0; }
+.note-box strong { color: var(--primary-dk); }
+
+.success-box {
+  background: var(--success-bg);
+  border: 1px solid var(--success);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 13.5px;
+}
+.success-box .note-label { color: var(--success); }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  font-size: 13.5px;
+}
+.warn-box .note-label { color: var(--warn); }
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+@media (max-width: 720px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+}
+.kpi-num {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  line-height: 1.2;
+}
+.kpi-label {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+.keyword-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) { .keyword-grid { grid-template-columns: 1fr; } }
+.kw-block {
+  background: var(--white);
+  border-left: 3px solid var(--primary);
+  padding: 14px 18px;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.07);
+}
+.kw-block-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--primary-dk);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.kw-list { list-style: none; padding: 0; }
+.kw-list li {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12.5px;
+  color: var(--charcoal);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--neutral);
+}
+.kw-list li:last-child { border-bottom: none; }
+.kw-list li code {
+  background: rgba(91,63,168,0.07);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+.headline-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) { .headline-grid { grid-template-columns: 1fr 1fr; } }
+.headline-pill {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  color: var(--primary-dk);
+  font-weight: 600;
+}
+.headline-pill .pin {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 6px;
+  vertical-align: middle;
+  letter-spacing: 0.4px;
+}
+
+.description-list { list-style: none; padding: 0; margin-bottom: 16px; }
+.description-list li {
+  background: var(--white);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 1px 3px rgba(91,63,168,0.05);
+}
+
+.sitelink-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 720px) { .sitelink-grid { grid-template-columns: 1fr; } }
+.sitelink-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+}
+.sitelink-card .sl-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  margin-bottom: 4px;
+}
+.sitelink-card .sl-desc {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+.sitelink-card .sl-url {
+  font-size: 11px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: var(--primary);
+  word-break: break-all;
+}
+
+.callout-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.callout-pill {
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid var(--neutral);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 24px;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--neutral);
+}
+.timeline-item {
+  position: relative;
+  padding: 6px 0 18px 0;
+}
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -27px;
+  top: 11px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.timeline-item.done::before {
+  background: var(--success);
+  box-shadow: 0 0 0 2px var(--success);
+}
+.timeline-item.future::before {
+  background: var(--warn-border);
+  box-shadow: 0 0 0 2px var(--warn-border);
+}
+.timeline-day {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.timeline-event {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dk);
+  margin-bottom: 3px;
+}
+.timeline-detail {
+  font-size: 13px;
+  color: var(--charcoal);
+}
+
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 8px 0 8px 28px;
+  position: relative;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--neutral);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li.done::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 18px;
+  height: 18px;
+  background: var(--success);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 11px;
+  text-align: center;
+  line-height: 18px;
+  font-weight: 700;
+}
+.checklist li.todo::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--neutral);
+  border-radius: 50%;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+.badge-success { background: var(--success-bg); color: var(--success); }
+.badge-warn { background: var(--warn-bg); color: var(--warn); border: 1px solid var(--warn-border); }
+.badge-info { background: var(--primary-lt); color: var(--primary-dk); }
+
+.doc-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.55);
+  padding: 28px 40px;
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.doc-footer strong { color: rgba(255,255,255,0.9); }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: #fff; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo — Google Ads Campaign 1 Build Report</span>
+  <button class="toolbar-btn" onclick="window.print()">⬇ Download / Print</button>
+</div>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Google Ads — Campaign Build Report</div>
+    <h1>AWS Managed Services Search Campaign</h1>
+    <div class="subtitle">Built, paused, ready for Monday launch · Sydney, Australia</div>
+    <div class="header-tags">
+      <span class="header-tag green">PAUSED · No spend possible</span>
+      <span class="header-tag">25 April 2026</span>
+      <span class="header-tag">Customer ID 356-492-6382</span>
+      <span class="header-tag">Built by Antonio Caruso</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-num">A$50</div>
+      <div class="kpi-label">Daily Budget (AUD)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">37</div>
+      <div class="kpi-label">Targeted Keywords</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">11</div>
+      <div class="kpi-label">RSA Headlines</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-num">92.5%</div>
+      <div class="kpi-label">Optimisation Score</div>
+    </div>
+  </div>
+
+  <div class="success-box">
+    <div class="note-label">Status</div>
+    <p>Campaign is built, billing submitted, and currently <strong>PAUSED</strong>. Zero spend is possible until someone manually enables it. The plan is to enable on <strong>Monday 27 April 2026</strong>, Sydney time. Google's projected performance at these settings: ~84 clicks per week at A$4.17 average CPC — directionally aligned with the strategy doc's "Conservative scenario" forecast of 5-12 consultations per month.</p>
+  </div>
+
+  <!-- 01 CAMPAIGN SETTINGS -->
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Campaign settings</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <table>
+    <tbody>
+      <tr><td class="td-label" style="width:200px">Campaign name</td><td>Campaign #1 (renamed by Google during launch; originally Search-1)</td></tr>
+      <tr><td class="td-label">Campaign ID</td><td>23792912378</td></tr>
+      <tr><td class="td-label">Type</td><td>Search</td></tr>
+      <tr><td class="td-label">Final URL</td><td><code>https://kubiieo.com/active/</code></td></tr>
+      <tr><td class="td-label">Locations</td><td>Australia (Presence only — not "Presence or interest")</td></tr>
+      <tr><td class="td-label">Languages</td><td>English</td></tr>
+      <tr><td class="td-label">Networks</td><td>Google Search Network only (Search Partners <strong>OFF</strong>, Display <strong>OFF</strong>)</td></tr>
+      <tr><td class="td-label">Audiences</td><td>Observation mode, no segments selected (will populate post-GA4 link)</td></tr>
+      <tr><td class="td-label">Bid strategy</td><td>Maximise Clicks · Max CPC bid limit A$5</td></tr>
+      <tr><td class="td-label">Daily budget</td><td>A$50 AUD (Google can spend up to 2× on a peak day, monthly avg ~A$1,520)</td></tr>
+      <tr><td class="td-label">Time zone</td><td>(GMT+10:00) Sydney Time — account-level, cannot be changed later</td></tr>
+      <tr><td class="td-label">Status</td><td><span class="badge badge-warn">Paused</span> until manual Enable on 2026-04-27</td></tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <div class="note-label">Why this configuration</div>
+    <p><strong>AWS-only focus:</strong> Per Baz on the kickoff call: Kubiieo is an AWS Advanced Tier Partner but doesn't yet have equivalent partner status with Azure or GCP. Spending paid budget on terms where you can't compete on partner credibility is wasted — so Campaign 1 is laser-focused on AWS only. Azure/GCP can be added in Phase 2 once an MSP relationship is established with those platforms.</p>
+    <p><strong>Conservative budget:</strong> Baz's call: "let's start the conservative... I want to make sure that the whole end-to-end flow is working." A$50/day validates the funnel (ad → /active/ → form → Zoho) without burning budget on premium auctions. Once the first converted lead lands in Zoho, raise to A$100-150/day as the strategy doc recommends.</p>
+    <p><strong>$5 max CPC cap:</strong> Strategy doc estimated $12-22 CPC on premium AWS keywords. The $5 cap deliberately keeps us out of those higher-tier auctions for now — we get more clicks per dollar on the entry-point and consultation-tier keywords ($6-14 range). This is fine for week 1 validation. Raise to $10-15 once we know the flow works.</p>
+    <p><strong>Search-only, no Display, no Search Partners:</strong> Display Network on a Search campaign leaks budget to low-intent display surfaces. Search Partners include unverified sites with much lower quality. For a B2B AWS campaign in AU, both are budget burn. Off.</p>
+  </div>
+
+  <!-- 02 KEYWORDS -->
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Keywords</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>37 keywords, exact + phrase match types only (no broad). Single ad group in this build — Phase 2 will split into 3 groups (Managed Services / Consulting / Migration-Cost) once we have search term data to inform the split.</p>
+
+  <div class="keyword-grid">
+    <div class="kw-block">
+      <div class="kw-block-title">AWS Managed Services intent</div>
+      <ul class="kw-list">
+        <li><code>[aws managed services]</code> · <code>"aws managed services"</code></li>
+        <li><code>[aws managed services australia]</code> · <code>"…"</code></li>
+        <li><code>[managed aws services]</code> · <code>"…"</code></li>
+        <li><code>[managed aws support]</code> · <code>"…"</code></li>
+        <li><code>[aws partner managed services]</code> · <code>"…"</code></li>
+        <li><code>[outsource aws management]</code> · <code>"…"</code></li>
+      </ul>
+    </div>
+
+    <div class="kw-block">
+      <div class="kw-block-title">AWS MSP / Cloud MSP Provider</div>
+      <ul class="kw-list">
+        <li><code>[aws msp]</code> · <code>"aws msp"</code></li>
+        <li><code>[aws msp australia]</code></li>
+        <li><code>[cloud managed services provider]</code> · <code>"…"</code></li>
+        <li><code>[managed cloud services australia]</code> · <code>"…"</code></li>
+      </ul>
+    </div>
+
+    <div class="kw-block">
+      <div class="kw-block-title">AWS Consulting Partner</div>
+      <ul class="kw-list">
+        <li><code>[aws consulting partner]</code> · <code>"…"</code></li>
+        <li><code>[aws consulting services]</code> · <code>"…"</code></li>
+        <li><code>[aws consulting australia]</code> · <code>"…"</code></li>
+        <li><code>[aws partner australia]</code> · <code>"…"</code></li>
+      </ul>
+    </div>
+
+    <div class="kw-block">
+      <div class="kw-block-title">AWS Cost Optimisation (entry-point)</div>
+      <ul class="kw-list">
+        <li><code>[aws cost optimisation]</code> · <code>"…"</code></li>
+        <li><code>[aws cost optimization]</code> · <code>"…"</code> (US spelling for cross-border AU traffic)</li>
+        <li><code>[reduce aws costs]</code> · <code>"…"</code></li>
+      </ul>
+    </div>
+
+    <div class="kw-block" style="grid-column: 1 / -1;">
+      <div class="kw-block-title">AWS Migration</div>
+      <ul class="kw-list">
+        <li><code>[aws migration services]</code> · <code>"aws migration services"</code></li>
+        <li><code>[migrate to aws]</code> · <code>"migrate to aws"</code></li>
+        <li><code>[aws cloud migration]</code> · <code>"aws cloud migration"</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 03 AD COPY -->
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Responsive Search Ad</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Ad strength: <span class="badge badge-success">Good</span> (up from "Average" before extensions were added).</p>
+
+  <div class="subsection-title">11 Headlines (max 30 char each)</div>
+
+  <div class="headline-grid">
+    <div class="headline-pill">AWS Managed Services AU</div>
+    <div class="headline-pill">AWS Advanced Tier Partner</div>
+    <div class="headline-pill">Free AWS Cost Assessment</div>
+    <div class="headline-pill">Reduce Your AWS Bill 20-40%</div>
+    <div class="headline-pill">Sydney AWS Specialists</div>
+    <div class="headline-pill">1,500+ Cloud Projects</div>
+    <div class="headline-pill">98% Customer Satisfaction</div>
+    <div class="headline-pill">AWS Migration Experts</div>
+    <div class="headline-pill">24/7 AWS Monitoring</div>
+    <div class="headline-pill">Trusted AWS Partner Sydney</div>
+    <div class="headline-pill">Cloud Migrations, No Lock-In</div>
+  </div>
+
+  <p style="font-size: 12.5px; color: var(--muted); margin-bottom: 24px;">"AWS Advanced Tier Partner" was specifically requested by Baz for ad copy. Sean noted on the call that people don't search this exact phrase, but it serves as a credibility signal when Google rotates it into the displayed ad — buyers see it and trust the source.</p>
+
+  <div class="subsection-title">4 Descriptions (max 90 char each, all unique)</div>
+
+  <ul class="description-list">
+    <li>Managed AWS, migrations, DevOps & cost cuts. Sydney-based AWS experts. Talk to us today.</li>
+    <li>Reduce AWS spend, plug security gaps, modernise faster. Free assessment, no obligation.</li>
+    <li>From AWS bill shock to optimised infrastructure. Get a free cost assessment today.</li>
+    <li>Sydney AWS engineers trusted by AU startups & scaleups. Real talk, real results.</li>
+  </ul>
+
+  <!-- 04 EXTENSIONS -->
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Ad extensions (assets)</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="subsection-title">6 Sitelinks — pointing to confirmed-live URLs</div>
+
+  <div class="sitelink-grid">
+    <div class="sitelink-card">
+      <div class="sl-title">Free Cloud Assessment</div>
+      <div class="sl-desc">No-cost AWS cost or security audit · Book a 30-min call with our team</div>
+      <div class="sl-url">kubiieo.com/contact/</div>
+    </div>
+    <div class="sitelink-card">
+      <div class="sl-title">Cloud Migrations</div>
+      <div class="sl-desc">Smooth AWS migrations, no downtime · AWS-certified team, fixed pricing</div>
+      <div class="sl-url">kubiieo.com/cloud-migrations/</div>
+    </div>
+    <div class="sitelink-card">
+      <div class="sl-title">Reduce AWS Costs</div>
+      <div class="sl-desc">Cut your AWS bill 20-40% · FinOps audit + ongoing optimisation</div>
+      <div class="sl-url">kubiieo.com/cost-optimisation/</div>
+    </div>
+    <div class="sitelink-card">
+      <div class="sl-title">Security & Compliance</div>
+      <div class="sl-desc">Cloud security in every layer · DevSecOps + compliance automation</div>
+      <div class="sl-url">kubiieo.com/security-compliance/</div>
+    </div>
+    <div class="sitelink-card">
+      <div class="sl-title">Why Kubiieo</div>
+      <div class="sl-desc">20 years in cloud and IT · AWS Advanced Tier Partner</div>
+      <div class="sl-url">kubiieo.com/why-us/</div>
+    </div>
+    <div class="sitelink-card">
+      <div class="sl-title">Meet the Team</div>
+      <div class="sl-desc">The engineers behind your cloud · AWS-certified, Sydney-based</div>
+      <div class="sl-url">kubiieo.com/team/</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">7 Callouts</div>
+
+  <div class="callout-grid">
+    <span class="callout-pill">AWS Advanced Tier Partner</span>
+    <span class="callout-pill">20+ Years Experience</span>
+    <span class="callout-pill">1,500+ Projects Delivered</span>
+    <span class="callout-pill">98% Customer Satisfaction</span>
+    <span class="callout-pill">Free Cloud Assessment</span>
+    <span class="callout-pill">AWS-Certified Engineers</span>
+    <span class="callout-pill">Sydney-Based Team</span>
+  </div>
+
+  <div class="warn-box">
+    <div class="note-label">Skipped from the strategy doc</div>
+    <p><strong>"3-Minute Average Response Time":</strong> Baz mentioned on the call that the support coverage process (chat staffing, on-call rotation) is still being worked out. A callout that turns out to be aspirational gets disputed by competitors and flagged by Google's policy team. Add it back once the SLA is internally confirmed.</p>
+    <p><strong>"Multi-Cloud Specialists":</strong> Replaced with "AWS-Certified Engineers" because we're explicitly positioning AWS-first per Baz's call instruction. Restore once Azure/GCP partner status is established.</p>
+    <p><strong>Phone-call asset (Call extension):</strong> Skipped until Baz's 1300 number forwarding chain (1300 → SIM → Eugene fallback) is live and tested. Adding a non-functional number on a B2B campaign that might be the first impression for a six-figure managed-services prospect is a worse outcome than no number at all. ~90 seconds to add when ready.</p>
+  </div>
+
+  <!-- 05 TRACKING -->
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Tracking & conversion setup</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>End-to-end tracking is wired through GA4. The chain: site → GTM → GA4 → Google Ads (via account link).</p>
+
+  <table>
+    <thead>
+      <tr><th>Component</th><th>Status</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>GA4 property</strong> (kubiieo.com, ID 530485438)</td>
+        <td><span class="badge badge-success">Live</span></td>
+        <td>Tag IDs G-CJS11Q3Y3Y, GT-T94DJN75 confirmed installed via GTM.</td>
+      </tr>
+      <tr>
+        <td><strong>GA4 → Google Ads link</strong></td>
+        <td><span class="badge badge-success">Linked</span></td>
+        <td>Auto-tagging enabled. Personalised advertising enabled.</td>
+      </tr>
+      <tr>
+        <td><strong>Conversion: Converted leads</strong> (close_convert_lead)</td>
+        <td><span class="badge badge-success">Imported · Primary</span></td>
+        <td>Currently 0 events. Will tick up as soon as form_submit fires post-launch.</td>
+      </tr>
+      <tr>
+        <td><strong>Conversion: Qualified leads</strong> (qualify_lead)</td>
+        <td><span class="badge badge-success">Imported · Primary</span></td>
+        <td>Currently 0 events. Same trigger source as Converted leads.</td>
+      </tr>
+      <tr>
+        <td><strong>GTM container</strong> (GTM-TV9VXWHD)</td>
+        <td><span class="badge badge-success">Healthy</span></td>
+        <td>Conversion Linker firing on All Pages. Google Tag (gtag) firing on every page. GA4 event tags firing on form_submit and link clicks.</td>
+      </tr>
+      <tr>
+        <td><strong>Native Google Ads conversion tags</strong> (in GTM)</td>
+        <td><span class="badge badge-warn">Paused — intentional</span></td>
+        <td>Two scaffold tags exist with placeholder IDs. Not activated because they would duplicate-count with the GA4 imports above. Useful spare capacity if we ever want to switch off GA4 import.</td>
+      </tr>
+      <tr>
+        <td><strong>"Google tag not installed" warning in Ads UI</strong></td>
+        <td><span class="badge badge-warn">Will clear in 24-48h</span></td>
+        <td>Verification lag. The tag IS installed and firing — Google Ads' crawler just hasn't re-verified yet.</td>
+      </tr>
+      <tr>
+        <td><strong>Zoho CRM lead handover</strong></td>
+        <td><span class="badge badge-info">Pending verification</span></td>
+        <td>Confirm leads land in Zoho with UTM + gclid attribution. Not strictly required for Monday but should be tested in week 1.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 06 LAUNCH PLAN -->
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Launch & post-launch playbook</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item done">
+      <div class="timeline-day">Saturday 25 April 2026</div>
+      <div class="timeline-event">Build complete — campaign paused</div>
+      <div class="timeline-detail">Account created, billing submitted (A$600/A$600 promo applied), all assets in. Campaign in "Paused" state, Google reviewing the ad in parallel.</div>
+    </div>
+    <div class="timeline-item future">
+      <div class="timeline-day">Monday 27 April 2026</div>
+      <div class="timeline-event">Manual unpause — launch</div>
+      <div class="timeline-detail">Open <code>https://ads.google.com/aw/overview?campaignId=23792912378</code>, click status toggle → Enable. Ads start serving within minutes assuming review has cleared. Watch for first impressions in the dashboard within 1-3 hours.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-day">Week 1 (Apr 28 – May 4)</div>
+      <div class="timeline-event">Validate the funnel</div>
+      <div class="timeline-detail">Monitor daily: search terms report (build negative keyword list), CTR (target >3%), CPC (should average <$5), first form submissions hitting Zoho. Confirm at least 1 conversion fires correctly through GA4 → Ads.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-day">Week 2 (May 5 – May 11)</div>
+      <div class="timeline-event">Tune and decide on Phase 2</div>
+      <div class="timeline-detail">Pause underperforming keywords. Consider raising max CPC from $5 → $10-15 if impression share is weak on premium terms. Add 1300 Call asset if number is live. Begin scoping Campaign 2 (Professional Services, 35% budget).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-day">Month 2+</div>
+      <div class="timeline-event">Scale</div>
+      <div class="timeline-detail">After ~30 conversions, switch bid strategy from Maximise Clicks to Target CPA at ~A$200. Launch Campaign 2 + Campaign 3 (Entry-Point Offers, 20% budget). Add retargeting via GA4 audiences.</div>
+    </div>
+  </div>
+
+  <!-- 07 OUTSTANDING -->
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Outstanding items</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <ul class="checklist">
+    <li class="todo"><strong>Manual unpause Monday morning</strong> — Baz or Antonio, takes 10 seconds. The single action standing between the campaign and going live.</li>
+    <li class="todo"><strong>Verify <code>kubiieo_form_submit</code> fires</strong> when someone completes the contact form on /active/. Use GA4 DebugView with the GA Debugger Chrome extension to watch in real time.</li>
+    <li class="todo"><strong>Verify Zoho CRM lead handover</strong> — submit a test lead through /active/ and confirm it lands in Zoho with utm_source=google, utm_medium=cpc, gclid populated.</li>
+    <li class="todo"><strong>Add 1300 number as Call asset</strong> once the forwarding chain (1300 → Baz's SIM → Eugene fallback) is functional. ~90 seconds, account-level so applies to all future campaigns.</li>
+    <li class="todo"><strong>Negative keyword seed list</strong> — apply at the account level in week 1: <code>jobs, training, course, certification, tutorial, exam, salary, github, login, download, pricing calculator, free trial aws, aws certification, solutions architect jobs</code>.</li>
+    <li class="todo"><strong>Switch to Target CPA bidding</strong> after the campaign records ~30 conversions. Setting: Target CPA A$200 AUD as the ceiling per the strategy doc.</li>
+    <li class="todo"><strong>Phase 2: split into 3 ad groups</strong> (AWS Managed Services, AWS Consulting, Cost-Migration) once 2-3 weeks of search term data is in.</li>
+    <li class="todo"><strong>Campaigns 2 and 3</strong> — Professional Services (35% budget) and Entry-Point Offers (20% budget) per the strategy doc. Launch in week 2-3.</li>
+  </ul>
+
+  <!-- 08 KEY URLS -->
+  <div class="section-header">
+    <span class="section-num">08</span>
+    <h2 class="section-title">Quick reference</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <table>
+    <tbody>
+      <tr><td class="td-label" style="width:200px">Campaign overview URL</td><td><code style="font-size:11px;">ads.google.com/aw/overview?campaignId=23792912378</code></td></tr>
+      <tr><td class="td-label">Customer ID</td><td>356-492-6382</td></tr>
+      <tr><td class="td-label">Campaign ID</td><td>23792912378</td></tr>
+      <tr><td class="td-label">GA4 property ID</td><td>530485438 (kubiieo.com)</td></tr>
+      <tr><td class="td-label">GTM container</td><td>GTM-TV9VXWHD (account 6349961027, container 249466059)</td></tr>
+      <tr><td class="td-label">Landing page</td><td>https://kubiieo.com/active/</td></tr>
+      <tr><td class="td-label">Promo applied</td><td>Spend A$600, get A$600 in Ads credits (deadline 24 June 2026)</td></tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="doc-footer">
+  <div><strong>Kubiieo</strong> · Google Ads Campaign 1 · Build Report</div>
+  <div>25 April 2026 · Built by Antonio Caruso (caruso.martech@gmail.com)</div>
+</div>
+
+</body>
+</html>
