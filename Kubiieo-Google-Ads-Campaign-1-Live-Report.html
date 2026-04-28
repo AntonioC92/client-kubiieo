@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo - Campaign #1 Live Report</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+  --danger-bd:   #e0b0b0;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--neutral);
+}
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.warn-box .warn-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warn-text);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.warn-box p { margin-bottom: 10px; line-height: 1.75; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.block-done, .block-inprog, .block-blocked {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.block-done .block-head { background: #2E7D32; color: #fff; }
+.block-inprog .block-head { background: #C87E00; color: #fff; }
+.block-blocked .block-head { background: #8b3333; color: #fff; }
+
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 10px; }
+.block-body p:last-child { margin-bottom: 0; }
+.block-body ul { list-style: none; padding: 0; margin-top: 10px; }
+.block-body ul li {
+  padding: 5px 0 5px 18px;
+  position: relative;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--neutral);
+  line-height: 1.6;
+}
+.block-body ul li:last-child { border-bottom: none; }
+.block-done .block-body ul li::before { content: "\2713"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+.block-inprog .block-body ul li::before { content: "\27F3"; position: absolute; left: 0; color: #C87E00; font-weight: 700; }
+.block-blocked .block-body ul li::before { content: "\25B2"; position: absolute; left: 0; color: var(--danger); font-weight: 700; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.kw-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) { .kw-grid { grid-template-columns: 1fr; } }
+.kw-pill {
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  border: 1px solid var(--neutral);
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+.kw-pill.neg {
+  background: #fff5f5;
+  border-color: #e0b0b0;
+  color: var(--danger);
+}
+
+.timeline {
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 14px;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-time {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.timeline-text { font-size: 13.5px; line-height: 1.6; }
+
+.live-banner {
+  background: linear-gradient(135deg, #2E7D32 0%, #4caf50 100%);
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 12px rgba(46,125,50,0.25);
+}
+.live-banner-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 6px;
+}
+.live-banner h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.live-banner p { color: rgba(255,255,255,0.9); }
+
+.footer-note {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--neutral);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Campaign Launch Report &nbsp;·&nbsp; 28 April 2026</div>
+    <h1>Campaign #1 is live</h1>
+    <p class="subtitle">AWS Managed Services Search campaign on Google Ads, now serving across Australia. This is what got built and switched on today.</p>
+    <div class="header-tags">
+      <span class="header-tag live">Status: Eligible</span>
+      <span class="header-tag">A$50/day</span>
+      <span class="header-tag">AU geo</span>
+      <span class="header-tag">Search only</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+<div class="live-banner">
+  <div class="live-banner-label">Now live</div>
+  <h2>Campaign #1 unpaused at 1:30 PM, 28 April 2026</h2>
+  <p>Ads enter Google's review queue and start serving within 1 to 2 hours. First impressions on AWS managed services search queries should arrive this afternoon.</p>
+</div>
+
+<p class="lead-paragraph">Quick context before the detail. The campaign was built and paused last week with a Monday launch in mind. Today I went back through the Google Ads recommendations panel, tightened the keyword list, added campaign-level negatives to keep us out of irrelevant traffic, attached our existing callouts to the campaign, and made sure conversion tracking is wired through to both GA4 and Google Ads. Once that was clean, I unpaused.</p>
+
+<p>The rest of this document covers what changed today and what to watch in the first week.</p>
+
+
+<div class="section-header">
+  <span class="section-num">01</span>
+  <span class="section-title">Campaign at a glance</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card"><span class="stat-num">41</span><span class="stat-label">Keywords</span></div>
+  <div class="stat-card"><span class="stat-num">17</span><span class="stat-label">Negatives</span></div>
+  <div class="stat-card"><span class="stat-num">7</span><span class="stat-label">Callouts</span></div>
+  <div class="stat-card"><span class="stat-num">6</span><span class="stat-label">Sitelinks</span></div>
+</div>
+
+<table>
+  <tr><td class="td-label" style="width: 35%;">Campaign name</td><td>Campaign #1 (AWS Managed Services, Search, AU)</td></tr>
+  <tr><td class="td-label">Status</td><td><strong style="color: var(--success);">Eligible (live)</strong></td></tr>
+  <tr><td class="td-label">Daily budget</td><td>A$50.00 / day</td></tr>
+  <tr><td class="td-label">Bid strategy</td><td>Maximise Clicks (capped at $5 max CPC)</td></tr>
+  <tr><td class="td-label">Network</td><td>Google search only (no Display, no Search Partners)</td></tr>
+  <tr><td class="td-label">Geo</td><td>Australia, English, all day</td></tr>
+  <tr><td class="td-label">Final URL</td><td><code>kubiieo.com/active/</code></td></tr>
+  <tr><td class="td-label">Start date</td><td>26 April 2026 (already passed)</td></tr>
+  <tr><td class="td-label">End date</td><td>None set, runs until paused or removed</td></tr>
+</table>
+
+
+<div class="section-header">
+  <span class="section-num">02</span>
+  <span class="section-title">What I added today from the Recommendations panel</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>Google's Recommendations panel suggested 35 new keywords. About a third of them were Azure or generic cloud terms that would have dragged us into wrong-fit traffic. I filtered those out and added the 11 that genuinely match Kubiieo's AWS positioning. All as Phrase match, never Broad.</p>
+
+<div class="subsection-title">11 keywords added (Phrase match)</div>
+
+<div class="kw-grid">
+  <div class="kw-pill">"aws consulting companies"</div>
+  <div class="kw-pill">"managed aws"</div>
+  <div class="kw-pill">"aws governance"</div>
+  <div class="kw-pill">"managed cloud services aws"</div>
+  <div class="kw-pill">"amazon web services managed services"</div>
+  <div class="kw-pill">"aws advanced partner"</div>
+  <div class="kw-pill">"managed services in aws"</div>
+  <div class="kw-pill">"amazon web services consulting"</div>
+  <div class="kw-pill">"managed services on aws"</div>
+  <div class="kw-pill">"aws managed cloud"</div>
+  <div class="kw-pill">"aws cloud managed services"</div>
+</div>
+
+<p>That brings the campaign to 41 keywords total, all in Phrase or Exact match. Zero Broad match. This means our budget only spends on searches that actually contain or closely match our chosen phrases, not on tangential queries Google might guess at.</p>
+
+
+<div class="subsection-title">17 negative keywords added (campaign level)</div>
+
+<p>These block our ads from showing on searches we don't want to pay for. They apply to every ad group in the campaign.</p>
+
+<table>
+  <tr><th style="width: 50%;">Competitor cloud platforms</th><th>Wrong intent</th></tr>
+  <tr>
+    <td>
+      <div class="kw-pill neg">azure</div>
+      <div class="kw-pill neg">microsoft azure</div>
+      <div class="kw-pill neg">gcp</div>
+      <div class="kw-pill neg">google cloud</div>
+      <div class="kw-pill neg">google cloud platform</div>
+      <div class="kw-pill neg">alibaba cloud</div>
+      <div class="kw-pill neg">oracle cloud</div>
+      <div class="kw-pill neg">ibm cloud</div>
+    </td>
+    <td>
+      <div class="kw-pill neg">jobs</div>
+      <div class="kw-pill neg">salary</div>
+      <div class="kw-pill neg">career</div>
+      <div class="kw-pill neg">tutorial</div>
+      <div class="kw-pill neg">free</div>
+      <div class="kw-pill neg">how to</div>
+      <div class="kw-pill neg">what is</div>
+      <div class="kw-pill neg">certification</div>
+      <div class="kw-pill neg">training course</div>
+    </td>
+  </tr>
+</table>
+
+<div class="note-box">
+  <div class="note-label">Why these matter</div>
+  <p>The competitor cloud terms are obvious. If someone is searching for Azure or GCP services, we shouldn't bid on them. Even with Phrase match, Google can occasionally drift into related territory, and these negatives are belt and braces against that.</p>
+  <p>The "wrong intent" negatives stop us paying for clicks from people who aren't buyers. Someone Googling "AWS jobs" or "AWS certification training" is not looking to hire a managed services partner. Same for "free aws tutorial". Filtering these out protects the budget for actual prospects.</p>
+</div>
+
+
+<div class="subsection-title">Callouts now attached to Campaign #1</div>
+
+<p>The 7 callout assets we wrote already existed at account level but were not yet attached to this campaign. Today I applied them. They appear under the ad copy in search results.</p>
+
+<div class="kw-grid">
+  <div class="kw-pill">AWS Advanced Tier Partner</div>
+  <div class="kw-pill">20+ Years Experience</div>
+  <div class="kw-pill">1500+ Projects Delivered</div>
+  <div class="kw-pill">98% Customer Satisfaction</div>
+  <div class="kw-pill">Free Cloud Assessment</div>
+  <div class="kw-pill">AWS-Certified Engineers</div>
+  <div class="kw-pill">Sydney-Based</div>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">03</span>
+  <span class="section-title">Conversion tracking, end to end</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>Today I also fixed a tracking gap I found while testing the form on the /active/ landing page. The original GTM bridge for Elementor forms was relying on an older jQuery event that newer versions of Elementor Pro don't always fire. Form submissions were silently failing to fire the conversion event.</p>
+
+<p>I replaced the bridge with a more robust version that listens three different ways (jQuery delegated event, native DOM event, and a DOM observer that watches for the success message appearing). Then I tested it. The conversion event fires correctly with all the form data attached: form name, form ID, form location, plus user email and phone.</p>
+
+<div class="subsection-title">Two conversion paths now active</div>
+
+<table>
+  <tr><th>Path</th><th>How it flows</th><th>Latency</th></tr>
+  <tr>
+    <td><strong>Path A</strong><br><span class="td-label">GA4 import</span></td>
+    <td>Form submit → GA4 generate_lead event → imported to Google Ads as close_convert_lead and qualify_lead</td>
+    <td>3 to 24 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Path B</strong><br><span class="td-label">Direct Ads tag</span></td>
+    <td>Form submit → Google Ads conversion tag fires → recorded as Consultation Request - Form Submit</td>
+    <td>Real time (minutes)</td>
+  </tr>
+</table>
+
+<div class="note-box">
+  <div class="note-label">Why two paths</div>
+  <p>Path A feeds Smart Bidding optimisation (the "Conversions" column in Google Ads). It uses the GA4 imported events as the official signal.</p>
+  <p>Path B sits in a different goal category, so it does not double-count for bidding. Its job is faster reporting visibility. When a form is submitted, you'll see the conversion appear in Google Ads within minutes via Path B, instead of waiting overnight for the GA4 import to catch up.</p>
+  <p>Both paths still respect Google Ads attribution rules. Conversions from organic, direct, LinkedIn or any non-ad traffic source will appear in the "All conversions" column for reporting, but will not be attributed to Campaign #1 for bid optimisation. Only ad-click-attributed conversions influence Smart Bidding.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">04</span>
+  <span class="section-title">What to expect this week</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-time">First few hours</div>
+    <div class="timeline-text">Google's ad review clears. Ads enter rotation on AWS managed services queries.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">First 24 hours</div>
+    <div class="timeline-text">First impressions and clicks. Watch for any disapprovals or policy flags. CPC should sit comfortably under the $5 cap.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">First week</div>
+    <div class="timeline-text">CTR target above 2%. If lower, the ad copy needs a refresh. If higher, we're well-aligned to search intent. First conversions should arrive if traffic is qualified.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">First 30 days</div>
+    <div class="timeline-text">Need around 30 conversions to make Smart Bidding eligible. Until then, Maximise Clicks is the right strategy. Once we cross that threshold, we switch to Target CPA.</div>
+  </div>
+</div>
+
+<div class="warn-box">
+  <div class="warn-label">Caveat about close_convert_lead and qualify_lead</div>
+  <p>Those two GA4 events are sales funnel stages, not form submissions. They fire when a lead becomes qualified or closes as a customer. Right now, no integration is firing them automatically. They'll only count once Zoho is wired to push events back into GA4 when sales updates lead status, or until someone fires them manually. That's a follow-up worth raising with Eugene.</p>
+  <p>For the launch, the practical conversion signal is Path B (Consultation Request - Form Submit), which fires immediately on form submission. That's what you'll see populate first.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">05</span>
+  <span class="section-title">Open follow-ups</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Add 1300 number as a Call asset</span>
+    <span class="block-tag">Waiting on Baz</span>
+  </div>
+  <div class="block-body">
+    <p>Once the 1300 forwarding is live, I'll add it as a Call asset on the campaign and unpause the click_to_call conversion tag in GTM. About 90 seconds of work when the number is ready.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Verify Zoho lead handover</span>
+    <span class="block-tag">Confirm with Baz</span>
+  </div>
+  <div class="block-body">
+    <p>First time the form fires post-launch, check that the lead lands cleanly in Zoho with the right fields populated and the right owner assigned. Today's test submissions were tagged "TEST" so they're easy to spot.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Decide what triggers qualify_lead and close_convert_lead</span>
+    <span class="block-tag">Conversation with Eugene</span>
+  </div>
+  <div class="block-body">
+    <p>These two GA4 events sit in the import path but nothing currently fires them. Either build a Zoho → GA4 push when sales updates lead stage, or accept they're placeholders and remove them from Google Ads as conversions.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Switch bid strategy after 30 conversions</span>
+    <span class="block-tag">~30 days out</span>
+  </div>
+  <div class="block-body">
+    <p>Once we have enough conversion volume, move from Maximise Clicks to Target CPA. The threshold for Smart Bidding to work is roughly 30 conversions in a 30 day window.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Phase 2: ad group split</span>
+    <span class="block-tag">After first month</span>
+  </div>
+  <div class="block-body">
+    <p>Right now the campaign has one ad group covering everything. Once we have search term data, split into themed ad groups: cost optimisation, migration, MSP general. Lets us write tighter ad copy for each intent and improve Quality Score.</p>
+  </div>
+</div>
+
+
+<div class="footer-note">
+  Prepared by Antonio Caruso · Caruso Martech · caruso.martech@gmail.com
+</div>
+
+</div>
+</body>
+</html>
