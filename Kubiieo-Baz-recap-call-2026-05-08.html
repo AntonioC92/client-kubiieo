@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo · Recap for Baz — Google Ads &amp; WordPress</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:        #9041F7;
+    --primary-deep:   #4F0EA8;
+    --primary-mid:    #7430DC;
+    --accent:         #FF9900;
+    --accent-soft:    #FFB347;
+    --bg:             #FAFAFC;
+    --bg-soft:        #F4EFFB;
+    --charcoal:       #2A2F3A;
+    --muted:          #6B7280;
+    --white:          #FFFFFF;
+    --rule:           rgba(79,14,168,0.12);
+    --rule-soft:      rgba(79,14,168,0.07);
+    --done-bg:        #E8F4EC;
+    --done-text:      #1E6B3A;
+    --pending-bg:     #FFF7E0;
+    --pending-text:   #946100;
+    --next-bg:        #ECDDFD;
+    --next-text:      #4F0EA8;
+    --baz-bg:         #FFE0EE;
+    --baz-text:       #B0185D;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--charcoal);
+    line-height: 1.6;
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--primary-deep);
+    background-image:
+      radial-gradient(1200px 400px at 90% -50%, rgba(255,153,0,0.22), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(255,255,255,0.06), transparent 60%),
+      linear-gradient(180deg, var(--primary-deep), var(--primary));
+    color: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 64px 48px 56px;
+    position: relative;
+  }
+  .brand-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255,153,0,0.3);
+    max-width: 220px;
+  }
+  .header-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    margin-bottom: 6px;
+  }
+  .header-title span { color: var(--accent); }
+  .header-sub {
+    font-size: 16px;
+    color: rgba(255,255,255,0.78);
+    max-width: 740px;
+    margin-top: 14px;
+    font-weight: 300;
+    line-height: 1.55;
+  }
+  .header-meta {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .meta-value { font-size: 14px; color: var(--white); font-weight: 500; }
+  .accent-bar { height: 3px; background: linear-gradient(90deg, var(--accent), transparent); }
+
+  /* ── LAYOUT ── */
+  .main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 48px 96px;
+  }
+
+  /* ── SCORE STRIP ── */
+  .score-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 52px;
+  }
+  .score-cell {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(79,14,168,0.06);
+  }
+  .score-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .score-value {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 30px;
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+  }
+  .score-foot {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 56px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.18em;
+    min-width: 32px;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.015em;
+  }
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), rgba(255,153,0,0.08));
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    font-size: 16px;
+    color: var(--charcoal);
+    line-height: 1.7;
+    margin-bottom: 22px;
+    max-width: 880px;
+  }
+  .intro strong { color: var(--primary); font-weight: 600; }
+
+  /* ── CARDS / LISTS ── */
+  .done-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .done-list li {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--done-text);
+    border-radius: 8px;
+    padding: 16px 18px 16px 42px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--charcoal);
+    box-shadow: 0 1px 3px rgba(79,14,168,0.05);
+  }
+  .done-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 18px;
+    height: 18px;
+    background: var(--done-text);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .done-list strong { color: var(--primary); font-weight: 600; }
+
+  .next-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .next-list li {
+    background: var(--next-bg);
+    border-left: 3px solid var(--primary);
+    border-radius: 8px;
+    padding: 14px 18px 14px 42px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--charcoal);
+  }
+  .next-list li::before {
+    content: '→';
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .next-list strong { color: var(--primary); font-weight: 600; }
+
+  .baz-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .baz-list li {
+    background: var(--baz-bg);
+    border-left: 3px solid var(--baz-text);
+    border-radius: 8px;
+    padding: 14px 18px 14px 42px;
+    position: relative;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--charcoal);
+  }
+  .baz-list li::before {
+    content: '!';
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    width: 18px;
+    height: 18px;
+    background: var(--baz-text);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .baz-list strong { color: var(--baz-text); font-weight: 700; }
+
+  /* ── PAGE STRIP ── */
+  .pages-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .page-card {
+    background: var(--white);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(79,14,168,0.06);
+  }
+  .page-card-head {
+    background: var(--primary);
+    color: var(--white);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .page-card-head .pc-name {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  .page-card-head .pc-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    background: rgba(255,153,0,0.16);
+    border: 1px solid rgba(255,153,0,0.4);
+    padding: 3px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+  }
+  .page-card-body { padding: 14px 16px 16px; }
+  .page-card-body p {
+    font-size: 13.5px;
+    color: var(--charcoal);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .page-card-body p:last-child { margin-bottom: 0; }
+  .page-card-body .pc-slug {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--primary);
+    background: var(--bg-soft);
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 4px;
+  }
+
+  /* ── STAT BAND ── */
+  .stat-band {
+    background: linear-gradient(135deg, var(--primary-deep), var(--primary));
+    color: var(--white);
+    border-radius: 12px;
+    padding: 26px 30px;
+    margin-bottom: 26px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+  }
+  .stat-cell {
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: rgba(255,255,255,0.05);
+  }
+  .stat-cell-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .stat-cell-value {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .stat-cell-foot {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  /* ── FOOTER ── */
+  .site-footer {
+    background: var(--primary-deep);
+    color: rgba(255,255,255,0.75);
+    padding: 26px 48px;
+    font-size: 13px;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+  .footer-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 720px) {
+    .header-inner { padding: 48px 24px 40px; }
+    .main { padding: 40px 24px 60px; }
+    .done-list { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">Kubiieo · Recap for Baz</div>
+    <h1 class="header-title">Where we are on Google Ads <span>and the new landing pages.</span></h1>
+    <p class="header-sub">A short recap of the last two weeks of work across the campaign and the WordPress build, plus what I'm picking up next from my side. Sized for a 30-minute call.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Prepared for</span>
+        <span class="meta-value">Baz Lalor · Kubiieo</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared by</span>
+        <span class="meta-value">Antonio Caruso</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">8 May 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Format</span>
+        <span class="meta-value">30-minute review</span>
+      </div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+</header>
+
+<main class="main">
+
+  <!-- AT A GLANCE -->
+  <div class="score-strip">
+    <div class="score-cell">
+      <div class="score-label">Optimisation score</div>
+      <div class="score-value">74.5% → 81%</div>
+      <div class="score-foot">+6.5 points across the last fortnight</div>
+    </div>
+    <div class="score-cell">
+      <div class="score-label">Ad strength</div>
+      <div class="score-value">Good</div>
+      <div class="score-foot">Up from Average</div>
+    </div>
+    <div class="score-cell">
+      <div class="score-label">Conversion tracking</div>
+      <div class="score-value">Live</div>
+      <div class="score-foot">Consultation Request firing in Ads</div>
+    </div>
+    <div class="score-cell">
+      <div class="score-label">Landing pages built</div>
+      <div class="score-value">3 drafts</div>
+      <div class="score-foot">In WordPress, ready for review</div>
+    </div>
+  </div>
+
+  <!-- SECTION 01 — GOOGLE ADS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Google Ads — what was improved</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Campaign 1 (Managed Services) is live and has been steadily tuned. The optimisation score is now <strong>81%</strong>, ad strength is <strong>Good</strong>, and the consultation form on <strong>/contact</strong> is firing as a clean conversion signal so Smart Bidding has real data to work with.</p>
+
+    <ul class="done-list">
+      <li><strong>Bid strategy refinement.</strong> Manual CPC tightened across the active ad groups, with caps adjusted off live impression-share data.</li>
+      <li><strong>Six-sitelink suite added.</strong> FinOps audit, managed services, migrations, security, our work, why Kubiieo. The ad now takes more SERP real estate.</li>
+      <li><strong>Service Catalog asset.</strong> Structured snippets added so the platforms and services list shows directly in the ad.</li>
+      <li><strong>Negative keyword expansion.</strong> 23 new exclusions added based on the live search-terms report. Spend stays on qualified intent.</li>
+      <li><strong>Keyword coverage widened.</strong> New phrase variants brought in for managed services, AWS support, and cost optimisation.</li>
+      <li><strong>Ad strength elevated to Good.</strong> RSA headlines and descriptions rewritten, pinning relaxed where it was hurting the score.</li>
+      <li><strong>Conversion measurement validated end-to-end.</strong> Consultation Request tag firing in GTM, conversion logged in Google Ads (AW-18096994923 / PTQyCIiukKQcEOv0qLVD), event flowing into GA4.</li>
+      <li><strong>Stale duplicate conversion action removed.</strong> Old duplicate Consultation action archived so the bidding model only sees the canonical signal.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 02 — WORDPRESS / LP -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">WordPress — three landing pages built</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The three lead-magnet landing pages are built end-to-end on kubiieo.com as <strong>drafts</strong>, on the existing VamTam Tecnologia theme using Elementor Pro 3.29.2. Each carries a yellow admin-only banner listing the small items still to close before publish, so nothing ships by accident during the review pass.</p>
+
+    <div class="stat-band">
+      <div class="stat-cell">
+        <div class="stat-cell-label">Theme</div>
+        <div class="stat-cell-value">VamTam Tecnologia</div>
+        <div class="stat-cell-foot">Already on the site</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Builder</div>
+        <div class="stat-cell-value">Elementor Pro 3.29.2</div>
+        <div class="stat-cell-foot">Already active</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Build method</div>
+        <div class="stat-cell-value">REST API + Gutenberg</div>
+        <div class="stat-cell-foot">Faster, more reliable than UI-driving</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-cell-label">Form attribution</div>
+        <div class="stat-cell-value">UTM + campaign hidden fields</div>
+        <div class="stat-cell-foot">Ready to swap into Zoho on submit</div>
+      </div>
+    </div>
+
+    <ul class="done-list">
+      <li><strong>Shared shell across all three pages.</strong> Hero, body bullets, optional explainer block, form, trust block. Brand-consistent, mobile-first.</li>
+      <li><strong>Forms with full attribution.</strong> 7 to 8 visible fields plus 8 hidden fields (Lead Source, Campaign ID, five UTM parameters). Work-email regex blocks free providers.</li>
+      <li><strong>Per-page SEO meta.</strong> Title and description set on each page for organic and paid quality score.</li>
+      <li><strong>Trust blocks.</strong> AWS Advanced Tier, ISO 27001, MAP-eligible, 32 certifications, onshore Australia surfaced consistently.</li>
+      <li><strong>Page 3 multi-select compliance frameworks.</strong> Eight checkbox options (ISO 27001, SOC 2, PCI DSS, ACSC Essential 8, HIPAA, IRAP, etc.) rolled into a single hidden field on submit.</li>
+      <li><strong>Placeholder webhook in place.</strong> Pointed at a safe URL so submissions cannot accidentally go live before the real Zoho endpoint is wired in.</li>
+    </ul>
+
+    <div class="pages-strip">
+      <div class="page-card">
+        <div class="page-card-head">
+          <span class="pc-name">AWS Cost Assessment</span>
+          <span class="pc-tag">Page 1</span>
+        </div>
+        <div class="page-card-body">
+          <p>Five-page report inside 48 hours showing where AWS spend is leaking. Targets Head of Engineering and CTO, with a CFO secondary angle.</p>
+          <span class="pc-slug">/aws-cost-assessment</span>
+        </div>
+      </div>
+      <div class="page-card">
+        <div class="page-card-head">
+          <span class="pc-name">Cloud Migration Readiness</span>
+          <span class="pc-tag">Page 2</span>
+        </div>
+        <div class="page-card-body">
+          <p>Migration readiness scorecard inside one week, with risks, quick wins, cost projection, MAP funding eligibility, and a phased roadmap.</p>
+          <span class="pc-slug">/migration-readiness</span>
+        </div>
+      </div>
+      <div class="page-card">
+        <div class="page-card-head">
+          <span class="pc-name">DevSecOps Scorecard</span>
+          <span class="pc-tag">Page 3</span>
+        </div>
+        <div class="page-card-body">
+          <p>Five-page security scorecard mapping AWS posture to ISO 27001, SOC 2, PCI DSS, and ACSC Essential 8. Run via Kubiieo's in-house multi-account scanner.</p>
+          <span class="pc-slug">/devsecops-scorecard</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03 — NEXT FROM ANTONIO -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">What I'm picking up next</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">These are the items I'm executing on directly over the next one to two weeks. Nothing here is blocking the campaign or the page launches on its own, but ticking them off lifts the conversion signal, removes the last polish items on the pages, and gets us ready to scale.</p>
+
+    <p class="intro" style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; font-family: 'JetBrains Mono', monospace; margin-top: 18px; margin-bottom: 10px;">Google Ads</p>
+    <ul class="next-list">
+      <li><strong>Phone-call conversion tracking, going live this week.</strong> Updating the WordPress tel: link, flipping <code>click_to_call</code> to a Key Event in GA4, and creating the Phone Call Lead conversion action in Ads. Adds a second clean signal feeding the bidding model.</li>
+      <li><strong>Move to Smart Bidding once we have ~30 conversions banked.</strong> Switch from Manual CPC to Maximise Conversions or Target CPA so Google's model can take over the bid decisions on data we trust.</li>
+      <li><strong>Launch Campaigns 2 and 3.</strong> Professional Services (35% of budget) and Entry-Point Offers (20%) live alongside Managed Services, on the 45/35/20 split agreed in the strategy doc.</li>
+      <li><strong>First 30-day performance report.</strong> Delivered with optimisation recommendations for the next cycle, against a target CPL under $200 AUD on Campaign 1.</li>
+    </ul>
+
+    <p class="intro" style="font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; font-family: 'JetBrains Mono', monospace; margin-top: 26px; margin-bottom: 10px;">WordPress / Landing Pages</p>
+    <ul class="next-list">
+      <li><strong>Real Zoho CRM webhook.</strong> Replacing the placeholder action attribute on all three forms with the live Zoho Flow or Deluge endpoint, once Zoho admin access is granted.</li>
+      <li><strong>Six new Zoho custom fields on the Leads module.</strong> Three for Page 2 (current environment, workload size, migration trigger), three for Page 3 (engineering team size, compliance frameworks, AWS account count). Pick-lists and multi-select pick-list.</li>
+      <li><strong>Form widget upgrade.</strong> Convert the styled HTML forms to the native Elementor Pro Form widget so Email, Redirect and Webhook actions all fire from one place.</li>
+      <li><strong>Thank-you page variants.</strong> Single template with conditional copy by querystring (<code>?lp=cost</code>, <code>?lp=migration</code>, <code>?lp=devsecops</code>), each with a Calendly or Zoho Bookings embed so high-intent prospects can self-book the read-out call.</li>
+      <li><strong>Theme page-title duplication fix.</strong> Toggle the VamTam "Hide page title" option per page so the H1 stops doubling up above the hero.</li>
+      <li><strong>Compliance Frameworks delimiter fix.</strong> One-line Zoho Flow string transform so the comma-separated values from Page 3's checkbox set map cleanly into the Zoho multi-select pick-list.</li>
+      <li><strong>Lighthouse audit.</strong> Final pre-publish check against the brief targets (performance ≥ 90, accessibility ≥ 95, page weight under 1.5MB), once the forms are converted and the draft banners removed.</li>
+    </ul>
+  </section>
+
+  <!-- SECTION 04 — ON BAZ'S SIDE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">One thing I'd ask from your side</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Most of what's left I can drive myself with the access you've already given me. Two items genuinely need you, both quick:</p>
+
+    <ul class="baz-list">
+      <li><strong>Advertiser Verification in Google Ads.</strong> Has to be the legal entity owner. About 15 minutes inside the Recommendations tab. Needs ABN, ASIC business registration, and your government ID for the face match. Unlocks logo assets in ads and a +3.6% optimisation score lift. Ram has the link.</li>
+      <li><strong>Zoho admin access.</strong> So I can build the real CRM webhook and add the six new custom Lead fields the new pages depend on. Once that's in I can wire the three forms live the same day.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-mono">Kubiieo · Recap for Baz</div>
+    <div>Prepared by Antonio Caruso · Caruso Martech · 8 May 2026</div>
+    <div class="footer-mono">Confidential</div>
+  </div>
+</footer>
+
+</body>
+</html>
