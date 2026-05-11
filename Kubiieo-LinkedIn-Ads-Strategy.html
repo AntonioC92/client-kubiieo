@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo: LinkedIn Ads Strategy</title>
+<style>
+  :root {
+    --primary:    #5B3FA8;
+    --primary-dk: #3d2a75;
+    --primary-lt: #f0ebff;
+    --accent:     #7B5FCC;
+    --neutral:    #e2d9f3;
+    --charcoal:   #1a1a2e;
+    --muted:      rgba(0,0,0,0.55);
+    --white:      #ffffff;
+    --bg:         #f8f6ff;
+    --c1-bg:      #e8e0ff;
+    --c1-text:    #3d2a75;
+    --c2-bg:      #e0f0e8;
+    --c2-text:    #1a5c35;
+    --c3-bg:      #fdf0d5;
+    --c3-text:    #7B4F00;
+    --danger:     #8b3333;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: Helvetica, Arial, sans-serif;
+    color: var(--charcoal);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+    padding: 0;
+    border-bottom: 4px solid rgba(255,255,255,0.15);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 56px 48px 48px;
+  }
+  .brand-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .header-title span { color: rgba(255,255,255,0.65); font-weight: 400; }
+  .header-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 14px;
+    max-width: 820px;
+    line-height: 1.6;
+  }
+  .header-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 36px;
+    flex-wrap: wrap;
+  }
+  .meta-item { display: flex; flex-direction: column; gap: 3px; }
+  .meta-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+  }
+  .meta-value {
+    font-size: 13px;
+    color: var(--white);
+    font-weight: 600;
+    background: rgba(255,255,255,0.12);
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  /* TOOLBAR */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--primary-dk);
+    padding: 10px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .toolbar-title {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    flex: 1;
+  }
+  .toolbar-btn {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 7px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .toolbar-btn:hover { opacity: 0.85; }
+  .btn-print { background: var(--primary); color: #fff; }
+
+  /* LAYOUT */
+  .main { max-width: 1100px; margin: 0 auto; padding: 48px 48px 80px; }
+
+  /* SECTION */
+  .section { margin-bottom: 64px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 26px;
+  }
+  .section-num {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 1px;
+    min-width: 28px;
+  }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-dk);
+  }
+  .section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+  /* INTRO PARAGRAPH — more breathing room */
+  .intro {
+    font-size: 14.5px;
+    color: var(--charcoal);
+    line-height: 1.8;
+    margin-bottom: 22px;
+    max-width: 920px;
+  }
+  .intro:last-child { margin-bottom: 0; }
+  .intro strong { color: var(--primary-dk); font-weight: 700; }
+
+  /* CARDS */
+  .card {
+    background: var(--white);
+    border-radius: 6px;
+    padding: 24px 28px;
+    border: 1px solid var(--neutral);
+    box-shadow: 0 1px 4px rgba(91,63,168,0.07);
+    margin-bottom: 18px;
+  }
+  .card:last-child { margin-bottom: 0; }
+  .card p {
+    font-size: 14px;
+    color: var(--charcoal);
+    line-height: 1.8;
+    margin-bottom: 14px;
+  }
+  .card p:last-child { margin-bottom: 0; }
+  .card p strong { color: var(--primary-dk); font-weight: 700; }
+  .card ul { margin: 10px 0 0 20px; }
+  .card li { font-size: 14px; line-height: 1.8; color: var(--charcoal); margin-bottom: 10px; }
+  .card li:last-child { margin-bottom: 0; }
+  .card li strong { color: var(--primary-dk); font-weight: 700; }
+
+  /* STAT CARDS */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  @media (max-width: 680px) { .stat-row { grid-template-columns: repeat(2,1fr); } }
+  .stat-card {
+    background: var(--white);
+    border-radius: 6px;
+    padding: 18px 20px;
+    border: 1px solid var(--neutral);
+    box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  }
+  .stat-num { font-size: 22px; font-weight: 700; color: var(--primary-dk); line-height: 1.2; }
+  .stat-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+  /* SPEC TABLE */
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 22px; }
+  .spec-table th {
+    background: var(--primary);
+    color: var(--white);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .spec-table td { padding: 11px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; line-height: 1.65; }
+  .spec-table tr:last-child td { border-bottom: none; }
+  .spec-table tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+  .spec-table td:first-child { font-weight: 600; color: var(--primary-dk); width: 28%; }
+  .spec-table strong { color: var(--primary-dk); font-weight: 700; }
+  .spec-table code {
+    font-family: Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: rgba(91,63,168,0.08);
+    color: var(--primary-dk);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* CAMPAIGN BLOCKS */
+  .campaign-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 26px;
+  }
+  @media (max-width: 780px) { .campaign-grid { grid-template-columns: 1fr; } }
+
+  .campaign-block {
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--neutral);
+    box-shadow: 0 1px 4px rgba(91,63,168,0.07);
+  }
+  .campaign-head { padding: 14px 18px; border-bottom: 1px solid var(--neutral); }
+  .campaign-head.c1 { background: var(--c1-bg); }
+  .campaign-head.c2 { background: var(--c2-bg); }
+  .campaign-head.c3 { background: var(--c3-bg); }
+
+  .campaign-name { font-size: 14px; font-weight: 700; }
+  .campaign-name.c1 { color: var(--c1-text); }
+  .campaign-name.c2 { color: var(--c2-text); }
+  .campaign-name.c3 { color: var(--c3-text); }
+
+  .campaign-pct { font-size: 10px; letter-spacing: 0.5px; margin-top: 4px; opacity: 0.75; }
+  .campaign-pct.c1 { color: var(--c1-text); }
+  .campaign-pct.c2 { color: var(--c2-text); }
+  .campaign-pct.c3 { color: var(--c3-text); }
+
+  .campaign-body { padding: 16px 18px; }
+  .campaign-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--neutral);
+    font-size: 13px;
+  }
+  .campaign-row:last-child { border-bottom: none; }
+  .campaign-row-label {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .campaign-row-val {
+    color: var(--charcoal);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .campaign-row-val strong { color: var(--primary-dk); font-weight: 700; }
+  .campaign-row-val ul { list-style: none; padding-left: 0; margin: 4px 0 0; }
+  .campaign-row-val ul li {
+    padding: 3px 0 3px 14px;
+    position: relative;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .campaign-row-val ul li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  /* BUDGET TABLE */
+  .budget-table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 22px; }
+  .budget-table th {
+    background: var(--primary);
+    color: var(--white);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 11px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .budget-table td { padding: 13px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; line-height: 1.65; }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table tr.recommended td { background: var(--primary-lt); color: var(--primary-dk); }
+  .budget-table tr.recommended td:first-child { font-weight: 700; }
+  .budget-table strong { color: var(--primary-dk); font-weight: 700; }
+  .rec-badge {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: 8px;
+    font-weight: 600;
+    vertical-align: middle;
+  }
+
+  /* BUDGET SPLIT BAR */
+  .split-visual {
+    display: flex;
+    height: 36px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    border: 1px solid var(--neutral);
+  }
+  .split-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .split-seg.c1 { background: var(--primary-dk); color: #fff; width: 50%; }
+  .split-seg.c2 { background: var(--accent); color: #fff; width: 30%; }
+  .split-seg.c3 { background: #b07a20; color: #fff; width: 20%; }
+  .split-labels {
+    display: flex;
+    font-size: 12px;
+    color: var(--muted);
+    gap: 22px;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+  }
+  .split-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* PHASE BLOCKS */
+  .phase-block {
+    background: var(--white);
+    border: 1px solid var(--neutral);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  }
+  .phase-header {
+    background: var(--primary);
+    color: var(--white);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .phase-title { font-size: 14px; font-weight: 600; }
+  .phase-tag {
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.92);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .phase-body { padding: 18px 22px; }
+  .phase-body p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--charcoal);
+    margin-bottom: 14px;
+  }
+  .phase-body p:last-child { margin-bottom: 0; }
+  .phase-body p strong { color: var(--primary-dk); font-weight: 700; }
+  .phase-body ul { list-style: none; padding: 0; margin: 8px 0 0; }
+  .phase-body ul li {
+    padding: 7px 0 7px 20px;
+    position: relative;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--neutral);
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+  .phase-body ul li:last-child { border-bottom: none; }
+  .phase-body ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-size: 12px;
+    top: 7px;
+  }
+  .phase-body ul li strong { color: var(--primary-dk); font-weight: 700; }
+
+  .phase-section-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 700;
+    margin-top: 16px;
+    margin-bottom: 6px;
+  }
+  .phase-section-label:first-child { margin-top: 0; }
+
+  /* NOTE BOX */
+  .note-box {
+    background: var(--primary-lt);
+    border: 1px solid var(--neutral);
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin-bottom: 22px;
+    font-size: 13.5px;
+  }
+  .note-label {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .note-box p { margin-bottom: 12px; line-height: 1.8; }
+  .note-box p:last-child { margin-bottom: 0; }
+  .note-box p strong { color: var(--primary-dk); font-weight: 700; }
+
+  /* KILL RULE BOX */
+  .kill-box {
+    background: #fff5f5;
+    border: 1px solid #e0b0b0;
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 13px;
+  }
+  .kill-label {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--danger);
+    margin-bottom: 6px;
+    font-weight: 700;
+  }
+  .kill-box p { line-height: 1.7; color: var(--charcoal); }
+  .kill-box p strong { color: var(--danger); font-weight: 700; }
+
+  /* TIMELINE */
+  .timeline {
+    background: var(--white);
+    border: 1px solid var(--neutral);
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+    margin-bottom: 22px;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--neutral);
+    align-items: start;
+    gap: 18px;
+  }
+  .timeline-row:last-child { border-bottom: none; }
+  .timeline-week {
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-top: 2px;
+  }
+  .timeline-content { font-size: 13.5px; color: var(--charcoal); line-height: 1.75; }
+  .timeline-content strong { color: var(--primary-dk); font-weight: 700; }
+  .timeline-content code {
+    font-family: Menlo, Consolas, monospace;
+    font-size: 12px;
+    background: rgba(91,63,168,0.08);
+    color: var(--primary-dk);
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+
+  /* TRACKING BLOCK (dark purple panel) */
+  .tracking-block {
+    background: var(--primary-dk);
+    border-radius: 8px;
+    padding: 24px 28px;
+    color: var(--white);
+  }
+  .tracking-block h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 14px;
+  }
+  .tracking-block p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .tracking-block p:last-child { margin-bottom: 0; }
+  .tracking-block p strong { color: var(--white); font-weight: 700; }
+  .tracking-block ul { list-style: none; padding: 0; margin-top: 12px; }
+  .tracking-block ul li {
+    padding: 6px 0 6px 20px;
+    position: relative;
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+  }
+  .tracking-block ul li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.55);
+  }
+  .tracking-block ul li strong { color: var(--white); font-weight: 700; }
+
+  /* MATCH-TYPE STYLE TAGS */
+  .match-tag {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: rgba(91,63,168,0.1);
+    color: var(--primary-dk);
+    margin-right: 4px;
+    font-weight: 600;
+  }
+
+  /* FOOTER */
+  .site-footer {
+    background: var(--primary-dk);
+    padding: 18px 48px;
+    text-align: center;
+  }
+  .site-footer p {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .header-inner { padding: 44px 24px 36px; }
+    .main { padding: 36px 24px 60px; }
+    .timeline-row { grid-template-columns: 1fr; gap: 4px; }
+    .toolbar { padding: 8px 16px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .toolbar { display: none; }
+    body { background: var(--white); }
+    .site-header { background: var(--primary-dk) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card, .stat-card, .campaign-block, .phase-block, .timeline { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">LinkedIn Ads &nbsp;·&nbsp; Strategy Proposal</div>
+    <h1 class="header-title">Kubiieo <span>LinkedIn Ads Strategy</span></h1>
+    <p class="header-sub">A phased approach designed to layer on top of the Google Ads activity already running. The first weeks build a Kubiieo audience on LinkedIn and gather data on which messages land hardest. The later weeks turn that audience into leads, and then into booked consultations.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Client</span>
+        <span class="meta-value">Kubiieo (Baz Lalor)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Market</span>
+        <span class="meta-value">Australia + New Zealand</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Test phase · pre-launch</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Prepared by</span>
+        <span class="meta-value">Antonio Caruso</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">May 2026</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo &nbsp;·&nbsp; LinkedIn Ads Strategy Proposal</span>
+  <button class="toolbar-btn btn-print" onclick="window.print()">Download / Print</button>
+</div>
+
+<main class="main">
+
+  <!-- 01 WHY LINKEDIN -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Why LinkedIn for Kubiieo</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">$8–15</div>
+        <div class="stat-label">Cost per click on LinkedIn, Australian market</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1 deal</div>
+        <div class="stat-label">Closed engagement covers 12 months of LinkedIn spend</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3 phases</div>
+        <div class="stat-label">Audience build, lead capture, then conversion</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">90 days</div>
+        <div class="stat-label">Window to read whether the channel works for Kubiieo</div>
+      </div>
+    </div>
+
+    <p class="intro">Kubiieo's buyers are CTOs, Heads of Cloud, and infrastructure decision-makers at mid-market and enterprise organisations across Australia and New Zealand. They spend their working day on LinkedIn, and they search Google when something breaks or a project lands on their desk. Google Ads already covers the second moment well. The first moment, the long stretch where the buyer is forming opinions and shortlisting partners months before they ever type "AWS managed services" into a search bar, is where LinkedIn earns its place.</p>
+
+    <p class="intro">On the 8 May call, Baz asked about boosting LinkedIn posts after the Advanced Tier post did well organically. Boosting is fine as an amplifier for content that already works, and that lever stays available. The reason this proposal centres on structured campaigns instead is that boosting reaches the audience Kubiieo already has, mostly existing followers and their connections, while a proper campaign reaches the audience Kubiieo wants to have. The cost per click is higher than Meta, generally in the <strong>$8 to $15</strong> range for Australian IT decision-makers, but the audience there is the right audience: a single closed engagement in the <strong>$80,000 to $150,000</strong> range covers roughly twelve months of LinkedIn ad budget at the recommended starting tier.</p>
+  </section>
+
+  <!-- 02 THE THREE-PHASE FUNNEL -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Three phases, three jobs</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-label">How the funnel is built</div>
+      <p>The plan splits the work into three phases that hand off to each other. Phase 1 builds the Kubiieo audience on LinkedIn and gathers data on which creative angles land. Phase 2 turns those engaged people into named leads through a downloadable asset. Phase 3 puts the strongest converters in front of the new landing pages and Conversation Ads, and that is where the channel becomes pipeline-attributable.</p>
+      <p>Each phase produces the audience that the next phase relies on. Running them all at once on a brand-new LinkedIn account spreads the algorithm thin: the platform's optimisation needs people who have already shown interest before it can find more of them, and that engagement signal has to be built before it can be retargeted. Direct-response ads launched cold to a cold audience are the most common reason LinkedIn campaigns post a <strong>CPL above $200</strong> in the first month.</p>
+    </div>
+
+    <div class="campaign-grid">
+
+      <div class="campaign-block">
+        <div class="campaign-head c1">
+          <div class="campaign-name c1">Phase 1: Audience build</div>
+          <div class="campaign-pct c1">~50% test budget &nbsp;·&nbsp; Weeks 1-6</div>
+        </div>
+        <div class="campaign-body">
+          <div class="campaign-row">
+            <div class="campaign-row-label">Goal</div>
+            <div class="campaign-row-val">
+              <ul>
+                <li>Grow the Kubiieo company page audience inside the right ICP</li>
+                <li>Build a group of people who have engaged with at least one ad, available for retargeting later</li>
+                <li>Gather data on which creative angle (cost, security, migration, partner status) gets the most attention</li>
+              </ul>
+            </div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Three campaigns running in parallel</div>
+            <div class="campaign-row-val">
+              <ul>
+                <li><strong>Brand awareness</strong> using the Advanced Tier post and the AdaGoose Summit content</li>
+                <li><strong>Video views</strong> using a 30-second carousel cut from the 8 May screenshots</li>
+                <li><strong>Page follower</strong> campaign optimised directly for the Follow action</li>
+              </ul>
+              All three run at the same time so each objective stays measurable on its own.
+            </div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Frequency cap</div>
+            <div class="campaign-row-val">Four weekly impressions per person.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Target KPIs</div>
+            <div class="campaign-row-val">CPM <strong>$40-$80</strong>, cost per follower under <strong>$15</strong>, video completion rate above <strong>22%</strong>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="campaign-head c2">
+          <div class="campaign-name c2">Phase 2: Lead capture</div>
+          <div class="campaign-pct c2">~30% test budget &nbsp;·&nbsp; Weeks 4-10</div>
+        </div>
+        <div class="campaign-body">
+          <div class="campaign-row">
+            <div class="campaign-row-label">Goal</div>
+            <div class="campaign-row-val">Turn the engaged audience from Phase 1 into named leads with company, role, and email. LinkedIn's native lead-gen forms pre-fill from the user's profile, which lifts conversion by <strong>40 to 60%</strong> compared to sending traffic off-platform.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Lead magnet</div>
+            <div class="campaign-row-val"><strong>"The 2026 AWS Cost Reduction Playbook"</strong>, a 6 to 8-page PDF written from the same material as the AWS Cost Assessment landing page. Optional second magnet for the security-focused audience: <strong>"AWS Security Posture Checklist"</strong>.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Newsletter</div>
+            <div class="campaign-row-val">When someone downloads the magnet, they get an opt-in to subscribe to a <strong>LinkedIn-native newsletter</strong> published from the Kubiieo company page. This is LinkedIn's own newsletter product, where subscribers get a notification and an email each time a new issue ships. Quarterly cadence, one technical write-up, one customer outcome, one upcoming event mention. It gives the page a real reason for someone to follow and stays inside LinkedIn rather than depending on an external email tool.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Target KPIs</div>
+            <div class="campaign-row-val">CPL <strong>$50-$75</strong>. Quality measured by Sean against first reply on outreach.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="campaign-block">
+        <div class="campaign-head c3">
+          <div class="campaign-name c3">Phase 3: Conversion</div>
+          <div class="campaign-pct c3">~20% test budget &nbsp;·&nbsp; Weeks 8 onward</div>
+        </div>
+        <div class="campaign-body">
+          <div class="campaign-row">
+            <div class="campaign-row-label">Goal</div>
+            <div class="campaign-row-val">Send the engaged audience from Phase 1 and the named leads from Phase 2 to the three new landing pages. This is the phase where LinkedIn becomes pipeline-attributable, with each booked consultation traceable back to the campaign that produced it.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Three campaigns</div>
+            <div class="campaign-row-val">
+              <ul>
+                <li><strong>Retargeting</strong> to the AWS Cost / Migration / DevSecOps landing pages</li>
+                <li><strong>Lookalike audience</strong> built from TPG Telecom and Satori Group decision-maker profiles</li>
+                <li><strong>Conversation Ads</strong> from Baz to senior cloud titles inside named target accounts</li>
+              </ul>
+            </div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Attribution</div>
+            <div class="campaign-row-val">LinkedIn Insight Tag installed in the existing GTM container plus UTM parameters already wired into the landing-page hidden fields.</div>
+          </div>
+          <div class="campaign-row">
+            <div class="campaign-row-label">Target KPIs</div>
+            <div class="campaign-row-val">Cost per landing-page form submit <strong>$250-$400</strong>. Conversation Ads reply rate above <strong>6%</strong>.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="split-visual">
+      <div class="split-seg c1">PHASE 1 · 50%</div>
+      <div class="split-seg c2">PHASE 2 · 30%</div>
+      <div class="split-seg c3">PHASE 3 · 20%</div>
+    </div>
+    <div class="split-labels">
+      <span><span class="split-dot" style="background:var(--primary-dk)"></span>Audience build</span>
+      <span><span class="split-dot" style="background:var(--accent)"></span>Lead capture</span>
+      <span><span class="split-dot" style="background:#b07a20"></span>Conversion + retargeting</span>
+    </div>
+
+    <p class="intro" style="font-size:13px; color:var(--muted)">Split shown assumes the recommended starting tier. During the early test phase, all spend sits in Phase 1.</p>
+  </section>
+
+  <!-- 03 PHASE DETAIL + KILL RULES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Phase detail and kill rules</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The cards above lay out what each phase does. The section below explains how the phases hand off to each other, the unique mechanic each one relies on, and the spending thresholds that trigger a pause rather than a quiet drift into bad performance.</p>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-title">Phase 1 · Audience build</div>
+        <span class="phase-tag">Start here</span>
+      </div>
+      <div class="phase-body">
+        <p>Phase 1 runs first because Phases 2 and 3 depend on the audience it produces. Launching lead-gen forms or retargeting against a brand-new LinkedIn audience routinely pushes <strong>CPL above $150</strong> on the platform, and Phase 1 is what protects against that failure mode.</p>
+        <p>The three parallel campaigns feed each other in useful ways. The awareness creative builds brand familiarity, which lifts the conversion rate on the page follower campaign by roughly <strong>15 to 25%</strong>. The video views campaign produces the strongest retargeting signal of the three, because the platform records who watched a defined threshold, and that audience is what converts best once Phase 3 retargets it.</p>
+        <p>The handoff into Phase 2 is gated on engaged audience size rather than on calendar weeks. If Phase 1 needs an extra fortnight to clear 3,000 engaged people, the rest of the timeline shifts right by the same amount.</p>
+        <div class="kill-box">
+          <div class="kill-label">Phase 1 kill rule</div>
+          <p>If cost per follower is above <strong>$25</strong> and engagement rate is below <strong>1.2%</strong> after <strong>$1,500 in spend</strong>, the targeting is wrong. We pause, audit the audience definition together, and rebuild before topping up. We will not move to Phase 2 until the engaged audience clears 3,000 unique people.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-title">Phase 2 · Lead capture</div>
+        <span class="phase-tag">Overlaps Phase 1</span>
+      </div>
+      <div class="phase-body">
+        <p>Phase 2 launches around <strong>week 4</strong>, while Phase 1 is still running at reduced budget. It uses the engaged audience that Phase 1 produced as the primary targeting layer, which is what keeps cost per lead inside the <strong>$50 to $75</strong> band. The same lead-gen creative run cold against a brand-new audience routinely posts CPL above $150 on LinkedIn.</p>
+        <p>The lead pipe-through is the other half of this phase. Leads flow into a holding list (a shared Google Sheet or Airtable view, exported weekly by Antonio) until Baz's Zoho admin invite lands. Once admin access is in place, the lead-gen webhook routes directly into Zoho Leads with Lead Source tagged per campaign, and the holding list back-loads into the live flow. No leads are lost during the gap.</p>
+        <p>The second magnet (the security checklist) is held in reserve and only launched if the security creative outperforms the cost creative on Phase 1 engagement rate. Running both magnets at the same time splits spend across two audiences and slows both down.</p>
+        <div class="kill-box">
+          <div class="kill-label">Phase 2 kill rule</div>
+          <p>If CPL on the lead-gen form is above <strong>$90 after $2,000 in spend</strong>, the magnet is the wrong asset for this audience. Iterate the headline and re-test for two weeks before pausing the campaign.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phase-block">
+      <div class="phase-header">
+        <div class="phase-title">Phase 3 · Conversion</div>
+        <span class="phase-tag">Gated on Zoho</span>
+      </div>
+      <div class="phase-body">
+        <p>Phase 3 opens around <strong>week 8</strong>, once the engaged audience from Phase 1 is big enough to retarget against and the Phase 2 lead list is producing signal. This is the phase where LinkedIn becomes pipeline-attributable.</p>
+        <p>The attribution mechanic is what makes this phase work. The LinkedIn Insight Tag installed in the existing GTM container fires on every landing-page form submit, and the UTM parameters already wired into the landing-page hidden fields tag each submission back to the campaign and creative that produced it. Antonio reads the attribution against Zoho deal stage at the 90-day review.</p>
+        <p>Conversation Ads are the one piece of Phase 3 that needs Baz's direct involvement. The ad runs from a named sender, defaulting to him, and replies from senior cloud titles land in an inbox of his choosing. The retargeting and lookalike layers run independently.</p>
+        <p>By <strong>week 12</strong> there should be enough booked-consultation and pipeline data to call whether the channel scales up or pulls back to Phase 1 awareness only.</p>
+        <div class="kill-box">
+          <div class="kill-label">Phase 3 kill rule</div>
+          <p>If cost per landing-page conversion is above <strong>$400 after $3,000 in spend</strong>, the bottleneck is the page or the offer, not the ad. The next move is a single-variable test on the landing-page hero, not more ad spend.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 AUDIENCE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Audience targeting recipe</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">LinkedIn rewards an audience that is tightly defined enough to keep the wrong people from spending Kubiieo's budget, but large enough for the algorithm to optimise inside. The combination below sits at roughly <strong>80,000 to 120,000 active members</strong> across Australia, New Zealand, and Singapore. Three ad sets test slices of it against each other.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>Layer</th><th>Definition</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Geography</td><td>Australia and New Zealand as the primary market. Singapore as a secondary expansion test in a separate ad set, so spend stays attributable per region.</td></tr>
+        <tr><td>Seniority</td><td>Manager, Senior Manager, Director, VP, CXO. Excludes Entry and Training levels.</td></tr>
+        <tr><td>Job function</td><td>Information Technology, Engineering, Operations. Layered with title-keyword filters for <strong>Cloud, DevOps, SRE, Infrastructure, Security, Platform</strong>.</td></tr>
+        <tr><td>Company size</td><td><strong>200 to 5,000 employees</strong> as the primary band. A second ad set tests 5,000+ to see if enterprise responds to the same creative.</td></tr>
+        <tr><td>Industry</td><td>Technology, Financial Services, Telecommunications, Energy, Government, Higher Education.</td></tr>
+        <tr><td>Skills and interests</td><td>AWS, Cloud Migration, FinOps, DevSecOps, Compliance. Softer layer on top of title filters.</td></tr>
+        <tr><td>Lookalike layer</td><td>Matched Audience built from the existing Kubiieo client roster, especially <strong>TPG Telecom and Satori Group</strong> decision-maker profiles. Activated in Phase 3.</td></tr>
+        <tr><td>Excluded audiences</td><td>Existing Kubiieo clients and direct competitors. Saves spend that would otherwise reach people Kubiieo cannot sell to.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 05 BUDGET -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Budget: test first, scale on signal</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The numbers below are options, not a fixed commitment. The recommended path starts with a small test budget, watches whether Phase 1 produces the audience growth and creative signal it is meant to, and only then scales up. Two things should drive the decision to move from one tier to the next: <strong>Google Ads producing measurable returns</strong> (which gives the business cash flow to invest into LinkedIn), and <strong>LinkedIn's own early signal</strong> (which tells us whether spending more is worth it). One closed deal in the typical Kubiieo range covers a year of LinkedIn spend at the committed tier, which is what makes the test worth running in the first place.</p>
+
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Monthly spend</th>
+          <th>What it covers</th>
+          <th>When it makes sense</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Test</strong></td>
+          <td>$500-$1,000</td>
+          <td>Phase 1 only, smaller daily caps, two creative variants. First read on CPF, CPM, and which creative angle the audience responds to.</td>
+          <td>Starting point. Validates the targeting before committing to a monthly figure.</td>
+        </tr>
+        <tr>
+          <td><strong>Starter</strong></td>
+          <td>$1,500</td>
+          <td>Phase 1 across all three campaign objectives. Audience build of <strong>2,000-3,500</strong> engaged people. Single creative test per fortnight.</td>
+          <td>Once Phase 1 test produces a clean CPF number and the targeting is settled.</td>
+        </tr>
+        <tr class="recommended">
+          <td><strong>Committed</strong> <span class="rec-badge">Recommended</span></td>
+          <td>$3,000</td>
+          <td>Phase 1 plus Phase 2 in parallel from week 4. Lead-gen forms live, audience build of <strong>5,000-8,000</strong> engaged people, expecting <strong>30 to 60 leads/month</strong>.</td>
+          <td>Once the engaged audience clears 3,000 and the lead-gen creative is approved.</td>
+        </tr>
+        <tr>
+          <td><strong>Scale</strong></td>
+          <td>$5,000+</td>
+          <td>All three phases concurrently. Retargeting, lookalike layer, Conversation Ads on named accounts. Expecting <strong>6 to 12 booked consultations/month</strong>.</td>
+          <td>Once the committed tier produces measurable pipeline and Google Ads is producing the cash flow to fund it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <div class="note-label">How the budget actually scales</div>
+      <p>The plan is built so that each tier upgrade is funded by results, not by faith. The test tier produces the data needed to decide whether the starter tier is worth it. The starter tier produces the audience that makes the committed tier productive. The committed tier produces the pipeline that justifies the scale tier. <strong>If Google Ads starts producing closed consultations,</strong> a portion of that revenue can be reinvested into LinkedIn, which means the LinkedIn budget grows from real returns rather than from a pure upfront commitment.</p>
+      <p>Campaign management, creative production, weekly optimisation and reporting sit inside the existing weekly engagement Antonio is already running for Kubiieo. The figures above are <strong>media spend paid directly to LinkedIn</strong>, with no separate management fee on top.</p>
+    </div>
+  </section>
+
+  <!-- 06 MEASUREMENT -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Measurement and reporting</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">LinkedIn reporting is only useful when the KPI matches the phase. A Phase 1 campaign judged on CPL will always look broken, because lead capture is not what it was set up to do.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>Phase + objective</th><th>Primary KPI · target band</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 1 · Awareness</td><td><span class="match-tag">CPM</span> <strong>$40-$80</strong> inside the target audience. Secondary: ad recall lift if a survey budget is available.</td></tr>
+        <tr><td>Phase 1 · Video views</td><td><span class="match-tag">Cost / ThruPlay</span> under <strong>$0.18</strong>. Secondary: completion rate above 22%.</td></tr>
+        <tr><td>Phase 1 · Page followers</td><td><span class="match-tag">CPF</span> under <strong>$15</strong>. Secondary: organic reach lift on the next four posts after launch.</td></tr>
+        <tr><td>Phase 2 · Lead gen forms</td><td><span class="match-tag">CPL</span> <strong>$50-$75</strong>. Secondary: lead-to-MQL rate, judged by Sean on first reply.</td></tr>
+        <tr><td>Phase 3 · Landing page conversions</td><td><span class="match-tag">Cost / submit</span> <strong>$250-$400</strong>. Secondary: cost per booked consultation.</td></tr>
+        <tr><td>Phase 3 · Conversation Ads</td><td><span class="match-tag">Reply rate</span> above <strong>6%</strong>. Secondary: cost per booked call.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="tracking-block">
+      <h3>Reporting cadence</h3>
+      <p>The reporting layer matches what is already running for Google Ads, so Baz reads one consistent format across both channels.</p>
+      <ul>
+        <li><strong>Weekly:</strong> short Slack post in the Kubiieo channel with spend, results, what changed, and what is being tested next.</li>
+        <li><strong>Fortnightly:</strong> a one-page HTML report per channel, in the same brand-consistent template as the existing Google Ads reporting.</li>
+        <li><strong>End of Phase 1 (week 6):</strong> phase-end review with Baz and Sean. Decision on whether to open Phase 2 spend.</li>
+        <li><strong>End of 90 days (week 12):</strong> attribution review covering pipeline sourced, consultations booked, and deals progressing. Scale-up or pull-back call sits here.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 07 TIMELINE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">07</span>
+      <h2 class="section-title">90-day execution timeline</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The timeline below is the path if all phases hit their kill rules cleanly. Phase boundaries shift right by a week or two if the audience build is slower than expected.</p>
+
+    <div class="timeline">
+      <div class="timeline-row">
+        <div class="timeline-week">Week 0</div>
+        <div class="timeline-content"><strong>Setup.</strong> LinkedIn Campaign Manager configured against the Kubiieo account. Insight Tag installed via the existing GTM container <code>GTM-TV9VXWHD</code>. Conversion events defined for follow, video view, lead-gen submit, and landing-page submit. Opening carousel creative built from the 8 May screenshots.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 1-2</div>
+        <div class="timeline-content"><strong>Phase 1 launch.</strong> Awareness, video views, and page follower campaigns all go live together. Three creative variants per objective. Audience size and pacing monitored daily through the first seven days, daily budget caps in place to prevent overspend during learning.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 2-3</div>
+        <div class="timeline-content"><strong>First creative cut.</strong> Lowest-performing variant paused, two new variants rotated in. AdaGoose Summit recap content added if the team captures usable footage on 13-14 May.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 4</div>
+        <div class="timeline-content"><strong>Phase 1 mid-checkpoint.</strong> Engaged audience size, CPF, and video completion read against the kill rule. Phase 2 lead magnet PDF finalised. Newsletter setup completed inside LinkedIn.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 5-6</div>
+        <div class="timeline-content"><strong>Phase 2 launch.</strong> Lead-gen form goes live with the AWS Cost Reduction Playbook. Two headline variants test against each other. Phase 1 continues at a reduced budget.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 6</div>
+        <div class="timeline-content"><strong>Phase 1 review with Baz and Sean.</strong> Full data read. Decision on whether to continue Phase 2 spend at current pace and on Phase 3 readiness.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 7-8</div>
+        <div class="timeline-content"><strong>Zoho integration verified.</strong> Once Baz's admin invite lands, the lead-gen webhook routes directly into Zoho Leads with Lead Source set per campaign. The manual weekly export bridges the gap until then.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 8-9</div>
+        <div class="timeline-content"><strong>Phase 3 launch.</strong> Retargeting to the three landing pages goes live. Lookalike audience built from TPG Telecom and Satori Group profiles. Conversation Ads launched on a small budget against the named-account list.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 10-11</div>
+        <div class="timeline-content"><strong>Optimisation pass.</strong> Bid adjustments per ad set. Underperforming creative cycled out. If the primary 200-5,000 employee band is saturating, the audience-expansion test on the 5,000+ band runs here.</div>
+      </div>
+      <div class="timeline-row">
+        <div class="timeline-week">Week 12</div>
+        <div class="timeline-content"><strong>90-day attribution review.</strong> Pipeline sourced, consultations booked, deals progressing. Recommendation to either scale to the next tier or pull back, depending on what the data says.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 RISKS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">08</span>
+      <h2 class="section-title">Risks and how they are handled</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>Item</th><th>How it is handled</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Zoho admin access pending</td><td>Phase 1 and Phase 2 do not need Zoho. Leads from Phase 2 export to a holding list weekly until admin access lands, then back-load into the live Zoho flow with the right Lead Source tagging. Phase 3 retargeting depends on Zoho being live, but Phase 3 does not start until week 8 in any case.</td></tr>
+        <tr><td>Google verification under review</td><td>Independent of LinkedIn. The verification work continues on the Google Ads side. No dependency between the two channels.</td></tr>
+        <tr><td>LinkedIn CPC running above the quoted band</td><td>If CPC sits <strong>30% above the upper band</strong> for two consecutive weeks, the targeting needs widening or the creative is wrong. Both responses sit inside the existing weekly optimisation block.</td></tr>
+        <tr><td>Singapore audience too small to spend</td><td>Tested in a separate ad set. If Singapore cannot spend its daily cap inside seven days, the ad set pauses and the spend returns to Australia and New Zealand.</td></tr>
+        <tr><td>Creative production capacity</td><td>Opening creative is built from the assets Baz already provided on 8 May. Future creative needs Sean for messaging direction and Antonio for production. No external creative agency engaged at this stage.</td></tr>
+        <tr><td>Conversation Ads dependency on Baz's account</td><td>Conversation Ads run from a named sender, defaulting to Baz. Requires Page Admin and Campaign Manager access. Replies route wherever Baz wants them to land.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 09 TEST LAUNCH -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">09</span>
+      <h2 class="section-title">What we need to launch the test</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">This is a test, not a $3,000-a-month commitment up front. The point is to spend a small amount over two or three weeks, see whether Phase 1 produces the audience growth and creative signal it is meant to, and use that data to decide whether scaling makes sense. Antonio already has admin access on the Kubiieo LinkedIn page, so most of the setup is internal work that does not need Baz.</p>
+
+    <div class="note-box">
+      <div class="note-label">The three items needed from Baz</div>
+      <p><strong>1. Confirm a small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience-build mechanics work. No monthly commitment attached.</p>
+      <p><strong>2. Confirm the billing setup on LinkedIn Campaign Manager.</strong> Antonio has admin access on the page but does not yet know whether a billing method is attached at the campaign account level. If nothing is configured, Baz drops a card in. If something is already there, no action needed.</p>
+      <p><strong>3. Approve the opening creative</strong> built from the security and AWS cost screenshots Baz shared on 8 May. One review cycle, written feedback in Slack is enough.</p>
+    </div>
+
+    <p class="intro">From there, Antonio handles the rest internally: LinkedIn Campaign Manager configuration, Insight Tag deployment into the existing GTM container, conversion events, audience targeting, creative production, and launch. The first numbers come back within <strong>seven to ten days</strong> of going live, and the first formal review with Baz and Sean lands at week 6.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Ads Strategy Proposal &nbsp;·&nbsp; May 2026 &nbsp;·&nbsp; Confidential</p>
+</footer>
+
+</body>
+</html>
