@@ -813,7 +813,7 @@
       </div>
       <div class="phase-body">
         <p>Phase 2 launches around <strong>week 4</strong>, while Phase 1 is still running at reduced budget. It uses the engaged audience that Phase 1 produced as the primary targeting layer, which is what keeps cost per lead inside the <strong>$50 to $75</strong> band. The same lead-gen creative run cold against a brand-new audience routinely posts CPL above $150 on LinkedIn.</p>
-        <p>The lead pipe-through is the other half of this phase. Leads flow into a holding list (a shared Google Sheet or Airtable view, exported weekly by Antonio) until Baz's Zoho admin invite lands. Once admin access is in place, the lead-gen webhook routes directly into Zoho Leads with Lead Source tagged per campaign, and the holding list back-loads into the live flow. No leads are lost during the gap.</p>
+        <p>The lead pipe-through is the other half of this phase. Leads flow into a holding list (a shared Google Sheet or Airtable view, exported weekly) until Baz's Zoho admin invite lands. Once admin access is in place, the lead-gen webhook routes directly into Zoho Leads with Lead Source tagged per campaign, and the holding list back-loads into the live flow. No leads are lost during the gap.</p>
         <p>The second magnet (the security checklist) is held in reserve and only launched if the security creative outperforms the cost creative on Phase 1 engagement rate. Running both magnets at the same time splits spend across two audiences and slows both down.</p>
         <div class="kill-box">
           <div class="kill-label">Phase 2 kill rule</div>
@@ -829,7 +829,7 @@
       </div>
       <div class="phase-body">
         <p>Phase 3 opens around <strong>week 8</strong>, once the engaged audience from Phase 1 is big enough to retarget against and the Phase 2 lead list is producing signal. This is the phase where LinkedIn becomes pipeline-attributable.</p>
-        <p>The attribution mechanic is what makes this phase work. The LinkedIn Insight Tag installed in the existing GTM container fires on every landing-page form submit, and the UTM parameters already wired into the landing-page hidden fields tag each submission back to the campaign and creative that produced it. Antonio reads the attribution against Zoho deal stage at the 90-day review.</p>
+        <p>The attribution mechanic is what makes this phase work. The LinkedIn Insight Tag installed in the existing GTM container fires on every landing-page form submit, and the UTM parameters already wired into the landing-page hidden fields tag each submission back to the campaign and creative that produced it. We read the attribution against Zoho deal stage at the 90-day review.</p>
         <p>Conversation Ads are the one piece of Phase 3 that needs Baz's direct involvement. The ad runs from a named sender, defaulting to him, and replies from senior cloud titles land in an inbox of his choosing. The retargeting and lookalike layers run independently.</p>
         <p>By <strong>week 12</strong> there should be enough booked-consultation and pipeline data to call whether the channel scales up or pulls back to Phase 1 awareness only.</p>
         <div class="kill-box">
@@ -917,7 +917,7 @@
     <div class="note-box">
       <div class="note-label">How the budget actually scales</div>
       <p>The plan is built so that each tier upgrade is funded by results, not by faith. The test tier produces the data needed to decide whether the starter tier is worth it. The starter tier produces the audience that makes the committed tier productive. The committed tier produces the pipeline that justifies the scale tier. <strong>If Google Ads starts producing closed consultations,</strong> a portion of that revenue can be reinvested into LinkedIn, which means the LinkedIn budget grows from real returns rather than from a pure upfront commitment.</p>
-      <p>Campaign management, creative production, weekly optimisation and reporting sit inside the existing weekly engagement Antonio is already running for Kubiieo. The figures above are <strong>media spend paid directly to LinkedIn</strong>, with no separate management fee on top.</p>
+      <p>Campaign management, creative production, weekly optimisation and reporting sit inside the existing weekly engagement we are already running for Kubiieo. The figures above are <strong>media spend paid directly to LinkedIn</strong>, with no separate management fee on top.</p>
     </div>
   </section>
 
@@ -1028,7 +1028,7 @@
         <tr><td>Google verification under review</td><td>Independent of LinkedIn. The verification work continues on the Google Ads side. No dependency between the two channels.</td></tr>
         <tr><td>LinkedIn CPC running above the quoted band</td><td>If CPC sits <strong>30% above the upper band</strong> for two consecutive weeks, the targeting needs widening or the creative is wrong. Both responses sit inside the existing weekly optimisation block.</td></tr>
         <tr><td>Singapore audience too small to spend</td><td>Tested in a separate ad set. If Singapore cannot spend its daily cap inside seven days, the ad set pauses and the spend returns to Australia and New Zealand.</td></tr>
-        <tr><td>Creative production capacity</td><td>Opening creative is built from the assets Baz already provided on 8 May. Future creative needs Sean for messaging direction and Antonio for production. No external creative agency engaged at this stage.</td></tr>
+        <tr><td>Creative production capacity</td><td>Opening creative is built from the assets Baz already provided on 8 May. Future creative is produced internally without an external agency.</td></tr>
         <tr><td>Conversation Ads dependency on Baz's account</td><td>Conversation Ads run from a named sender, defaulting to Baz. Requires Page Admin and Campaign Manager access. Replies route wherever Baz wants them to land.</td></tr>
       </tbody>
     </table>
@@ -1042,16 +1042,18 @@
       <div class="section-rule"></div>
     </div>
 
-    <p class="intro">This is a test, not a $3,000-a-month commitment up front. The point is to spend a small amount over two or three weeks, see whether Phase 1 produces the audience growth and creative signal it is meant to, and use that data to decide whether scaling makes sense. Antonio already has admin access on the Kubiieo LinkedIn page, so most of the setup is internal work that does not need Baz.</p>
+    <p class="intro">This is a test, not a $3,000-a-month commitment up front. The point is to spend a small amount over two or three weeks, see whether Phase 1 produces the audience growth and creative signal it is meant to, and use that data to decide whether scaling makes sense. We already have admin access on the Kubiieo LinkedIn page, so most of the setup is internal work that does not need Baz.</p>
 
     <div class="note-box">
       <div class="note-label">The three items needed from Baz</div>
       <p><strong>1. Confirm a small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience-build mechanics work. No monthly commitment attached.</p>
-      <p><strong>2. Confirm the billing setup on LinkedIn Campaign Manager.</strong> Antonio has admin access on the page but does not yet know whether a billing method is attached at the campaign account level. If nothing is configured, Baz drops a card in. If something is already there, no action needed.</p>
+      <p><strong>2. Confirm the billing setup on LinkedIn Campaign Manager.</strong> We have admin access on the page but do not yet know whether a billing method is attached at the campaign account level. If nothing is configured, Baz drops a card in. If something is already there, no action needed.</p>
       <p><strong>3. Approve the opening creative</strong> built from the security and AWS cost screenshots Baz shared on 8 May. One review cycle, written feedback in Slack is enough.</p>
     </div>
 
-    <p class="intro">From there, Antonio handles the rest internally: LinkedIn Campaign Manager configuration, Insight Tag deployment into the existing GTM container, conversion events, audience targeting, creative production, and launch. The first numbers come back within <strong>seven to ten days</strong> of going live, and the first formal review with Baz and Sean lands at week 6.</p>
+    <p class="intro">From there, we handle the rest internally: LinkedIn Campaign Manager configuration, Insight Tag deployment into the existing GTM container, conversion events, audience targeting, creative production, and launch. The first numbers come back within <strong>seven to ten days</strong> of going live, and the first formal review with Baz lands at week 6.</p>
+
+    <p class="intro" style="font-size:13.5px; color: var(--muted); margin-top:6px;">Inside the team: Antonio leads campaign setup, weekly optimisation, and reporting. Sean covers messaging direction, creative review, and the organic LinkedIn content cadence already running on the page.</p>
   </section>
 
 </main>
