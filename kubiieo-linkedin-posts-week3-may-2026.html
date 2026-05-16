@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo: LinkedIn Content Week 3 May 2026</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* HEADER */
+.site-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  padding: 0;
+}
+.header-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 40px 40px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+}
+.header-text { flex: 1; }
+.brand-eyebrow {
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: block;
+}
+.header-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: clamp(30px, 5vw, 44px);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+.header-title span { color: rgba(255,255,255,0.7); }
+.header-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.7);
+  margin-top: 10px;
+}
+.header-meta { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+}
+.meta-value { font-size: 14px; color: #fff; font-weight: 600; }
+.gold-bar { height: 4px; background: rgba(255,255,255,0.2); width: 100%; }
+
+/* LAYOUT */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+/* SECTION */
+.section { margin-bottom: 64px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  margin-top: 8px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+/* INTRO CARD */
+.intro-card {
+  background: var(--white);
+  border-radius: 6px;
+  padding: 24px 28px;
+  border: 1px solid var(--neutral);
+  border-left: 4px solid var(--primary);
+}
+.intro-card p { font-size: 14px; color: var(--charcoal); line-height: 1.75; margin-bottom: 10px; }
+.intro-card p:last-child { margin-bottom: 0; }
+
+/* POST CARD */
+.post-card {
+  background: var(--white);
+  border-radius: 6px;
+  border: 1px solid var(--neutral);
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+.post-header {
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--neutral);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  background: var(--primary-lt);
+}
+.post-header-left { flex: 1; }
+.post-number {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 700;
+}
+.post-title {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  line-height: 1.3;
+}
+.platform-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.badge-aws { background: #fff3e0; color: #b35c00; border: 1px solid #ffd0a0; }
+
+.post-header-badges { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.status-review {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff8e1; color: #8a6000;
+  border: 1.5px solid #f0c040; border-radius: 20px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; padding: 4px 12px;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+/* VISUAL BLOCKS */
+.visual-block {
+  width: 100%;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--neutral);
+  position: relative;
+  overflow: hidden;
+}
+.visual-block-1 {
+  background: linear-gradient(135deg, #3d2a75 0%, #5B3FA8 55%, #7B5FCC 100%);
+}
+.visual-block-2 {
+  background: linear-gradient(135deg, #2d1f5e 0%, #4a3090 50%, #5B3FA8 100%);
+}
+.visual-block-3 {
+  background: linear-gradient(135deg, #1a1040 0%, #3d2a75 50%, #5B3FA8 100%);
+}
+.visual-service-label {
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.55);
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.visual-pill-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+}
+.visual-inner-wrap {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.vpill {
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.vpill-aws   { background: rgba(255,153,0,0.15); color: #FF9900; border: 1px solid rgba(255,153,0,0.3); }
+.vpill-white { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+
+/* POST BODY */
+.post-body { padding: 24px 28px 0; }
+.post-copy {
+  font-size: 14px;
+  color: var(--charcoal);
+  line-height: 1.85;
+  white-space: pre-line;
+  border-left: 3px solid var(--primary);
+  padding-left: 18px;
+  margin-bottom: 20px;
+}
+
+/* META ROW */
+.post-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 16px 28px;
+  border-top: 1px solid var(--neutral);
+  background: var(--primary-lt);
+  align-items: center;
+}
+.meta-tag {
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--neutral);
+  color: var(--primary-dk);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.meta-tag-aws { background: #fff3e0; color: #b35c00; }
+
+/* COMMENT BLOCK */
+.comment-block {
+  margin: 0 28px 24px;
+  background: #fffbe6;
+  border: 1px solid #f0c040;
+  border-radius: 4px;
+  padding: 14px 18px;
+}
+.comment-label {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #7a5800;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: block;
+}
+.comment-text { font-size: 14px; color: var(--charcoal); line-height: 1.65; }
+
+/* LINK BLOCK */
+.post-link-block { padding: 16px 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 4px;
+  padding: 12px 16px;
+}
+.link-label-col { min-width: 110px; }
+.link-label {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+.link-desc { font-size: 12px; color: var(--muted); }
+.link-url { flex: 1; font-size: 13px; color: var(--primary-dk); font-weight: 500; word-break: break-all; }
+.link-url a { color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--neutral); padding-bottom: 1px; }
+
+/* NOTES BOX */
+.notes-box {
+  background: var(--white);
+  border-radius: 6px;
+  padding: 24px 28px;
+  border: 1px solid var(--neutral);
+  border-left: 4px solid var(--primary);
+}
+.notes-box ul { list-style: none; padding: 0; }
+.notes-box ul li {
+  font-size: 14px;
+  color: var(--charcoal);
+  padding: 10px 0;
+  border-bottom: 1px solid var(--neutral);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  line-height: 1.6;
+}
+.notes-box ul li:last-child { border-bottom: none; }
+.notes-box ul li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* FOOTER */
+.site-footer {
+  background: var(--primary-dk);
+  padding: 20px 40px;
+  text-align: center;
+}
+.site-footer p {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+}
+
+@media (max-width: 720px) {
+  .header-inner { flex-direction: column; padding: 36px 24px 28px; }
+  .main { padding: 28px 16px 60px; }
+  .post-header { flex-direction: column; gap: 10px; }
+  .post-body, .post-link-block, .comment-block { padding-left: 16px; padding-right: 16px; }
+  .post-meta { padding-left: 16px; padding-right: 16px; }
+  .link-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <span class="brand-eyebrow">Kubiieo &nbsp;·&nbsp; Content</span>
+      <h1 class="header-title">LinkedIn Posts<br><span>Week 3, May 2026</span></h1>
+      <p class="header-sub">3 new posts: AWS platform updates</p>
+      <div class="header-meta">
+        <div class="meta-item">
+          <span class="meta-label">Posts</span>
+          <span class="meta-value">3 to review</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Platform</span>
+          <span class="meta-value">AWS</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Prepared</span>
+          <span class="meta-value">16 May 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">00</span>
+      <h2 class="section-title">Overview</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="intro-card">
+      <p>Three new posts covering this week's AWS announcements. All three are AWS-only, mapped to Kubiieo's managed services, Generative AI, and security service lines.</p>
+      <p>Each post includes a first comment with the relevant Kubiieo service page link, posted immediately after publishing to keep the main copy clean and avoid LinkedIn reach penalties on external links.</p>
+    </div>
+  </section>
+
+  <!-- POST 1: Amazon Redshift RG Instances -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Amazon Redshift RG Instances: Graviton Performance Uplift</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 01 of 03</span>
+          <div class="post-title">Redshift just got meaningfully faster and cheaper at the same time</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-1">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon Redshift · RG Instances</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Generally Available</span>
+            <span class="vpill vpill-white">2.4x Faster</span>
+            <span class="vpill vpill-white">30% Lower Cost</span>
+            <span class="vpill vpill-white">Graviton</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">Amazon Redshift has launched RG instances, a new generation of provisioned cluster nodes powered by AWS Graviton processors. The headline numbers are worth paying attention to: up to 2.4x faster than the previous RA3 instances, at 30% lower price per vCPU.
+
+The performance gain comes from the Graviton architecture combined with Redshift's custom-built vectorised data lake query engine. That engine runs directly on open table formats including Apache Iceberg and Parquet, which matters if your architecture spans a data warehouse and a data lake. Query processing happens closer to the data rather than going back and forth between systems.
+
+The 30% reduction in price per vCPU is a real number and the performance uplift compounds it. If your Redshift cluster is running RA3 instances, the economic case for migrating is straightforward.
+
+The integrated data lake query engine is the other thing worth evaluating. Teams running hybrid architectures, where some data sits in S3 and some in Redshift, have historically had to manage that boundary carefully. RG instances with native Iceberg support reduce that friction without requiring architectural changes.
+
+If you are running provisioned Redshift today, this is a migration worth scoping. The cost and performance improvement combined with open format support makes the upgrade path fairly clear.
+
+#AWS #AmazonRedshift #DataWarehouse #Graviton #CloudCost</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Amazon Redshift</span>
+        <span class="meta-tag">Graviton</span>
+        <span class="meta-tag">Data Warehouse</span>
+        <span class="meta-tag">Generally Available</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If you want to understand what Redshift RG instances mean for your current architecture and whether the migration makes sense, we can review your setup and model the cost impact: <strong>kubiieo.com/managed-services-2</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/05/amazon-redshift-rg-instances-powered-by-graviton" target="_blank">aws.amazon.com / Amazon Redshift launches RG instances powered by AWS Graviton</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/managed-services-2" target="_blank">kubiieo.com/managed-services-2</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 2: Amazon Bedrock Advanced Prompt Optimization -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Amazon Bedrock: Advanced Prompt Optimization Tool</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 02 of 03</span>
+          <div class="post-title">Prompt optimisation in Bedrock now has a dedicated tool</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-2">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon Bedrock · Advanced Prompt Optimization</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Generally Available</span>
+            <span class="vpill vpill-white">Model Migration</span>
+            <span class="vpill vpill-white">5 Models Parallel</span>
+            <span class="vpill vpill-white">Eval Feedback Loop</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">Amazon Bedrock has introduced Advanced Prompt Optimization, a tool that addresses one of the more time-consuming parts of working with foundation models in production.
+
+The problem is well known to anyone who has shipped AI workloads at scale. Optimising prompts is slow and iterative. When you want to move to a newer model, prompts that performed well on the previous model rarely transfer cleanly. You have to rebuild, test, and validate from scratch, with no systematic way to prevent regressions as you go.
+
+Advanced Prompt Optimization gives you a structured workflow for this. You can compare optimised outputs across up to five models simultaneously, which makes model selection and migration decisions considerably faster. The built-in evaluation feedback loop means you are testing against a defined baseline rather than manually assessing outputs.
+
+The migration use case is the more important one for teams with existing Bedrock workloads. If you have prompts tuned for an older model, the tool gives you a repeatable path for porting them to newer models without losing the performance characteristics you have already validated.
+
+For teams building at scale on Bedrock, this reduces the maintenance overhead that accumulates as the model landscape evolves. That is a meaningful efficiency gain when you have dozens of prompts running in production.
+
+#AWS #AmazonBedrock #GenerativeAI #PromptEngineering #AIEngineering</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Amazon Bedrock</span>
+        <span class="meta-tag">Prompt Optimisation</span>
+        <span class="meta-tag">Generative AI</span>
+        <span class="meta-tag">Generally Available</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If you are building or scaling AI workloads on AWS and need help with architecture, model selection, or optimisation workflows, we work with teams on exactly this: <strong>kubiieo.com/generative-ai</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/05/amazon-bedrock-advanced-prompt-optimization-migration-tool/" target="_blank">aws.amazon.com / Amazon Bedrock Introduces Advanced Prompt Optimization and Migration Tool</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Blog post</span>
+            <span class="link-desc">AWS News Blog</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/blogs/aws/amazon-bedrock-introduces-new-advanced-prompt-optimization-and-migration-tool/" target="_blank">aws.amazon.com / Bedrock Advanced Prompt Optimization (blog)</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/generative-ai" target="_blank">kubiieo.com/generative-ai</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 3: AWS WAF AI Traffic Analysis Dashboards -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">AWS WAF: AI Traffic Analysis Dashboards</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 03 of 03</span>
+          <div class="post-title">AWS WAF now shows you exactly what your AI traffic looks like</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-3">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">AWS WAF · AI Traffic Analysis</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">AI Bot Visibility</span>
+            <span class="vpill vpill-white">Traffic Intelligence</span>
+            <span class="vpill vpill-white">Policy Control</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">AWS has added AI Traffic Analysis dashboards to AWS WAF, and for teams running web-facing applications, this is worth reviewing now.
+
+The context matters. AI agents and automated programmatic traffic now account for a meaningful and growing share of web requests hitting most applications. The challenge is that most WAF configurations were designed around human traffic patterns. Bot traffic has always been a concern, but the nature of automated access is changing: AI agents are more sophisticated, harder to fingerprint, and increasingly legitimate in some contexts while problematic in others.
+
+The new dashboards give you visibility into AI bot and agent activity specifically, rather than lumping it into the generic bot traffic category. You can see what is hitting your application, where it is coming from, and whether it is behaving in ways that warrant a policy response.
+
+The operational value is in separating signal from noise. Security teams spending time investigating traffic anomalies without this kind of categorisation are working harder than they need to. Having AI-specific visibility in WAF means you can make policy decisions based on actual traffic composition rather than broad rules that catch everything and nothing.
+
+If your application is publicly accessible and your WAF policies have not been reviewed recently, AI traffic patterns are a legitimate reason to revisit them.
+
+#AWS #CloudSecurity #AWSWAF #AISecurity #WebSecurity</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">AWS WAF</span>
+        <span class="meta-tag">AI Security</span>
+        <span class="meta-tag">Bot Traffic</span>
+        <span class="meta-tag">Traffic Analysis</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If your WAF configuration has not been reviewed for AI and bot traffic patterns, we can audit your current setup and recommend the right policy changes: <strong>kubiieo.com/security-compliance</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS Security Blog</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/blogs/security/introducing-ai-traffic-analysis-dashboards-for-aws-waf/" target="_blank">aws.amazon.com / Introducing AI traffic analysis dashboards for AWS WAF</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/security-compliance" target="_blank">kubiieo.com/security-compliance</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING NOTES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Publishing notes</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="notes-box">
+      <ul>
+        <li>Suggested cadence: Post 1 Monday, Post 2 Wednesday, Post 3 Friday. One post per day keeps reach consistent without flooding the feed.</li>
+        <li>Drop the first comment within 2 minutes of publishing. LinkedIn's algorithm rewards early engagement on comments.</li>
+        <li>For images: screenshot the announcement banner from the source article for a native feel, or use the gradient visual from this document.</li>
+        <li>Tagging AWS official pages in the post body tends to increase reach. Use @AWSCloud or tag the article author where available.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Content &nbsp;·&nbsp; Week 3 May 2026 &nbsp;·&nbsp; Prepared by Antonio Caruso</p>
+</footer>
+
+</body>
+</html>
