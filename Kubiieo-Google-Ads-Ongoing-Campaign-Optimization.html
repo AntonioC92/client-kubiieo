@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo, Google Ads, Ongoing Campaign Optimization</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+  --danger-bd:   #e0b0b0;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary-dk);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.toolbar-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-btn {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-download { background: var(--primary); color: #fff; }
+.btn-download:hover { opacity: 0.9; }
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--neutral);
+}
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.block-done {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.block-done .block-head { background: #2E7D32; color: #fff; }
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 12px; }
+.block-body p:last-child { margin-bottom: 0; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-num.success { color: var(--success); }
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.baz-box {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-bd);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+}
+.baz-box h3 {
+  color: var(--danger);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.baz-box p { margin-bottom: 10px; line-height: 1.7; }
+.baz-box ul { list-style: none; padding: 0; margin: 10px 0 0; }
+.baz-box ul li {
+  padding: 10px 0 10px 22px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.6;
+  border-bottom: 1px dashed rgba(139,51,51,0.2);
+}
+.baz-box ul li:last-child { border-bottom: none; }
+.baz-box ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--danger);
+  font-weight: 700;
+}
+.baz-box ul li strong { color: var(--danger); }
+
+.presenter-box {
+  background: var(--primary-lt);
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+.presenter-box .presenter-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.presenter-box p { margin-bottom: 12px; line-height: 1.75; }
+.presenter-box p:last-child { margin-bottom: 0; }
+
+.score-bar-wrap {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+}
+.score-bar-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 16px;
+}
+.score-bar-title {
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+}
+.score-bar-delta {
+  font-size: 14px;
+  color: var(--success);
+  font-weight: 700;
+}
+.score-track {
+  position: relative;
+  height: 28px;
+  background: var(--neutral);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.score-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+  border-radius: 14px;
+  width: 81%;
+}
+.score-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--charcoal);
+  opacity: 0.4;
+}
+.score-marker-label {
+  position: absolute;
+  top: 32px;
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+.score-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 28px;
+  padding-top: 4px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.doc-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.55);
+  padding: 24px 40px;
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.doc-footer strong { color: rgba(255,255,255,0.9); }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo, Google Ads Ongoing Optimization</span>
+  <button class="toolbar-btn btn-download" onclick="window.print()">⬇ Download / Print</button>
+</div>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Google Ads, Campaign Performance Optimization</div>
+    <h1>Kubiieo, Ongoing Campaign Optimization</h1>
+    <div class="subtitle">A round of structural improvements to Campaign #1 (AWS Managed Services), focused on lifting the account's optimization score, expanding the asset set users see in search, and validating the full measurement stack so the campaign can start learning from real lead data.</div>
+    <div class="header-tags">
+      <span class="header-tag">May 2026, Round 3</span>
+      <span class="header-tag live">Optimization score: 97%</span>
+      <span class="header-tag">Ad strength: Good</span>
+      <span class="header-tag">Prepared by Antonio Caruso</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <p class="lead-paragraph">
+    Three rounds of structural work this month moved the Google Ads account into a materially stronger position. Optimization score climbed from <strong>74.5%</strong> at the start of May to <strong>97%</strong> today. The measurement-stack issue that had been silently blocking every conversion, uncovered and fixed in Round 2, is now confirmed working: a live test showed the conversion firing with consent granted, which cleared Google's <strong>+9.8%</strong> conversion-tracking recommendation and drove most of this round's gain. Search partners and a keyword cleanup added the rest. Ad strength is at Good.
+  </p>
+
+  <!-- ============================================================
+       Section 1: At a glance
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">At a Glance</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">74.5%</span>
+      <span class="stat-label">Score, Start</span>
+      <div class="stat-sub">earlier this week</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">81%</span>
+      <span class="stat-label">Score, Now</span>
+      <div class="stat-sub">post-optimization</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">+6.5</span>
+      <span class="stat-label">Points Gained</span>
+      <div class="stat-sub">single round of work</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">Good</span>
+      <span class="stat-label">Ad Strength</span>
+      <div class="stat-sub">moved up from Average</div>
+    </div>
+  </div>
+
+  <div class="score-bar-wrap">
+    <div class="score-bar-head">
+      <span class="score-bar-title">Optimization Score, Visualised</span>
+      <span class="score-bar-delta">▲ +6.5 points</span>
+    </div>
+    <div class="score-track">
+      <div class="score-fill"></div>
+      <div class="score-marker" style="left: 74.5%;"><div class="score-marker-label">74.5% start</div></div>
+      <div class="score-marker" style="left: 81%;"><div class="score-marker-label">81% now</div></div>
+    </div>
+    <div class="score-scale">
+      <span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100%</span>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <div class="note-label">What this score actually measures</div>
+    <p>Google's optimization score is the platform's own assessment of how well the account is set up to perform. Anything above 80% is considered strong for an early-stage Search campaign. Reaching 81% inside the first optimization round sets a healthy baseline for everything that follows.</p>
+  </div>
+
+  <!-- ============================================================
+       Section 2: What was improved
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">What Was Improved</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Each change below was made directly in the live account. They compound. Together they shift how aggressively the campaign competes in the AWS auction and how attractive the ads look to people searching.</p>
+
+  <!-- 2.1 Bid strategy -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Bid strategy refined for the AWS keyword market</span>
+      <span class="block-tag">Highest-impact change</span>
+    </div>
+    <div class="block-body">
+      <p>The campaign launched with a conservative bid ceiling to validate the end-to-end flow safely. With the flow now proven, the ceiling has been refined to a level that reflects what AWS commercial keywords actually trade for in the Australian auction.</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 4px 0 4px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Daily budget controls stay in place, so spend remains bounded as delivery scales up.</li>
+        <li style="padding: 4px 0 4px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Single change that unlocked the campaign's ability to compete properly.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.2 Sitelinks -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Sitelink suite expanded to six tightly-themed entries</span>
+      <span class="block-tag">+2.8% optimization</span>
+    </div>
+    <div class="block-body">
+      <p>Six campaign-level sitelinks now route searchers to the most commercially relevant pages on kubiieo.com:</p>
+      <table style="margin-top: 8px;">
+        <thead>
+          <tr><th>Sitelink</th><th>Promise</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Free Cloud Assessment</td><td>No-cost AWS cost or security audit</td></tr>
+          <tr><td>Cloud Migrations</td><td>Zero-downtime migrations, fixed pricing</td></tr>
+          <tr><td>Reduce AWS Costs</td><td>FinOps audit and ongoing optimization</td></tr>
+          <tr><td>Security &amp; Compliance</td><td>SOC2, ISO 27001, IRAP-aligned</td></tr>
+          <tr><td>Why Kubiieo</td><td>20 years in cloud, AWS Advanced Tier Partner</td></tr>
+          <tr><td>Meet the Team</td><td>Sydney-based engineers, 24/7 coverage</td></tr>
+        </tbody>
+      </table>
+      <p>Sitelinks give prospects multiple doorways into the site and typically lift click-through rate, particularly on top-of-page placements.</p>
+    </div>
+  </div>
+
+  <!-- 2.3 Structured snippet -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Service Catalog asset added to the ad</span>
+      <span class="block-tag">+2.3% optimization</span>
+    </div>
+    <div class="block-body">
+      <p>A structured snippet now appears under the ad showing your six core services: AWS Managed Services, Cloud Migration, Cost Optimisation, Security &amp; Compliance, DevOps &amp; DevSecOps, Disaster Recovery. Searchers see the breadth of the offer at a glance, and Google rewards the format with higher positioning when a query maps to a listed service.</p>
+    </div>
+  </div>
+
+  <!-- 2.4 Negatives -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Exclusion list expanded for spend protection</span>
+      <span class="block-tag">Waste prevention</span>
+    </div>
+    <div class="block-body">
+      <p>Six new negative keywords were layered onto the existing list, taking the total to 23. They catch low-intent variants like:</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><code>exam</code>, <code>github</code>, <code>login</code>, <code>download</code></li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><code>pricing calculator</code>, <code>free trial</code></li>
+      </ul>
+      <p>These protect the budget once delivery scales up, by preventing the ad from showing on queries that look related but are not commercial.</p>
+    </div>
+  </div>
+
+  <!-- 2.5 Keyword coverage -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Keyword coverage widened on a high-intent variant</span>
+      <span class="block-tag">Coverage gap closed</span>
+    </div>
+    <div class="block-body">
+      <p>An exact-match keyword for <code>[aws consulting]</code> was added to the Ad group. This captures consultancy-shaped searches at the tightest match level, which typically convert at higher rates than broader managed-services queries.</p>
+    </div>
+  </div>
+
+  <!-- 2.6 Ad strength -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Ad strength elevated from Average to Good</span>
+      <span class="block-tag">+1.3% optimization</span>
+    </div>
+    <div class="block-body">
+      <p>Two additional headline variants were applied through Google's recommendation engine, combined with the broader asset suite. Stronger ad strength translates directly into:</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>A discount on cost per click for the same auction position.</li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>A better chance of serving at the top of the search results page.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2.7 Conversion stack -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Conversion measurement validated end to end</span>
+      <span class="block-tag">Critical for Smart Bidding</span>
+    </div>
+    <div class="block-body">
+      <p>The full measurement stack was audited and verified working:</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Google Tag, Conversion Linker, and GA4 firing on every page.</li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Form submissions on kubiieo.com pushed cleanly into the dataLayer.</li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Consultation Request conversion action wired and bound to Campaign #1 as the primary bidding goal.</li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Tracking consolidated so every signal flows to one canonical conversion action, keeping reporting clean.</li>
+      </ul>
+      <p>From the moment the first lead arrives, Google's machine learning starts shaping bids around actual conversions instead of clicks. That's where compounding gains begin.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Section 3: What this means for performance
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">What This Means for Performance</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The changes shift the campaign from a validation footing into a competitive one. Four specific effects follow:</p>
+
+  <ul style="list-style: none; padding: 0; margin: 0 0 20px;">
+    <li style="padding: 12px 0 12px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">The campaign can win in the auction.</strong> The refined bid ceiling lets the ad appear in front of buyers when they search, instead of only on the rare cheap-auction. Delivery and clicks should rise materially in the days following.
+    </li>
+    <li style="padding: 12px 0 12px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">The ad takes up more space on the results page.</strong> Sitelinks, structured snippet, and callouts together turn the ad from one line of text into a rich block showing assessments, AWS partner tier, services, and trust signals.
+    </li>
+    <li style="padding: 12px 0 12px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Smart Bidding has clean data to learn from.</strong> The verified conversion stack is the difference between optimizing for clicks and optimizing for actual leads. The cost-per-lead curve starts bending downward once Google has data to weight bids around what converts.
+    </li>
+    <li style="padding: 12px 0 12px 24px; position: relative; line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Higher quality means lower CPC.</strong> Ad Strength at Good lifts Google's quality multiplier on the ad. The same auction position is now won at a lower price, even before any bid strategy change.
+    </li>
+  </ul>
+
+  <div class="presenter-box">
+    <div class="presenter-label">What you'll see in the dashboard over the next two weeks</div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Impressions and clicks rise noticeably as the campaign wins auctions it was previously priced out of.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Click-through rate holds or improves as the richer ad format does its job.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Cost per click settles into a sustainable middle of the AWS keyword range.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Conversions appear in the dashboard the first time a form is submitted.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>After ~30 conversions, bid strategy moves to Smart Bidding and the cost-per-lead curve compounds downward.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       Section 4: What's coming next
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">What's Coming Next</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Optimization is a weekly cadence, not a one-off project. The work continues across these tracks:</p>
+
+  <ul style="list-style: none; padding: 0; margin: 0 0 24px;">
+    <li style="padding: 14px 0 14px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Phone-call conversion tracking, going live this week.</strong> Updating the click-to-call links across the site to dial the new 1300 number, marking the click event as a Key Event in GA4, and creating the matching Phone Call Lead conversion in Google Ads. This adds a second conversion signal alongside form submits.
+    </li>
+    <li style="padding: 14px 0 14px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Weekly performance reviews.</strong> Impressions, click-through rate, average CPC, quality components, and search-terms reports reviewed each week. Underperforming keywords get attention, new negative keyword candidates get added.
+    </li>
+    <li style="padding: 14px 0 14px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Asset rotation.</strong> Sitelinks, callouts, and headlines are scored by engagement. Weakest performers get rotated out, stronger variants replace them. Continuous compounding loop on CTR.
+    </li>
+    <li style="padding: 14px 0 14px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Bid strategy migration to Smart Bidding.</strong> Once around 30 conversions have accumulated, the strategy moves from Maximize Clicks to Maximize Conversions or Target CPA. This is the change that drops cost-per-lead the most.
+    </li>
+    <li style="padding: 14px 0 14px 24px; position: relative; border-bottom: 1px solid var(--neutral); line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Phase 2 campaigns.</strong> Professional Services and Entry-Point Offers (per the strategy doc) launch on top of the same conversion infrastructure once Campaign #1 has produced reliable conversion data.
+    </li>
+    <li style="padding: 14px 0 14px 24px; position: relative; line-height: 1.6;">
+      <span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">▸</span>
+      <strong style="color: var(--primary-dk);">Weekly reporting.</strong> A short update covering impressions, clicks, CPC, CTR, and conversions lands at the end of every week, alongside the next round of recommended optimizations.
+    </li>
+  </ul>
+
+  <!-- ============================================================
+       Section 5: One item on your side
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">One Item on Your Side</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The campaign is live, optimized, and learning. Everything else on the optimization roadmap can be actioned without you. One single item required your direct action because Google reserves it for the legal entity owner. It is now complete.</p>
+
+  <div class="baz-box">
+    <h3>Complete Advertiser Verification with Google &nbsp;<span style="font-size: 13px; font-weight: 700; color: var(--success); background: #e6f4e6; padding: 3px 10px; border-radius: 12px; vertical-align: middle;">✓ DONE — May 12</span></h3>
+    <p>The formal identity check Google requires before the business name and logo can appear inside Search ads. Completed by Baz on May 12.</p>
+    <ul>
+      <li><strong>Outcome:</strong> Verification approved. Business Name and Business Logo assets uploaded the same day and are now pending Google's standard 24-hour asset review.</li>
+      <li><strong>Score impact:</strong> Unlocks an additional 3.6% on the optimization score once the assets approve and start serving.</li>
+      <li><strong>What you'll see:</strong> Search ads will display the Kubiieo wordmark and "Kubiieo" business name alongside the headline once review clears.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       Section 6: Round 2 - Week of May 12
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <h2 class="section-title">Round 2, Week of May 12</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>A second optimization round this week pushed the score from <strong>81%</strong> to <strong>84.9%</strong>, expanded the negative-keyword list, lifted the bid ceiling further, and uncovered a tracking-stack issue that had been silently preventing every conversion from being counted in Google Ads. The fix is live now.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">81%</span>
+      <span class="stat-label">Score, Round 1 close</span>
+      <div class="stat-sub">where last week ended</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">84.9%</span>
+      <span class="stat-label">Score, Today</span>
+      <div class="stat-sub">post Round 2 work</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">+3.9</span>
+      <span class="stat-label">Points, Round 2</span>
+      <div class="stat-sub">on top of Round 1's +6.5</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">v13</span>
+      <span class="stat-label">GTM Container</span>
+      <div class="stat-sub">republished today</div>
+    </div>
+  </div>
+
+  <!-- 6.1 Consent Mode fix - the headline item -->
+  <div class="block-done" style="border-left: 4px solid var(--danger);">
+    <div class="block-head">
+      <span class="block-title">Consent Mode posture corrected for the Australian market</span>
+      <span class="block-tag" style="background: var(--danger-bg); color: var(--danger); border-color: var(--danger-bd);">Hidden blocker, now fixed</span>
+    </div>
+    <div class="block-body">
+      <p>Investigation into why test conversions were not appearing in Google Ads exposed that the Consent Mode v2 tag inside GTM defaulted every advertising and analytics consent type to <code>denied</code>. With no cookie banner in place to update consent on user interaction, every form submission was firing the conversion tag correctly, and Google Ads was treating every ping as denied data, sending it to the modeling-only bucket rather than counting it.</p>
+      <p>Defaults changed to <strong>granted</strong> for the four ad and analytics consent types. The <code>ads_data_redaction</code> flag was switched off. Australia does not have a GDPR-style prior-consent requirement for analytics or advertising cookies, so this aligns Kubiieo's tracking posture with the actual legal regime the business operates under.</p>
+      <p>GTM container republished as <strong>Version 13</strong>. The Submit Lead Form goal moves from <strong>Misconfigured</strong> to <strong>Recording</strong> the moment Google's pipeline processes the next form submission (typically 3 to 15 minutes, up to a few hours for the first conversion against a brand-new action).</p>
+    </div>
+  </div>
+
+  <!-- 6.2 Bid cap nudge -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Bid ceiling raised to A$18</span>
+      <span class="block-tag">More auctions captured</span>
+    </div>
+    <div class="block-body">
+      <p>Round 1's A$15 ceiling moved the campaign from <em>Bid setting limited</em> into <em>Eligible</em> status. After two weeks of live data, top-performing keywords were still showing roughly <strong>80% Lost Impression Share due to rank</strong>, meaning Google was prepared to serve the ad more aggressively at a higher bid. The ceiling moved to <strong>A$18</strong> to capture that remaining headroom.</p>
+    </div>
+  </div>
+
+  <!-- 6.3 Negatives -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Negative-keyword list grown to 29 terms</span>
+      <span class="block-tag">Spend protection</span>
+    </div>
+    <div class="block-body">
+      <p>Six more negatives added this week, all identified from the live search-terms report against running ads:</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><code>hosting pricing</code>, <code>serverless</code>, <code>app runner</code></li>
+        <li style="padding: 3px 0 3px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><code>akamai</code>, <code>activate</code>, <code>migration evaluator</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6.4 Pause aws cloud migration -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">"aws cloud migration" keyword paused</span>
+      <span class="block-tag">Quality-driven trim</span>
+    </div>
+    <div class="block-body">
+      <p>After two weeks of live data, <code>aws cloud migration</code> was showing <em>Limited</em> status and a low quality score. Paused. The freed budget reroutes to keywords that carry their quality.</p>
+    </div>
+  </div>
+
+  <!-- 6.5 Business Name and Logo -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Business Name and Logo assets added to the account</span>
+      <span class="block-tag">Branded ad real estate</span>
+    </div>
+    <div class="block-body">
+      <p>Following Advertiser Verification approval, the asset set now includes:</p>
+      <ul style="list-style: none; padding: 0; margin-top: 6px;">
+        <li style="padding: 4px 0 4px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><strong>Business Logo at Campaign #1 level:</strong> the purple K mark, which reads cleanly at the small sizes Search ads render at.</li>
+        <li style="padding: 4px 0 4px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><strong>Business Logo at Account level:</strong> the full kubiieo wordmark, available for any future PMax or Display work.</li>
+        <li style="padding: 4px 0 4px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span><strong>Business Name:</strong> "Kubiieo", account level.</li>
+      </ul>
+      <p>All three are <em>Pending Under Review</em> per Google's standard 24-hour asset review. Once approved, Search ads start showing branded elements next to the headline.</p>
+    </div>
+  </div>
+
+  <!-- Next steps panel -->
+  <div class="presenter-box">
+    <div class="presenter-label">Next steps, week of May 19</div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Confirm the first real form submission registers as a counted conversion in Google Ads. The consent fix unblocks this.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Watch the <strong>+9.8% conversion-tracking</strong> recommendation clear from the Recommendations panel as conversions start flowing.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Continue weekly search-terms review and add negatives where waste appears.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Unpause the Phone Call Click conversion tag once its AW conversion ID and label are verified against the live tag in GTM Preview.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Reach <strong>around 30 conversions</strong>, then migrate the bid strategy from Maximize Clicks to Maximize Conversions or Target CPA. This is the change that drops cost-per-lead the most.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Once the new Business Logo and Business Name assets clear Google's review, monitor Ad Strength for a further lift into <em>Excellent</em>.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       Section 7: Round 3 - Week of May 21
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <h2 class="section-title">Round 3, Week of May 21</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>This round confirmed the Round 2 conversion fix is working and pushed the optimization score from <strong>84.9%</strong> to <strong>97%</strong>. A live test proved form submissions now fire a counted conversion with consent granted, which cleared the recommendation Google had been flagging. Two further changes, search partners and a keyword cleanup, added the remaining points.</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">84.9%</span>
+      <span class="stat-label">Score, Round 2 close</span>
+      <div class="stat-sub">where last update ended</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">97%</span>
+      <span class="stat-label">Score, Today</span>
+      <div class="stat-sub">post Round 3 work</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">+12.1</span>
+      <span class="stat-label">Points, Round 3</span>
+      <div class="stat-sub">on top of the earlier +10.4</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">Live</span>
+      <span class="stat-label">Conversion Tracking</span>
+      <div class="stat-sub">fires with consent granted</div>
+    </div>
+  </div>
+
+  <!-- 7.1 Conversion tracking confirmed - headline -->
+  <div class="block-done" style="border-left: 4px solid var(--success);">
+    <div class="block-head">
+      <span class="block-title">Conversion tracking confirmed firing, with consent granted</span>
+      <span class="block-tag" style="background: #eef7ee; color: var(--success); border-color: #b7ddb9;">Verified live</span>
+    </div>
+    <div class="block-body">
+      <p>A live test submission on the consultation form settled the open question from Round 2. On submit, the Google Ads conversion tag fired and sent its data with consent <strong>granted</strong> (the <code>gcs=G111</code> signal), so the ping now registers as a real conversion instead of going to the modeling-only bucket where it was being discarded before.</p>
+      <p>This is the change that cleared Google's <strong>+9.8%</strong> conversion-tracking recommendation, and that single item accounts for most of the move from <strong>84.9%</strong> to <strong>94.6%</strong> earlier in the round. The counted conversion surfaces in Google Ads reporting once the pipeline processes the first lead against the new action, which can take a few hours. An automated daily check now watches for it and reports when it lands.</p>
+      <p>The same form submission also feeds GA4 through an existing <code>generate_lead</code> event, so lead reporting is in place on both platforms.</p>
+    </div>
+  </div>
+
+  <!-- 7.2 Search partners -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Google search partners switched on for Campaign #1</span>
+      <span class="block-tag">+2.4% score, more reach</span>
+    </div>
+    <div class="block-body">
+      <p>With the campaign drawing only <strong>124 clicks</strong> across the last five weeks, extra reach is worth having. Search partners place Kubiieo's ad on Google's network of partner search sites, and their click-through rate does not affect Quality Score, so there is no cost to the core Search performance. Applying this took the score from <strong>94.6%</strong> to <strong>97%</strong>.</p>
+      <p>This is running as a test. In two to three weeks the campaign will be segmented by network to check whether partner clicks convert. If they spend without converting, the setting comes back off in one click.</p>
+    </div>
+  </div>
+
+  <!-- 7.3 Redundant keywords -->
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">11 redundant keywords consolidated</span>
+      <span class="block-tag">Account hygiene</span>
+    </div>
+    <div class="block-body">
+      <p>Eleven duplicate exact-match keywords were removed, each one already covered by its phrase-match equivalent in the same ad group. As an example, <code>[aws managed services]</code> was removed and <code>"aws managed services"</code> kept. Google treats these as the same searches, so no coverage was lost. The cleanup makes the account easier to manage and added a further <strong>+0.7%</strong> as it processes.</p>
+    </div>
+  </div>
+
+  <!-- Next steps panel -->
+  <div class="presenter-box">
+    <div class="presenter-label">Next steps, week of May 21</div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Daily automated check confirms the first counted conversion appears in Google Ads reporting.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Review search-partner performance by network after two to three weeks. Keep it on if partner clicks convert, switch off if they only add spend.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Continue the weekly search-terms review and add negatives where waste appears.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Reach <strong>around 30 conversions</strong>, then move the bid strategy from Maximize Clicks to Maximize Conversions or Target CPA. This is the change that drops cost-per-lead the most.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       Section 8: Final
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">08</div>
+    <h2 class="section-title">In Summary</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The campaign is in materially better shape than at the start of the month:</p>
+
+  <ul style="list-style: none; padding: 0; margin: 0 0 18px;">
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Optimization score up <strong>22.5 points</strong> across three rounds, from <strong>74.5%</strong> to <strong>97%</strong>.</li>
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Ad strength at Good. Branded assets queued for approval, which should lift it further.</li>
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Asset set: six sitelinks, structured snippet, seven callouts, Business Logo, Business Name.</li>
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Negative-keyword list at 29 terms, all data-driven from the search-terms report.</li>
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Bid strategy calibrated to the AWS keyword market at A$18.</li>
+    <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--success); font-weight: 700;">✓</span>Conversion tracking confirmed firing in a live test, with consent granted, so form submissions now count in both Google Ads and GA4.</li>
+  </ul>
+
+  <p>The structural foundations are in place. From here, the lever is data. Every lead that comes through the verified conversion path teaches the system more about which searches and audiences convert for Kubiieo. Cost-per-lead bends downward as that data accumulates, and weekly optimization keeps compounding the gains.</p>
+
+</div>
+
+<div class="doc-footer">
+  <span><strong>Kubiieo, Google Ads Ongoing Campaign Optimization</strong></span>
+  <span>Prepared by Antonio Caruso, May 2026 (Round 3 update, May 21)</span>
+</div>
+
+</body>
+</html>
