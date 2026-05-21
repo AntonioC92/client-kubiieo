@@ -158,6 +158,23 @@
   }
   .intro:last-child { margin-bottom: 0; }
   .intro strong { color: var(--primary-dk); font-weight: 700; }
+  .intro-list { list-style: none; padding: 0; margin: 0 0 22px; max-width: 920px; }
+  .intro-list li {
+    padding: 7px 0 7px 22px;
+    position: relative;
+    font-size: 14.5px;
+    color: var(--charcoal);
+    line-height: 1.8;
+  }
+  .intro-list li::before {
+    content: "\2192";
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-size: 13px;
+    top: 7px;
+  }
+  .intro-list li strong { color: var(--primary-dk); font-weight: 700; }
 
   /* CARDS */
   .card {
@@ -651,7 +668,7 @@
 
     <p class="intro">Kubiieo's buyers are CTOs, Heads of Cloud, and infrastructure decision-makers at mid-market and enterprise organisations across Australia and New Zealand. They spend their working day on LinkedIn, and they search Google when something breaks or a project lands on their desk. Google Ads already covers the second moment well. The first moment, the long stretch where the buyer is forming opinions and shortlisting partners months before they ever type "AWS managed services" into a search bar, is where LinkedIn earns its place.</p>
 
-    <p class="intro">On the 8 May call, Baz asked about boosting LinkedIn posts after the Advanced Tier post did well organically. Boosting is fine as an amplifier for content that already works, and that lever stays available. The reason this proposal centres on structured campaigns instead is that boosting reaches the audience Kubiieo already has, mostly existing followers and their connections, while a proper campaign reaches the audience Kubiieo wants to have. The cost per click is higher than Meta, generally in the <strong>$8 to $15</strong> range for Australian IT decision-makers, but the audience there is the right audience: a single closed engagement in the <strong>$80,000 to $150,000</strong> range covers roughly twelve months of LinkedIn ad budget at the recommended starting tier.</p>
+    <p class="intro">On the 8 May call, Baz asked about boosting LinkedIn posts after the Advanced Tier post did well organically. Boosting is fine for pushing content that already works, and that option stays open. The reason this proposal centres on structured campaigns instead is that boosting reaches the audience Kubiieo already has, mostly existing followers and their connections, while a proper campaign reaches the audience Kubiieo wants to have. The cost per click is higher than Meta, generally in the <strong>$8 to $15</strong> range for Australian IT decision-makers, but the audience there is the right audience: a single closed engagement in the <strong>$80,000 to $150,000</strong> range covers roughly twelve months of LinkedIn ad budget at the recommended starting tier.</p>
 
     <p class="intro">One decision shapes every campaign below: the lead message is <strong>AWS Cost Optimisation</strong>. It carries the most demand in the market right now, it opens a conversation with a cloud buyer faster than any other angle, and it is the engagement Kubiieo delivers fastest because the tooling and expertise already sit in-house. The AWS Cost Optimisation creative produced for the Google Ads channel, the assessment offer and the landing-page copy, moves straight across to LinkedIn, so the channel launches with material that already works. Security stays in the mix as a secondary angle, tested at a lower weight and given more budget only once it earns it.</p>
   </section>
@@ -790,7 +807,7 @@
       <div class="section-rule"></div>
     </div>
 
-    <p class="intro">The cards above lay out what each phase does. The section below explains how the phases hand off to each other, the unique mechanic each one relies on, and the spending thresholds that trigger a pause rather than a quiet drift into bad performance.</p>
+    <p class="intro">The cards above lay out what each phase does. The section below explains how the phases hand off to each other, the unique mechanic each one relies on, and the spending limits that trigger a pause before performance quietly slips.</p>
 
     <div class="phase-block">
       <div class="phase-header">
@@ -801,7 +818,7 @@
         <p>Phase 1 runs first because Phases 2 and 3 depend on the audience it produces. Launching lead-gen forms or retargeting against a brand-new LinkedIn audience routinely pushes <strong>CPL above $150</strong> on the platform, and Phase 1 is what protects against that failure mode.</p>
         <p>The three parallel campaigns feed each other in useful ways. The awareness creative builds brand familiarity, which lifts the conversion rate on the page follower campaign by roughly <strong>15 to 25%</strong>. The video views campaign produces the strongest retargeting signal of the three, because the platform records who watched a defined threshold, and that audience is what converts best once Phase 3 retargets it.</p>
         <p>Across all three campaigns, <strong>AWS Cost Optimisation</strong> runs as the lead creative and security runs underneath it at a smaller share of impressions. Phase 1 is where that question gets answered cheaply: the engagement data shows which message the audience moves on before any lead-gen budget goes out, so the lead magnet in Phase 2 is built around the angle that already proved itself.</p>
-        <p>The handoff into Phase 2 is gated on engaged audience size rather than on calendar weeks. If Phase 1 needs an extra fortnight to clear 3,000 engaged people, the rest of the timeline shifts right by the same amount.</p>
+        <p>The handoff into Phase 2 is gated on engaged audience size rather than on calendar weeks. If Phase 1 needs an extra couple of weeks to clear 3,000 engaged people, the rest of the timeline moves back by the same amount.</p>
         <div class="kill-box">
           <div class="kill-label">Phase 1 kill rule</div>
           <p>If cost per follower is above <strong>$25</strong> and engagement rate is below <strong>1.2%</strong> after <strong>$1,500 in spend</strong>, the targeting is wrong. We pause, audit the audience definition together, and rebuild before topping up. We will not move to Phase 2 until the engaged audience clears 3,000 unique people.</p>
@@ -816,8 +833,8 @@
       </div>
       <div class="phase-body">
         <p>Phase 2 launches around <strong>week 4</strong>, while Phase 1 is still running at reduced budget. It uses the engaged audience that Phase 1 produced as the primary targeting layer, which is what keeps cost per lead inside the <strong>$50 to $75</strong> band. The same lead-gen creative run cold against a brand-new audience routinely posts CPL above $150 on LinkedIn.</p>
-        <p>The lead pipe-through is the other half of this phase. Leads flow into a holding list (a shared Google Sheet or Airtable view, exported weekly) until Baz's Zoho admin invite lands. Once admin access is in place, the lead-gen webhook routes directly into Zoho Leads with Lead Source tagged per campaign, and the holding list back-loads into the live flow. No leads are lost during the gap.</p>
-        <p>The second magnet (the security checklist) is held in reserve and only launched if the security creative outperforms the cost creative on Phase 1 engagement rate. Running both magnets at the same time splits spend across two audiences and slows both down.</p>
+        <p>Getting the leads into the CRM is the other half of this phase. Leads land in a holding list (a shared Google Sheet or Airtable view, exported weekly) until Baz's Zoho admin invite comes through. Once that access is in place, the lead-gen form feeds straight into Zoho Leads with the Lead Source tagged per campaign, and the holding list is added into the live flow. No leads are lost in the meantime.</p>
+        <p>The second magnet (the security checklist) is kept ready and only goes live if the security creative beats the cost creative on Phase 1 engagement rate. Running both magnets at once splits spend across two audiences and slows both down.</p>
         <div class="kill-box">
           <div class="kill-label">Phase 2 kill rule</div>
           <p>If CPL on the lead-gen form is above <strong>$90 after $2,000 in spend</strong>, the magnet is the wrong asset for this audience. Iterate the headline and re-test for two weeks before pausing the campaign.</p>
@@ -901,7 +918,7 @@
         <tr>
           <td><strong>Starter</strong></td>
           <td>$1,500</td>
-          <td>Phase 1 across all three campaign objectives. Audience build of <strong>2,000-3,500</strong> engaged people. Single creative test per fortnight.</td>
+          <td>Phase 1 across all three campaign objectives. Audience build of <strong>2,000-3,500</strong> engaged people. One creative test every two weeks.</td>
           <td>Once Phase 1 test produces a clean CPF number and the targeting is settled.</td>
         </tr>
         <tr class="recommended">
@@ -955,7 +972,7 @@
       <p>The reporting layer matches what is already running for Google Ads, so Baz reads one consistent format across both channels.</p>
       <ul>
         <li><strong>Weekly:</strong> short Slack post in the Kubiieo channel with spend, results, what changed, and what is being tested next.</li>
-        <li><strong>Fortnightly:</strong> a one-page HTML report per channel, in the same brand-consistent template as the existing Google Ads reporting.</li>
+        <li><strong>Every two weeks:</strong> a one-page HTML report per channel, in the same brand-consistent template as the existing Google Ads reporting.</li>
         <li><strong>End of Phase 1 (week 6):</strong> phase-end review with Baz and Sean. Decision on whether to open Phase 2 spend.</li>
         <li><strong>End of 90 days (week 12):</strong> attribution review covering pipeline sourced, consultations booked, and deals progressing. Scale-up or pull-back call sits here.</li>
       </ul>
@@ -970,7 +987,7 @@
       <div class="section-rule"></div>
     </div>
 
-    <p class="intro">The timeline below is the path if all phases hit their kill rules cleanly. Phase boundaries shift right by a week or two if the audience build is slower than expected.</p>
+    <p class="intro">The timeline below is the path if all phases hit their kill rules cleanly. Phase boundaries move back by a week or two if the audience build is slower than expected.</p>
 
     <div class="timeline">
       <div class="timeline-row">
@@ -1007,7 +1024,7 @@
       </div>
       <div class="timeline-row">
         <div class="timeline-week">Week 10-11</div>
-        <div class="timeline-content"><strong>Optimisation pass.</strong> Bid adjustments per ad set. Underperforming creative cycled out. If the primary 200-5,000 employee band is saturating, the audience-expansion test on the 5,000+ band runs here.</div>
+        <div class="timeline-content"><strong>Optimisation pass.</strong> Bid adjustments per ad set. Underperforming creative cycled out. If the primary 200-5,000 employee band is running out of fresh people, the audience-expansion test on the 5,000+ band runs here.</div>
       </div>
       <div class="timeline-row">
         <div class="timeline-week">Week 12</div>
@@ -1029,7 +1046,7 @@
         <tr><th>Item</th><th>How it is handled</th></tr>
       </thead>
       <tbody>
-        <tr><td>Zoho admin access pending</td><td>Phase 1 and Phase 2 do not need Zoho. Leads from Phase 2 export to a holding list weekly until admin access lands, then back-load into the live Zoho flow with the right Lead Source tagging. Phase 3 retargeting depends on Zoho being live, but Phase 3 does not start until week 8 in any case.</td></tr>
+        <tr><td>Zoho admin access pending</td><td>Phase 1 and Phase 2 do not need Zoho. Leads from Phase 2 export to a holding list weekly until admin access lands, then load into the live Zoho flow with the right Lead Source tagging. Phase 3 retargeting depends on Zoho being live, but Phase 3 does not start until week 8 in any case.</td></tr>
         <tr><td>Google verification under review</td><td>Independent of LinkedIn. The verification work continues on the Google Ads side. No dependency between the two channels.</td></tr>
         <tr><td>LinkedIn CPC running above the quoted band</td><td>If CPC sits <strong>30% above the upper band</strong> for two consecutive weeks, the targeting needs widening or the creative is wrong. Both responses sit inside the existing weekly optimisation block.</td></tr>
         <tr><td>Singapore audience too small to spend</td><td>Tested in a separate ad set. If Singapore cannot spend its daily cap inside seven days, the ad set pauses and the spend returns to Australia and New Zealand.</td></tr>
@@ -1047,12 +1064,18 @@
       <div class="section-rule"></div>
     </div>
 
-    <p class="intro">This is a test, not a $3,000-a-month commitment up front. The point is to spend a small amount over two or three weeks, see whether Phase 1 produces the audience growth and creative signal it is meant to, and use that data to decide whether scaling makes sense. We already have admin access on the Kubiieo LinkedIn page, so most of the setup is internal work that does not need Baz.</p>
+    <p class="intro">This is a small test with no monthly commitment attached. Over the first two or three weeks the plan is to:</p>
+
+    <ul class="intro-list">
+      <li>Spend a small amount and get the first real numbers back.</li>
+      <li>See whether Phase 1 grows the audience and shows which creative lands.</li>
+      <li>Use that data to decide whether scaling up makes sense.</li>
+    </ul>
 
     <div class="note-box">
       <div class="note-label">The three items needed from Baz</div>
-      <p><strong>1. Confirm a small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience-build mechanics work. No monthly commitment attached.</p>
-      <p><strong>2. Confirm the billing setup on LinkedIn Campaign Manager.</strong> We have admin access on the page but do not yet know whether a billing method is attached at the campaign account level. If nothing is configured, Baz drops a card in. If something is already there, no action needed.</p>
+      <p><strong>1. Confirm a small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience build is working.</p>
+      <p><strong>2. Confirm the billing setup on LinkedIn Campaign Manager.</strong> We do not yet know whether a billing method is attached at the campaign account level. If nothing is set up, Baz drops a card in. If something is already there, no action needed.</p>
       <p><strong>3. Approve the opening creative</strong> built from the AWS Cost Optimisation material already in use on the Google Ads channel and the cost-saving screenshots Baz shared on 8 May. One review cycle, written feedback in Slack is enough.</p>
     </div>
 
