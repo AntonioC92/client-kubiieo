@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo: LinkedIn Content Week 4 June 2026</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: var(--charcoal); font-size: 15px; line-height: 1.7; }
+
+/* HEADER */
+.site-header { background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%); padding: 0; }
+.header-inner { max-width: 960px; margin: 0 auto; padding: 48px 40px 40px; display: flex; align-items: flex-start; justify-content: space-between; gap: 40px; }
+.header-text { flex: 1; }
+.brand-eyebrow { font-size: 11px; letter-spacing: 2px; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 12px; display: block; }
+.header-title { font-family: Helvetica, Arial, sans-serif; font-size: clamp(30px, 5vw, 44px); font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 6px; }
+.header-title span { color: rgba(255,255,255,0.7); }
+.header-sub { font-size: 15px; color: rgba(255,255,255,0.7); margin-top: 10px; }
+.header-meta { display: flex; gap: 32px; margin-top: 32px; flex-wrap: wrap; }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { font-size: 10px; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+.meta-value { font-size: 14px; color: #fff; font-weight: 600; }
+.gold-bar { height: 4px; background: rgba(255,255,255,0.2); width: 100%; }
+
+/* LAYOUT */
+.main { max-width: 960px; margin: 0 auto; padding: 48px 32px 80px; }
+
+/* SECTION */
+.section { margin-bottom: 64px; }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; margin-top: 8px; }
+.section-num { font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 1px; min-width: 28px; }
+.section-title { font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 700; color: var(--primary-dk); white-space: nowrap; }
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+/* INTRO CARD */
+.intro-card { background: var(--white); border-radius: 6px; padding: 24px 28px; border: 1px solid var(--neutral); border-left: 4px solid var(--primary); }
+.intro-card p { font-size: 14px; color: var(--charcoal); line-height: 1.75; margin-bottom: 10px; }
+.intro-card p:last-child { margin-bottom: 0; }
+
+/* POST CARD */
+.post-card { background: var(--white); border-radius: 6px; border: 1px solid var(--neutral); overflow: hidden; margin-bottom: 40px; }
+.post-header { padding: 24px 28px 18px; border-bottom: 1px solid var(--neutral); display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; background: var(--primary-lt); }
+.post-header-left { flex: 1; }
+.post-number { font-size: 10px; letter-spacing: 1.5px; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; display: block; font-weight: 700; }
+.post-title { font-family: Helvetica, Arial, sans-serif; font-size: 18px; font-weight: 700; color: var(--primary-dk); line-height: 1.3; }
+.platform-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 10px; letter-spacing: 0.8px; font-weight: 600; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+.badge-aws { background: #fff3e0; color: #b35c00; border: 1px solid #ffd0a0; }
+.post-header-badges { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.status-review { display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; color: #8a6000; border: 1.5px solid #f0c040; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 12px; white-space: nowrap; flex-shrink: 0; }
+
+/* VISUAL BLOCKS */
+.visual-block { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--neutral); position: relative; overflow: hidden; }
+.visual-block-1 { background: linear-gradient(135deg, #3d2a75 0%, #5B3FA8 55%, #7B5FCC 100%); }
+.visual-block-2 { background: linear-gradient(135deg, #2d1f5e 0%, #4a3090 50%, #5B3FA8 100%); }
+.visual-block-3 { background: linear-gradient(135deg, #1a1040 0%, #3d2a75 50%, #5B3FA8 100%); }
+.visual-service-label { font-size: 11px; letter-spacing: 2.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; font-weight: 600; text-align: center; position: relative; z-index: 1; }
+.visual-pill-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; position: relative; z-index: 1; }
+.visual-inner-wrap { text-align: center; position: relative; z-index: 1; }
+.vpill { padding: 4px 14px; border-radius: 20px; font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 600; }
+.vpill-aws   { background: rgba(255,153,0,0.15); color: #FF9900; border: 1px solid rgba(255,153,0,0.3); }
+.vpill-white { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.15); }
+
+/* POST BODY */
+.post-body { padding: 24px 28px 0; }
+.post-copy { font-size: 14px; color: var(--charcoal); line-height: 1.85; white-space: pre-line; border-left: 3px solid var(--primary); padding-left: 18px; margin-bottom: 20px; }
+
+/* META ROW */
+.post-meta { display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 28px; border-top: 1px solid var(--neutral); background: var(--primary-lt); align-items: center; }
+.meta-tag { font-size: 10px; letter-spacing: 0.8px; padding: 3px 10px; border-radius: 20px; background: var(--neutral); color: var(--primary-dk); font-weight: 600; text-transform: uppercase; }
+.meta-tag-aws { background: #fff3e0; color: #b35c00; }
+
+/* COMMENT BLOCK */
+.comment-block { margin: 0 28px 24px; background: #fffbe6; border: 1px solid #f0c040; border-radius: 4px; padding: 14px 18px; }
+.comment-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: #7a5800; font-weight: 700; margin-bottom: 6px; display: block; }
+.comment-text { font-size: 14px; color: var(--charcoal); line-height: 1.65; }
+
+/* LINK BLOCK */
+.post-link-block { padding: 16px 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+.link-row { display: flex; align-items: center; gap: 14px; background: var(--primary-lt); border: 1px solid var(--neutral); border-radius: 4px; padding: 12px 16px; }
+.link-label-col { min-width: 110px; }
+.link-label { font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); font-weight: 700; display: block; margin-bottom: 2px; }
+.link-desc { font-size: 12px; color: var(--muted); }
+.link-url { flex: 1; font-size: 13px; color: var(--primary-dk); font-weight: 500; word-break: break-all; }
+.link-url a { color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--neutral); padding-bottom: 1px; }
+
+/* NOTES BOX */
+.notes-box { background: var(--white); border-radius: 6px; padding: 24px 28px; border: 1px solid var(--neutral); border-left: 4px solid var(--primary); }
+.notes-box ul { list-style: none; padding: 0; }
+.notes-box ul li { font-size: 14px; color: var(--charcoal); padding: 10px 0; border-bottom: 1px solid var(--neutral); display: flex; gap: 12px; align-items: flex-start; line-height: 1.6; }
+.notes-box ul li:last-child { border-bottom: none; }
+.notes-box ul li::before { content: '→'; color: var(--primary); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* FOOTER */
+.site-footer { background: var(--primary-dk); padding: 20px 40px; text-align: center; }
+.site-footer p { font-size: 11px; letter-spacing: 1.5px; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+@media (max-width: 720px) {
+  .header-inner { flex-direction: column; padding: 36px 24px 28px; }
+  .main { padding: 28px 16px 60px; }
+  .post-header { flex-direction: column; gap: 10px; }
+  .post-body, .post-link-block, .comment-block { padding-left: 16px; padding-right: 16px; }
+  .post-meta { padding-left: 16px; padding-right: 16px; }
+  .link-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-text">
+      <span class="brand-eyebrow">Kubiieo &nbsp;·&nbsp; Content</span>
+      <h1 class="header-title">LinkedIn Posts<br><span>Week 4, June 2026</span></h1>
+      <p class="header-sub">3 new posts: AWS platform updates</p>
+      <div class="header-meta">
+        <div class="meta-item">
+          <span class="meta-label">Posts</span>
+          <span class="meta-value">3 to review</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Platform</span>
+          <span class="meta-value">AWS</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">Prepared</span>
+          <span class="meta-value">28 May 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="gold-bar"></div>
+</header>
+
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">00</span>
+      <h2 class="section-title">Overview</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="intro-card">
+      <p>Three new posts covering this week's AWS announcements. All three are AWS-only, mapped to Kubiieo's managed services, Generative AI, and security service lines.</p>
+      <p>Each post includes a first comment with the relevant Kubiieo service page link, posted immediately after publishing to keep the main copy clean and avoid LinkedIn reach penalties on external links.</p>
+    </div>
+  </section>
+
+  <!-- POST 1: Amazon EMR + Spark 4.0.2 -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Amazon EMR: Apache Spark 4.0.2 Generally Available</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 01 of 03</span>
+          <div class="post-title">Spark 4.0.2 is now GA across all three Amazon EMR deployment modes</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-1">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon EMR · Generally Available</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">GA · All EMR Modes</span>
+            <span class="vpill vpill-white">Iceberg v3</span>
+            <span class="vpill vpill-white">Row-Level FGAC</span>
+            <span class="vpill vpill-white">Real-Time Streaming</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">Apache Spark 4.0.2 is now generally available on Amazon EMR, and it is available across all three deployment modes: on EC2, on EKS, and Serverless.
+
+That matters because a lot of teams have fragmented data infrastructure. Some workloads run on managed EC2 clusters, others are containerised on EKS, and Serverless handles the more unpredictable jobs. Historically, a major Spark version upgrade could mean different timelines and different complexity depending on which deployment model you were on. That gap is closed now.
+
+The upgrade itself is substantive. ANSI SQL compliance with proper VARIANT data types simplifies pipeline logic that previously required workarounds. Row and column-level fine-grained access control is now built in, which is the governance requirement that was previously a significant engineering effort to implement correctly. Apache Iceberg v3 table format brings the open table standard up to date, and the streaming improvements reduce latency for real-time data applications.
+
+For teams running compliance-sensitive data pipelines on EMR, this is the version that makes governance the default rather than something you layer on afterwards.
+
+If your data infrastructure runs on EMR and you have not looked at what Spark 4.0.2 means for your current setup, it is worth doing that assessment now.
+
+#AWS #DataEngineering #ApacheSpark #AmazonEMR #CloudManagedServices</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Amazon EMR</span>
+        <span class="meta-tag">Apache Spark 4</span>
+        <span class="meta-tag">Generally Available</span>
+        <span class="meta-tag">Data Engineering</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If you are running EMR workloads and want to understand what the Spark 4.0.2 upgrade means for your current architecture, we offer a free managed services review: <strong>kubiieo.com/managed-services-2</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/05/amazon-emr-apache-spark/" target="_blank">aws.amazon.com / Amazon EMR now supports Apache Spark 4.0.2</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/managed-services-2" target="_blank">kubiieo.com/managed-services-2</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 2: P6-B200 SageMaker -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Amazon SageMaker: NVIDIA Blackwell P6-B200 Generally Available</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 02 of 03</span>
+          <div class="post-title">NVIDIA Blackwell B200 GPUs are now available on Amazon SageMaker Notebook Instances</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-2">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon SageMaker · Generally Available</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">US East · GA</span>
+            <span class="vpill vpill-white">8× Blackwell GPUs</span>
+            <span class="vpill vpill-white">2× Training Speed</span>
+            <span class="vpill vpill-white">1440 GB HBM3e</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">P6-B200 instances are now generally available on Amazon SageMaker Notebook Instances in US East (N. Virginia).
+
+The spec is worth understanding in full. Each instance carries 8 NVIDIA Blackwell B200 GPUs with 1,440 GB of HBM3e GPU memory, paired with 5th Gen Intel Xeon Emerald Rapids processors. AWS is quoting up to 2x better AI training performance compared to P5en instances.
+
+The part that matters most is how this changes what foundation model training looks like in practice. P6-B200 is not aimed at inference or light experimentation. This is the instance class for teams that are actually training or fine-tuning large models, running evaluation loops at scale, or handling workloads where GPU memory is the constraint that determines what is even possible.
+
+What makes the SageMaker Notebook Instances context significant is that it wraps that raw compute capacity in a managed environment. You are not building and maintaining the infrastructure underneath it. The operational overhead of running this class of compute drops considerably, which changes the calculation for teams that have been deferring serious model work because of infrastructure complexity.
+
+If you are planning AI training workloads or evaluating whether your current infrastructure is the right fit, this is worth looking at now rather than when you hit the ceiling.
+
+#AWS #NVIDIA #Blackwell #AmazonSageMaker #GenerativeAI #MLInfrastructure</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">SageMaker</span>
+        <span class="meta-tag">NVIDIA Blackwell</span>
+        <span class="meta-tag">P6-B200</span>
+        <span class="meta-tag">Generally Available</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">Building or scaling AI training workloads on AWS and want to know whether P6-B200 is the right fit, or whether you are over-provisioning on something simpler? We offer a free Generative AI infrastructure review: <strong>kubiieo.com/generative-ai</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/06/p6-b200-region-expansion-sagemaker-notebook-instances/" target="_blank">aws.amazon.com / P6-B200 instances GA on SageMaker Notebook Instances</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/generative-ai" target="_blank">kubiieo.com/generative-ai</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POST 3: Supply Chain Security -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">AWS Security: Supply Chain Attacks and Well-Architected Guidance</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 03 of 03</span>
+          <div class="post-title">AWS has updated its Well-Architected guidance for software supply chain security, and the timing is not coincidental</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-3">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">AWS Security · Well-Architected</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">Supply Chain Security</span>
+            <span class="vpill vpill-white">Amazon Inspector</span>
+            <span class="vpill vpill-white">Well-Architected</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">AWS published updated Well-Architected best practices for software supply chain security this week. The update comes in the context of a series of confirmed npm supply chain attacks over recent months, including Shai-Hulud, Chalk/Debug, one exploiting tea.xyz tokens, and most recently axios.
+
+Several of those attacks were caught through a combination of community effort, Amazon Inspector, and the Open Source Security Foundation. The fact that they were caught is the good news. The more sobering part is that the window between a malicious package being published and being in production somewhere is extremely short.
+
+The core principle in the updated guidance is one that applies directly to AWS workloads. Treating third-party packages as trusted inputs is a risk. Every dependency in your build pipeline is a potential attack surface. The organisations that handled these incidents well had Inspector running continuously, IAM locked down across build and deploy pipelines, and dependency audit processes that operated on a continuous rather than periodic basis.
+
+For most teams, the gap is not awareness. Most engineers understand supply chain risk in the abstract. The gap is whether the controls are actually in place and configured correctly, and whether anyone will notice if a malicious package makes it into the pipeline.
+
+This is a good moment to look at whether your AWS security posture covers the supply chain layer properly.
+
+#AWS #CloudSecurity #SupplyChain #AmazonInspector #WellArchitected #DevSecOps</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Security</span>
+        <span class="meta-tag">Supply Chain</span>
+        <span class="meta-tag">Well-Architected</span>
+        <span class="meta-tag">Amazon Inspector</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If your AWS environment does not have continuous supply chain monitoring in place, we offer a free cloud security review to show you where the gaps are: <strong>kubiieo.com/security-compliance</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS Security Blog</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/blogs/security/well-architected-best-practices-for-software-supply-chain-security/" target="_blank">aws.amazon.com / Well-Architected best practices for supply chain security</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/security-compliance" target="_blank">kubiieo.com/security-compliance</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING NOTES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Publishing notes</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="notes-box">
+      <ul>
+        <li>Suggested cadence: Post 1 Monday 2 June, Post 2 Wednesday 4 June, Post 3 Friday 6 June. One post per day keeps reach consistent without flooding the feed.</li>
+        <li>Drop the first comment within 2 minutes of publishing. LinkedIn's algorithm rewards early engagement on comments and penalises external links in the post body.</li>
+        <li>Images: branded PNG files (1200×628px) are provided separately in this folder for each post.</li>
+        <li>Tagging AWS official pages in the post body tends to increase reach. Use @AWSCloud or tag the article author where available.</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Content &nbsp;·&nbsp; Week 4 June 2026 &nbsp;·&nbsp; Prepared by Sean O'Brien</p>
+</footer>
+
+</body>
+</html>
