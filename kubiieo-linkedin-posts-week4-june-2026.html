@@ -43,6 +43,14 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
 .section-title { font-family: Helvetica, Arial, sans-serif; font-size: 20px; font-weight: 700; color: var(--primary-dk); white-space: nowrap; }
 .section-rule { flex: 1; height: 2px; background: var(--neutral); }
 
+/* SCHEDULE BANNER */
+.schedule-banner { background: var(--white); border-radius: 6px; padding: 20px 28px; border: 1px solid var(--neutral); border-left: 4px solid #FF9900; display: flex; gap: 0; flex-wrap: wrap; margin-bottom: 40px; }
+.sched-item { flex: 1; min-width: 180px; padding: 8px 20px 8px 0; border-right: 1px solid var(--neutral); margin-right: 20px; }
+.sched-item:last-child { border-right: none; margin-right: 0; }
+.sched-date { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: #b35c00; text-transform: uppercase; margin-bottom: 4px; }
+.sched-post { font-size: 13px; font-weight: 700; color: var(--primary-dk); margin-bottom: 2px; }
+.sched-topic { font-size: 12px; color: var(--muted); }
+
 /* INTRO CARD */
 .intro-card { background: var(--white); border-radius: 6px; padding: 24px 28px; border: 1px solid var(--neutral); border-left: 4px solid var(--primary); }
 .intro-card p { font-size: 14px; color: var(--charcoal); line-height: 1.75; margin-bottom: 10px; }
@@ -57,6 +65,7 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
 .platform-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 20px; font-size: 10px; letter-spacing: 0.8px; font-weight: 600; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
 .badge-aws { background: #fff3e0; color: #b35c00; border: 1px solid #ffd0a0; }
 .post-header-badges { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.post-date-chip { display: inline-flex; align-items: center; background: #e8f5e9; color: #2e7d32; border: 1.5px solid #a5d6a7; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 12px; white-space: nowrap; flex-shrink: 0; }
 .status-review { display: inline-flex; align-items: center; gap: 6px; background: #fff8e1; color: #8a6000; border: 1.5px solid #f0c040; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 12px; white-space: nowrap; flex-shrink: 0; }
 
 /* VISUAL BLOCKS */
@@ -64,6 +73,7 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
 .visual-block-1 { background: linear-gradient(135deg, #3d2a75 0%, #5B3FA8 55%, #7B5FCC 100%); }
 .visual-block-2 { background: linear-gradient(135deg, #2d1f5e 0%, #4a3090 50%, #5B3FA8 100%); }
 .visual-block-3 { background: linear-gradient(135deg, #1a1040 0%, #3d2a75 50%, #5B3FA8 100%); }
+.visual-block-4 { background: linear-gradient(135deg, #1e3a5f 0%, #2d5282 45%, #4a7fc1 100%); }
 .visual-service-label { font-size: 11px; letter-spacing: 2.5px; color: rgba(255,255,255,0.55); text-transform: uppercase; font-weight: 600; text-align: center; position: relative; z-index: 1; }
 .visual-pill-row { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 16px; position: relative; z-index: 1; }
 .visual-inner-wrap { text-align: center; position: relative; z-index: 1; }
@@ -112,6 +122,7 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
   .post-body, .post-link-block, .comment-block { padding-left: 16px; padding-right: 16px; }
   .post-meta { padding-left: 16px; padding-right: 16px; }
   .link-row { flex-direction: column; align-items: flex-start; }
+  .sched-item { border-right: none; border-bottom: 1px solid var(--neutral); padding-bottom: 12px; margin-bottom: 12px; }
 }
 </style>
 </head>
@@ -122,11 +133,11 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
     <div class="header-text">
       <span class="brand-eyebrow">Kubiieo &nbsp;·&nbsp; Content</span>
       <h1 class="header-title">LinkedIn Posts<br><span>Week 4, June 2026</span></h1>
-      <p class="header-sub">3 new posts: AWS platform updates</p>
+      <p class="header-sub">4 posts: AWS platform updates — Fri 29 May through Fri 5 June</p>
       <div class="header-meta">
         <div class="meta-item">
           <span class="meta-label">Posts</span>
-          <span class="meta-value">3 to review</span>
+          <span class="meta-value">4 to review</span>
         </div>
         <div class="meta-item">
           <span class="meta-label">Platform</span>
@@ -148,11 +159,35 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
   <section class="section">
     <div class="section-header">
       <span class="section-num">00</span>
-      <h2 class="section-title">Overview</h2>
+      <h2 class="section-title">Overview &amp; Publishing Schedule</h2>
       <div class="section-rule"></div>
     </div>
+
+    <div class="schedule-banner">
+      <div class="sched-item">
+        <div class="sched-date">Fri 29 May</div>
+        <div class="sched-post">Post 1</div>
+        <div class="sched-topic">Amazon EMR · Spark 4.0.2 · Managed Services</div>
+      </div>
+      <div class="sched-item">
+        <div class="sched-date">Mon 1 June</div>
+        <div class="sched-post">Post 2</div>
+        <div class="sched-topic">SageMaker · NVIDIA Blackwell · GenAI</div>
+      </div>
+      <div class="sched-item">
+        <div class="sched-date">Wed 3 June</div>
+        <div class="sched-post">Post 3</div>
+        <div class="sched-topic">Supply Chain Security · Well-Architected</div>
+      </div>
+      <div class="sched-item">
+        <div class="sched-date">Fri 5 June</div>
+        <div class="sched-post">Post 4</div>
+        <div class="sched-topic">Amazon Aurora MySQL 8.4 LTS · Managed Services</div>
+      </div>
+    </div>
+
     <div class="intro-card">
-      <p>Three new posts covering this week's AWS announcements. All three are AWS-only, mapped to Kubiieo's managed services, Generative AI, and security service lines.</p>
+      <p>Four posts covering this week's AWS announcements. All four are AWS-only, covering Kubiieo's managed services, Generative AI, and security service lines across a Mon/Wed/Fri cadence with a kick-off post this Friday.</p>
       <p>Each post includes a first comment with the relevant Kubiieo service page link, posted immediately after publishing to keep the main copy clean and avoid LinkedIn reach penalties on external links.</p>
     </div>
   </section>
@@ -168,11 +203,12 @@ body { font-family: Helvetica, Arial, sans-serif; background: var(--bg); color: 
     <div class="post-card">
       <div class="post-header">
         <div class="post-header-left">
-          <span class="post-number">Post 01 of 03</span>
+          <span class="post-number">Post 01 of 04</span>
           <div class="post-title">Spark 4.0.2 is now GA across all three Amazon EMR deployment modes</div>
         </div>
         <div class="post-header-badges">
           <span class="platform-badge badge-aws">AWS</span>
+          <span class="post-date-chip">Fri 29 May</span>
           <span class="status-review">To Review</span>
         </div>
       </div>
@@ -246,11 +282,12 @@ If your data infrastructure runs on EMR and you have not looked at what Spark 4.
     <div class="post-card">
       <div class="post-header">
         <div class="post-header-left">
-          <span class="post-number">Post 02 of 03</span>
+          <span class="post-number">Post 02 of 04</span>
           <div class="post-title">NVIDIA Blackwell B200 GPUs are now available on Amazon SageMaker Notebook Instances</div>
         </div>
         <div class="post-header-badges">
           <span class="platform-badge badge-aws">AWS</span>
+          <span class="post-date-chip">Mon 1 June</span>
           <span class="status-review">To Review</span>
         </div>
       </div>
@@ -324,11 +361,12 @@ If you are planning AI training workloads or evaluating whether your current inf
     <div class="post-card">
       <div class="post-header">
         <div class="post-header-left">
-          <span class="post-number">Post 03 of 03</span>
+          <span class="post-number">Post 03 of 04</span>
           <div class="post-title">AWS has updated its Well-Architected guidance for software supply chain security, and the timing is not coincidental</div>
         </div>
         <div class="post-header-badges">
           <span class="platform-badge badge-aws">AWS</span>
+          <span class="post-date-chip">Wed 3 June</span>
           <span class="status-review">To Review</span>
         </div>
       </div>
@@ -390,18 +428,97 @@ This is a good moment to look at whether your AWS security posture covers the su
     </div>
   </section>
 
-  <!-- PUBLISHING NOTES -->
+  <!-- POST 4: Amazon Aurora MySQL 8.4 LTS -->
   <section class="section">
     <div class="section-header">
       <span class="section-num">04</span>
+      <h2 class="section-title">Amazon Aurora: MySQL 8.4 Long Term Support Generally Available</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <div class="post-card">
+      <div class="post-header">
+        <div class="post-header-left">
+          <span class="post-number">Post 04 of 04</span>
+          <div class="post-title">Amazon Aurora now supports MySQL 8.4 LTS — the first long-term support release of MySQL 8</div>
+        </div>
+        <div class="post-header-badges">
+          <span class="platform-badge badge-aws">AWS</span>
+          <span class="post-date-chip">Fri 5 June</span>
+          <span class="status-review">To Review</span>
+        </div>
+      </div>
+
+      <div class="visual-block visual-block-4">
+        <div class="visual-inner-wrap">
+          <div class="visual-service-label">Amazon Aurora · Generally Available</div>
+          <div class="visual-pill-row">
+            <span class="vpill vpill-aws">LTS · MySQL 8.4</span>
+            <span class="vpill vpill-white">Aurora + RDS</span>
+            <span class="vpill vpill-white">5-Year Support</span>
+            <span class="vpill vpill-white">No Breaking Changes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="post-body">
+        <div class="post-copy">Amazon Aurora now supports MySQL 8.4, the community's first Long Term Support release of the MySQL 8 series.
+
+The distinction matters. MySQL 8.0 has been the standard for a while, but 8.0's end-of-life is approaching, and the gap between 8.0 and the next stable, long-supported version has been a planning question that many teams have been deferring. MySQL 8.4 closes that gap.
+
+LTS means a defined window of community security patches and bug fixes — typically five years — without breaking changes between minor releases. If you are running production databases on Aurora or RDS MySQL, the upgrade path is now clear and the target is stable.
+
+The operational detail that matters most is query compatibility. The move from 8.0 to 8.4 is not entirely frictionless. SQL mode changes and authentication plugin updates require testing before any migration, and on a large database with complex schemas, that validation takes real time and expertise to do properly.
+
+This is the kind of migration where the risk is not in the destination — 8.4 LTS is clearly the right target — it is in how the transition is managed. A structured assessment of your Aurora or RDS MySQL environment, identifying schema compatibility issues and creating a validated migration plan before you are forced to move, is worth doing now while you have control of the timeline.
+
+#AWS #AmazonAurora #MySQL #LTS #DatabaseManagement #CloudManagedServices</div>
+      </div>
+
+      <div class="post-meta">
+        <span class="meta-tag meta-tag-aws">AWS</span>
+        <span class="meta-tag">Amazon Aurora</span>
+        <span class="meta-tag">MySQL 8.4</span>
+        <span class="meta-tag">LTS</span>
+        <span class="meta-tag">Managed Services</span>
+      </div>
+
+      <div class="comment-block">
+        <span class="comment-label">First comment: post immediately after publishing</span>
+        <div class="comment-text">If your Aurora or RDS MySQL databases are still on 8.0 and you want a clear migration path to 8.4 LTS before end-of-life pressure hits, we offer a free managed database review: <strong>kubiieo.com/managed-services-2</strong></div>
+      </div>
+
+      <div class="post-link-block">
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Source</span>
+            <span class="link-desc">AWS What's New</span>
+          </div>
+          <div class="link-url"><a href="https://aws.amazon.com/about-aws/whats-new/2026/05/amazon-aurora-mysql/8-4/" target="_blank">aws.amazon.com / Amazon Aurora MySQL 8.4 is now generally available</a></div>
+        </div>
+        <div class="link-row">
+          <div class="link-label-col">
+            <span class="link-label">Landing page</span>
+            <span class="link-desc">Kubiieo service</span>
+          </div>
+          <div class="link-url"><a href="https://kubiieo.com/managed-services-2" target="_blank">kubiieo.com/managed-services-2</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLISHING NOTES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
       <h2 class="section-title">Publishing notes</h2>
       <div class="section-rule"></div>
     </div>
     <div class="notes-box">
       <ul>
-        <li>Suggested cadence: Post 1 Monday 2 June, Post 2 Wednesday 4 June, Post 3 Friday 6 June. One post per day keeps reach consistent without flooding the feed.</li>
+        <li><strong>Schedule:</strong> Post 1 Friday 29 May, Post 2 Monday 1 June, Post 3 Wednesday 3 June, Post 4 Friday 5 June. One post per slot keeps reach consistent without flooding the feed.</li>
         <li>Drop the first comment within 2 minutes of publishing. LinkedIn's algorithm rewards early engagement on comments and penalises external links in the post body.</li>
-        <li>Images: branded PNG files (1200×628px) are provided separately in this folder for each post.</li>
+        <li>Images: branded PNG files (1200×628px) are provided alongside this document for each post.</li>
         <li>Tagging AWS official pages in the post body tends to increase reach. Use @AWSCloud or tag the article author where available.</li>
       </ul>
     </div>
@@ -410,7 +527,7 @@ This is a good moment to look at whether your AWS security posture covers the su
 </main>
 
 <footer class="site-footer">
-  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Content &nbsp;·&nbsp; Week 4 June 2026 &nbsp;·&nbsp; Prepared by Sean O'Brien</p>
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Content &nbsp;·&nbsp; Week 4 June 2026 &nbsp;·&nbsp; Prepared by Streetwise Consultancy</p>
 </footer>
 
 </body>
