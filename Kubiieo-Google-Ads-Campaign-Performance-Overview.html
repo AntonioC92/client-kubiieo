@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo, Google Ads, Campaign Performance Overview</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+  --danger-bd:   #e0b0b0;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary-dk);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.toolbar-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-btn {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-download { background: var(--primary); color: #fff; }
+.btn-download:hover { opacity: 0.9; }
+.btn-edit { background: var(--accent); color: #fff; }
+.btn-edit:hover { opacity: 0.9; }
+.btn-save { background: var(--success); color: #fff; }
+.btn-save:hover { opacity: 0.9; }
+.btn-save[hidden] { display: none; }
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-metric { font-weight: 600; color: var(--primary-dk); }
+.td-delta-up { color: var(--success); font-weight: 600; }
+.td-delta-down { color: var(--success); font-weight: 600; }
+.td-delta-flat { color: var(--muted); font-weight: 600; }
+.td-delta-neg { color: var(--danger); font-weight: 600; }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.warn-box .warn-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warn-text);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.warn-box p { margin-bottom: 10px; line-height: 1.75; color: #4a3a00; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.block-done {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--primary);
+  color: #fff;
+}
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 12px; }
+.block-body p:last-child { margin-bottom: 0; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-num.success { color: var(--success); }
+.stat-num.muted { color: var(--muted); }
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.stat-sub.good { color: var(--success); font-weight: 600; }
+.stat-sub.flat { color: var(--muted); font-weight: 600; }
+
+.presenter-box {
+  background: var(--primary-lt);
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+.presenter-box .presenter-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.presenter-box p { margin-bottom: 12px; line-height: 1.75; }
+.presenter-box p:last-child { margin-bottom: 0; }
+
+.doc-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.55);
+  padding: 24px 40px;
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.doc-footer strong { color: rgba(255,255,255,0.9); }
+
+body.editing .page, body.editing .doc-header-inner {
+  outline: 2px dashed var(--accent);
+  outline-offset: 8px;
+  background: rgba(123, 95, 204, 0.03);
+}
+.edit-banner {
+  position: sticky;
+  top: 41px;
+  z-index: 99;
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  border-bottom: 1px solid var(--warn-bd);
+  padding: 8px 24px;
+  font-size: 12px;
+  text-align: center;
+  display: none;
+}
+body.editing .edit-banner { display: block; }
+
+@media print {
+  .toolbar { display: none; }
+  .edit-banner { display: none !important; }
+  body { background: white; }
+}
+</style>
+</head>
+<body class="">
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo, Google Ads Performance Overview</span>
+  <button class="toolbar-btn btn-download" onclick="window.print()">⬇ Download / Print</button>
+  <button class="toolbar-btn btn-edit" id="btnEdit" onclick="toggleEdit()">✓ Done editing</button>
+  <button class="toolbar-btn btn-save" id="btnSave" onclick="saveHtml()">💾 Save HTML</button>
+</div>
+<div class="edit-banner">Editing mode is on. Click into any text to change it. When you're done, click <strong>Save HTML</strong> to download your edited copy.</div>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Google Ads, Campaign Performance Overview</div>
+    <h1>Kubiieo, Campaign Performance Overview</h1>
+    <div class="subtitle">Campaign #1 (AWS Managed Services). All-time totals since launch on 17 April 2026, plus the most recent week-on-week comparison and the trajectory that connects the two.</div>
+    <div class="header-tags">
+      <span class="header-tag">17 Apr - 2 Jun 2026</span>
+      <span class="header-tag live">Optimisation score: 97.8%</span>
+      <span class="header-tag">Status: Eligible</span>
+      <span class="header-tag">Prepared by Antonio Caruso</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <p class="lead-paragraph">
+    Since launch on 17 April, Campaign #1 has served <strong>8,760 impressions</strong> and pulled <strong>387 clicks</strong> at an average cost-per-click of <strong>A$4.16</strong>, for total spend of <strong>A$1,608.57</strong>. The campaign has an optimisation score of <strong>97.8%</strong>.</p><p class="lead-paragraph">This week's CPC is <strong>A$1.99</strong>, more than half of where it started, and click-through rate has climbed from <strong>2.03%</strong> in the first month to <strong>9.06%</strong> in the most recent week.&nbsp;</p>
+
+  <!-- ============================================================
+       Section 1: Since Launch
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Since Launch</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Totals across the full live period (47 days, 17 April to 2 June 2026).</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">387</span>
+      <span class="stat-label">Total Clicks</span>
+      <div class="stat-sub">across 47 days live</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">8,760</span>
+      <span class="stat-label">Total Impressions</span>
+      <div class="stat-sub">eyeballs on the ad</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">A$4.16</span>
+      <span class="stat-label">Avg CPC, All-Time</span>
+      <div class="stat-sub">blended across early high-CPC period and recent gains</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">A$1,609</span>
+      <span class="stat-label">Total Spend</span>
+      <div class="stat-sub">A$50/day budget</div>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">4.42%</span>
+      <span class="stat-label">CTR, All-Time</span>
+      <div class="stat-sub">solid for B2B Search</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num muted">0</span>
+      <span class="stat-label">Conversions</span>
+      <div class="stat-sub">open item, see section 05</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">97.8%</span>
+      <span class="stat-label">Optimisation Score</span>
+      <div class="stat-sub">up from 74.5% at start</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">47</span>
+      <span class="stat-label">Days Live</span>
+      <div class="stat-sub">since 17 Apr 2026</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Section 2: This Week vs Last Week
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">This Week vs Last Week</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The most recent seven days (Tue 26 May to Mon 1 Jun) against the previous seven (Tue 19 to Mon 25 May).</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num success">163</span>
+      <span class="stat-label">Clicks</span>
+      <div class="stat-sub good">▲ +49 vs prev (+43%)</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">9.06%</span>
+      <span class="stat-label">CTR</span>
+      <div class="stat-sub good">▲ +1.66 pt vs 7.40%</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">A$1.99</span>
+      <span class="stat-label">Avg CPC</span>
+      <div class="stat-sub good">▼ -A$0.89 (-31%)</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">A$324</span>
+      <span class="stat-label">Cost</span>
+      <div class="stat-sub flat">▼ -A$4.58 (essentially flat)</div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Metric</th>
+        <th>Previous week<br><span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; opacity: 0.85;">Tue 19 - Mon 25 May</span></th>
+        <th>This week<br><span style="font-weight: 400; text-transform: none; letter-spacing: 0; font-size: 10px; opacity: 0.85;">Tue 26 May - Mon 1 Jun</span></th>
+        <th>Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-metric">Clicks</td>
+        <td>114</td>
+        <td><strong>163</strong></td>
+        <td class="td-delta-up">▲ +49 (+43.0%)</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Impressions</td>
+        <td>1,541</td>
+        <td><strong>1,799</strong></td>
+        <td class="td-delta-up">▲ +258 (+16.7%)</td>
+      </tr>
+      <tr>
+        <td class="td-metric">CTR</td>
+        <td>7.40%</td>
+        <td><strong>9.06%</strong></td>
+        <td class="td-delta-up">▲ +1.66 pt (+22.4%)</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Avg CPC</td>
+        <td>A$2.88</td>
+        <td><strong>A$1.99</strong></td>
+        <td class="td-delta-down">▼ -A$0.89 (-30.9%)</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Cost</td>
+        <td>A$328.57</td>
+        <td><strong>A$323.99</strong></td>
+        <td class="td-delta-flat">▼ -A$4.58 (-1.4%)</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Conversions</td>
+        <td>0</td>
+        <td><strong>0</strong></td>
+        <td class="td-delta-flat">no change, open item</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       Section 3: Trajectory
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Trajectory</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The campaign's first month and its most recent week look like two different campaigns. Each click is now buying more than four times the impression share it bought at launch, at less than a quarter of the price.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Period</th>
+        <th>Clicks</th>
+        <th>Impressions</th>
+        <th>CTR</th>
+        <th>Avg CPC</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="td-metric">First 32 days<br><span class="stat-sub" style="margin: 0;">17 Apr - 18 May</span></td>
+        <td>110</td>
+        <td>5,420</td>
+        <td>2.03%</td>
+        <td>A$8.69</td>
+        <td>A$956.01</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Previous week<br><span class="stat-sub" style="margin: 0;">19 - 25 May</span></td>
+        <td>114</td>
+        <td>1,541</td>
+        <td>7.40%</td>
+        <td>A$2.88</td>
+        <td>A$328.57</td>
+      </tr>
+      <tr>
+        <td class="td-metric">Past week<br><span class="stat-sub" style="margin: 0;">26 May - 1 Jun</span></td>
+        <td><strong>163</strong></td>
+        <td><strong>1,799</strong></td>
+        <td><strong>9.06%</strong></td>
+        <td><strong>A$1.99</strong></td>
+        <td><strong>A$323.99</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <div class="note-label">Reading the trajectory</div>
+    <p>The first month, before structural fixes had taken hold, was paying around <strong>A$8.69 per click</strong> at a <strong>2.03%</strong> CTR.&nbsp;</p><p>Two weeks of optimisation later, CPC was already down to <strong>A$2.88</strong> and CTR more than tripled.&nbsp;</p><p>This week the campaign reached <strong>A$1.99 CPC</strong> and <strong>9.06% CTR</strong>.</p>
+  </div>
+
+  <!-- ============================================================
+       Section 4: What's Driven the Improvement
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">What's Driven the Improvement</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Round 1, early May</span>
+      <span class="block-tag">Foundation</span>
+    </div>
+    <div class="block-body">
+      <p>I added Six sitelinks added, structured snippets, seven callouts, four additional RSA headlines that pushed Ad Strength from Average to Good. I also added a Negative-keyword starter list. After raising bidding ceiling from <strong>A$5 to A$15, </strong>Score climbed from <strong>74.5%</strong> to <strong>81%</strong>.</p>
+    </div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Round 2, week of 12 May</span>
+      <span class="block-tag">Measurement fix</span>
+    </div>
+    <div class="block-body">
+      <p>Investigation uncovered that the Consent Mode tag in GTM was defaulting every advertising and analytics consent type to <code>denied</code>, I fixed that and increased max bidding per click to&nbsp;<strong>A$18</strong>. Six more negatives added, taking the list to <strong>29 terms</strong>. Score climbed to <strong>84.9%</strong>.</p>
+    </div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <span class="block-title">Round 3, week of 21 May into 2 Jun</span>
+      <span class="block-tag">Verification and efficiency</span>
+    </div>
+    <div class="block-body">
+      <p>A live test confirmed the conversion tag now fires with consent granted (<code>gcs=G111</code>), which cleared Google's <strong>+9.8%</strong> conversion-tracking recommendation and drove most of the score jump from <strong>84.9%</strong> to <strong>94.6%</strong>.&nbsp;</p><p>I added Google search partners for additional reach (no Quality Score impact). Eleven duplicate exact-match keywords consolidated into their phrase-match equivalents, with no loss of coverage. The score then reached <strong>97.8%</strong>.&nbsp;</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Section 5: The Open Item
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">The Open Item, Conversions</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The one number that has not moved is counted conversions. After <strong>387 ad clicks</strong> and <strong>A$1,608.57</strong> in spend, the campaign reports <strong>zero</strong>. The Round 3 verification proved the tag fires correctly with consent granted in a direct-visit test, so the pipeline itself is working.&nbsp;</p>
+
+  <div class="warn-box">
+    <div class="warn-label">I fixed all crm issues for leads to be captured properly in zoho</div></div><div class="section-header">
+  </div>
+
+  <div class="presenter-box">
+    <div class="presenter-label">Near-term priorities</div>
+    <ul style="list-style: none; padding: 0; margin: 0;">
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Confirm whether this week's <strong>A$1.99 CPC</strong> holds as the system continues to learn.&nbsp;</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Land the first counted conversion in Google Ads reporting. Daily check is monitoring.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Segment search-partner performance by network in two to three weeks. Keep it on if partner clicks contribute, switch off if they only add spend.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Continue the weekly search-terms review and add negatives where waste appears.</li>
+      <li style="padding: 6px 0 6px 18px; position: relative;"><span style="position: absolute; left: 0; color: var(--primary); font-weight: 700;">→</span>Reach <strong>around 30 conversions</strong>, then migrate the bid strategy from Maximize Clicks to Maximize Conversions or Target CPA. This is the change that pulls cost-per-lead down the most.</li>
+    </ul>
+  </div>
+
+  <!-- ============================================================
+       Section 7: In Summary
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <h2 class="section-title">In Summary</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Across <strong>47 days live</strong>, Campaign #1 has accumulated <strong>387 clicks</strong>, <strong>8,760 impressions</strong>, and <strong>A$1,608.57</strong> in spend.&nbsp;</p><p>The optimisation score has moved from <strong>74.5% to 97.8%</strong>. Per-click cost has dropped from <strong>A$8.69</strong> in the first month to <strong>A$1.99</strong> this week, a reduction of just over <strong>77%</strong>. CTR has climbed from <strong>2.03%</strong> to <strong>9.06%</strong>.&nbsp;</p><p>The structural foundations are in place and the auction is responding.&nbsp;</p>
+
+</div>
+
+<div class="doc-footer">
+  <span><strong>Kubiieo, Google Ads Campaign Performance Overview</strong></span>
+  <span>Prepared by Antonio Caruso, 2 Jun 2026</span>
+</div>
+
+<script>
+function toggleEdit() {
+  const body = document.body;
+  const editBtn = document.getElementById('btnEdit');
+  const saveBtn = document.getElementById('btnSave');
+  const editable = document.querySelectorAll('.page, .doc-header-inner');
+  const turnOn = !body.classList.contains('editing');
+  body.classList.toggle('editing', turnOn);
+  editable.forEach(el => {
+    if (turnOn) el.setAttribute('contenteditable', 'true');
+    else el.removeAttribute('contenteditable');
+  });
+  editBtn.textContent = turnOn ? '✓ Done editing' : '✎ Edit';
+  saveBtn.hidden = !turnOn;
+}
+function saveHtml() {
+  document.querySelectorAll('[contenteditable]').forEach(el => el.removeAttribute('contenteditable'));
+  document.body.classList.remove('editing');
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = (document.title || 'report').replace(/[^a-z0-9._-]+/gi, '-').replace(/^-+|-+$/g, '');
+  a.href = url;
+  a.download = safeName + '-edited.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  document.getElementById('btnEdit').textContent = '✎ Edit';
+  document.getElementById('btnSave').hidden = true;
+}
+</script>
+
+
+
+</body></html>
