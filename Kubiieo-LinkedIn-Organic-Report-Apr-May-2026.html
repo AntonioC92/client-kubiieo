@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo, LinkedIn Organic Report, April &amp; May 2026</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--primary-dk);
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.toolbar-title {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  flex: 1;
+}
+.toolbar-btn {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 7px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-download { background: var(--primary); color: #fff; }
+.btn-download:hover { opacity: 0.9; }
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+th.num { text-align: right; }
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+td.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.date { white-space: nowrap; color: var(--muted); font-size: 12.5px; }
+td.title { font-weight: 600; color: var(--primary-dk); }
+td.author { white-space: nowrap; color: var(--muted); font-size: 12.5px; }
+td.rank-cell {
+  text-align: center;
+  font-weight: 700;
+  color: var(--primary-dk);
+  background: var(--primary-lt) !important;
+  width: 36px;
+}
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+tr.top-row td { background: rgba(91,63,168,0.08); }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.warn-box .warn-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warn-text);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.warn-box p { margin-bottom: 10px; line-height: 1.75; color: #4a3a00; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.block-done {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--primary);
+  color: #fff;
+}
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 12px; }
+.block-body p:last-child { margin-bottom: 0; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-num.success { color: var(--success); }
+.stat-num.muted { color: var(--muted); }
+.stat-label {
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat-sub {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+.stat-sub.good { color: var(--success); font-weight: 600; }
+.stat-sub.flat { color: var(--muted); font-weight: 600; }
+
+.presenter-box {
+  background: var(--primary-lt);
+  border-left: 4px solid var(--primary);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+.presenter-box .presenter-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.presenter-box p { margin-bottom: 12px; line-height: 1.75; }
+.presenter-box p:last-child { margin-bottom: 0; }
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+.list-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 18px 22px;
+  font-size: 13.5px;
+}
+.list-card h4 {
+  font-size: 13px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: 700;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--neutral);
+  padding-bottom: 8px;
+}
+.list-card .row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--neutral);
+  align-items: center;
+}
+.list-card .row:last-child { border-bottom: none; }
+.list-card .row .name { color: var(--charcoal); }
+.list-card .row .count { color: var(--primary-dk); font-weight: 600; font-variant-numeric: tabular-nums; }
+.list-card .row .pct { color: var(--muted); font-size: 11.5px; min-width: 46px; text-align: right; font-variant-numeric: tabular-nums; }
+.list-card .person { padding: 9px 0; border-bottom: 1px solid var(--neutral); }
+.list-card .person:last-child { border-bottom: none; }
+.list-card .person .pname { color: var(--primary-dk); font-weight: 600; font-size: 13.5px; }
+.list-card .person .prole { color: var(--muted); font-size: 12px; margin-top: 2px; line-height: 1.45; }
+
+.rec-list { list-style: none; padding: 0; margin-bottom: 0; }
+.rec-list li {
+  padding: 8px 0 8px 22px;
+  position: relative;
+  font-size: 14px;
+  border-bottom: 1px solid var(--neutral);
+  line-height: 1.7;
+}
+.rec-list li:last-child { border-bottom: none; }
+.rec-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  color: var(--primary);
+  font-weight: 700;
+}
+.rec-list strong { color: var(--primary-dk); }
+
+.doc-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.55);
+  padding: 24px 40px;
+  margin-top: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+.doc-footer strong { color: rgba(255,255,255,0.9); }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: white; }
+}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo, LinkedIn Organic Report</span>
+  <button class="toolbar-btn btn-download" onclick="window.print()">⬇ Download / Print</button>
+</div>
+
+<div class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">LinkedIn Organic, Performance Overview</div>
+    <h1>Kubiieo, LinkedIn Organic Report</h1>
+    <div class="subtitle">Performance summary for Kubiieo's company page across the first full sprint of weekly AWS-focused content (8 April to 1 June 2026). Page-level metrics, post-by-post performance, follower growth, and what the data is telling us about what to keep doing.</div>
+    <div class="header-tags">
+      <span class="header-tag">8 Apr, 1 Jun 2026</span>
+      <span class="header-tag live">221 followers, +53 in May</span>
+      <span class="header-tag">13 posts published</span>
+      <span class="header-tag">Prepared by Caruso Martech</span>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+
+  <p class="lead-paragraph">
+    Eight weeks of weekly posting has moved Kubiieo's company page from a flat zero baseline to a working organic channel. <strong>3,286 impressions and 73 reactions</strong> on 13 posts is a healthy starting point for a niche B2B page in the Australian cloud-consulting space, and the audience growth signal underneath it is the more important number.
+  </p>
+  <p class="lead-paragraph">
+    May added <strong>53 new followers (+341.7% vs April)</strong>, and the composition is on-ICP: Principal DevOps Engineers, Lead AWS Consultants, AI Product Leaders. The same buyer pool we're targeting on Google Ads is now finding the page on its own.
+  </p>
+
+  <!-- ============================================================
+       Section 1: Headline Numbers
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <h2 class="section-title">Headline Numbers</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Totals across the live posting window (8 April to 1 June 2026, 90-day analytics view).</p>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">3,286</span>
+      <span class="stat-label">Total Impressions</span>
+      <div class="stat-sub">all organic, no paid spend</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">221</span>
+      <span class="stat-label">Followers</span>
+      <div class="stat-sub good">▲ +53 in May (+341.7%)</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">73</span>
+      <span class="stat-label">Reactions</span>
+      <div class="stat-sub">avg 5.6 per post</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">94</span>
+      <span class="stat-label">Clicks to Page</span>
+      <div class="stat-sub">blended CTR ~2.9%</div>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">196</span>
+      <span class="stat-label">Page Views, May</span>
+      <div class="stat-sub good">▲ +44.8% vs April</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">86</span>
+      <span class="stat-label">Unique Visitors, May</span>
+      <div class="stat-sub">50/50 desktop, mobile</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">646</span>
+      <span class="stat-label">Top Post Impressions</span>
+      <div class="stat-sub">Cost Explorer + Amazon Q, 8 Apr</div>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num success">9.43%</span>
+      <span class="stat-label">Best Engagement Rate</span>
+      <div class="stat-sub">Redshift RG, 18 May</div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Section 2: What the numbers are telling us
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <h2 class="section-title">What the Numbers Are Telling Us</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Four signals in the data worth pulling out before reading the post table.</p>
+
+  <div class="block-done">
+    <div class="block-head">
+      <div class="block-title">The audience is real and on-ICP</div>
+      <span class="block-tag">Signal 1</span>
+    </div>
+    <div class="block-body">
+      <p>53 new followers landed in May alone, up 341.7% on April. The mix isn't random clicks: it's Principal DevOps Engineers, Lead AWS Consultants, Engineering Leaders ex-AWS, AI &amp; Product Leaders in insurance, all exactly the buyer profile in the Google Ads ICP.</p>
+    </div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <div class="block-title">Sydney and Melbourne dominate</div>
+      <span class="block-tag">Signal 2</span>
+    </div>
+    <div class="block-body">
+      <p>143 of 221 followers are in Greater Sydney (53.8%) or Greater Melbourne (10.9%). The geographic concentration aligns with the Google Ads targeting and means the same audience is being warmed in two places. 64.7% Australia, 35.3% international (mostly tech hubs: Bengaluru, London, Paris, Chennai).</p>
+    </div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <div class="block-title">Cadence matters more than length</div>
+      <span class="block-tag">Signal 3</span>
+    </div>
+    <div class="block-body">
+      <p>The impressions chart shows a near-flat baseline in March, then a clear inflection point in mid-April when weekly posting started. The follower curve and the impressions curve are tracking together, which is the signal we want. Follower growth is up 7,200% versus the previous 90-day window when no posting was happening.</p>
+    </div>
+  </div>
+
+  <div class="block-done">
+    <div class="block-head">
+      <div class="block-title">Leadership voices drive engagement</div>
+      <span class="block-tag">Signal 4</span>
+    </div>
+    <div class="block-body">
+      <p>Posts published under leadership names outperform the page average. The Advanced Tier milestone (504 impressions) and the AWS Summit coffee post (150 impressions from a 50-word text post) prove personal voice still beats company voice on LinkedIn. Three of the top six posts overall come from leadership-authored content.</p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       Section 3: Post-by-post performance
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Post-by-Post Performance</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Every post Kubiieo has published since the campaign started, ranked by impressions. Highlighted rows are the top five performers.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date</th>
+        <th>Topic</th>
+        <th class="num">Impr.</th>
+        <th class="num">Clicks</th>
+        <th class="num">CTR</th>
+        <th class="num">React.</th>
+        <th class="num">Comm.</th>
+        <th class="num">Eng. rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="top-row">
+        <td class="rank-cell">1</td>
+        <td class="date">8 Apr</td>
+        <td class="title">Cost Explorer with Amazon Q natural-language queries</td>
+        <td class="num"><strong>646</strong></td>
+        <td class="num">26</td>
+        <td class="num">4.02%</td>
+        <td class="num">11</td>
+        <td class="num">1</td>
+        <td class="num">6.04%</td>
+      </tr>
+      <tr class="top-row">
+        <td class="rank-cell">2</td>
+        <td class="date">7 May</td>
+        <td class="title">AWS Advanced Tier Partner milestone</td>
+        <td class="num"><strong>504</strong></td>
+        <td class="num">21</td>
+        <td class="num">4.17%</td>
+        <td class="num">14</td>
+        <td class="num">0</td>
+        <td class="num">7.54%</td>
+      </tr>
+      <tr class="top-row">
+        <td class="rank-cell">3</td>
+        <td class="date">17 Apr</td>
+        <td class="title">AWS using AI to defend customers at scale</td>
+        <td class="num"><strong>333</strong></td>
+        <td class="num">5</td>
+        <td class="num">1.50%</td>
+        <td class="num">5</td>
+        <td class="num">1</td>
+        <td class="num">3.30%</td>
+      </tr>
+      <tr class="top-row">
+        <td class="rank-cell">4</td>
+        <td class="date">15 Apr</td>
+        <td class="title">Amazon OpenSearch Serverless Derived Source</td>
+        <td class="num"><strong>282</strong></td>
+        <td class="num">11</td>
+        <td class="num">3.90%</td>
+        <td class="num">10</td>
+        <td class="num">1</td>
+        <td class="num">7.80%</td>
+      </tr>
+      <tr class="top-row">
+        <td class="rank-cell">5</td>
+        <td class="date">8 May</td>
+        <td class="title">AWS Glue 5.1 GA across all regions</td>
+        <td class="num"><strong>247</strong></td>
+        <td class="num">4</td>
+        <td class="num">1.62%</td>
+        <td class="num">3</td>
+        <td class="num">0</td>
+        <td class="num">2.83%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">6</td>
+        <td class="date">11 May</td>
+        <td class="title">AWS CIRT updates the public Threat Technique Catalog</td>
+        <td class="num">232</td>
+        <td class="num">4</td>
+        <td class="num">1.72%</td>
+        <td class="num">4</td>
+        <td class="num">0</td>
+        <td class="num">3.45%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">7</td>
+        <td class="date">20 May</td>
+        <td class="title">Amazon Bedrock Advanced Prompt Optimization</td>
+        <td class="num">178</td>
+        <td class="num">2</td>
+        <td class="num">1.12%</td>
+        <td class="num">4</td>
+        <td class="num">0</td>
+        <td class="num">3.37%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">8</td>
+        <td class="date">16 Apr</td>
+        <td class="title">AWS Agent Registry (Bedrock AgentCore) preview</td>
+        <td class="num">171</td>
+        <td class="num">4</td>
+        <td class="num">2.34%</td>
+        <td class="num">6</td>
+        <td class="num">1</td>
+        <td class="num">6.43%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">9</td>
+        <td class="date">22 May</td>
+        <td class="title">AWS WAF AI Traffic Analysis dashboards</td>
+        <td class="num">167</td>
+        <td class="num">5</td>
+        <td class="num">2.99%</td>
+        <td class="num">5</td>
+        <td class="num">0</td>
+        <td class="num">5.99%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">10</td>
+        <td class="date">18 May</td>
+        <td class="title">Amazon Redshift RG instances on Graviton</td>
+        <td class="num">159</td>
+        <td class="num">8</td>
+        <td class="num">5.03%</td>
+        <td class="num">5</td>
+        <td class="num">2</td>
+        <td class="num"><strong>9.43%</strong></td>
+      </tr>
+      <tr>
+        <td class="rank-cell">11</td>
+        <td class="date">12 May</td>
+        <td class="title">AWS Summit Sydney, see you tomorrow (text post)</td>
+        <td class="num">150</td>
+        <td class="num">3</td>
+        <td class="num">2.00%</td>
+        <td class="num">3</td>
+        <td class="num">0</td>
+        <td class="num">4.67%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">12</td>
+        <td class="date">29 May</td>
+        <td class="title">Apache Spark 4.0.2 GA on Amazon EMR</td>
+        <td class="num">110</td>
+        <td class="num">1</td>
+        <td class="num">0.91%</td>
+        <td class="num">3</td>
+        <td class="num">1</td>
+        <td class="num">4.55%</td>
+      </tr>
+      <tr>
+        <td class="rank-cell">13</td>
+        <td class="date">1 Jun</td>
+        <td class="title">P6-B200 NVIDIA Blackwell on SageMaker Notebooks</td>
+        <td class="num">77</td>
+        <td class="num">0</td>
+        <td class="num">0%</td>
+        <td class="num">2</td>
+        <td class="num">0</td>
+        <td class="num">2.60%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ============================================================
+       Section 4: Follower growth and audience composition
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Follower Growth and Audience Composition</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>May added <strong>53 new followers (+341.7%)</strong> on top of an April baseline that was effectively zero. The composition is the part to look at: this is the engineering and consulting buyer pool we've been targeting, finding the page on their own and following.</p>
+
+  <div class="two-col">
+
+    <div class="list-card">
+      <h4>Where the audience is</h4>
+      <div class="row"><div class="name">Greater Sydney</div><div class="count">119</div><div class="pct">53.8%</div></div>
+      <div class="row"><div class="name">Greater Melbourne</div><div class="count">24</div><div class="pct">10.9%</div></div>
+      <div class="row"><div class="name">Greater Bengaluru</div><div class="count">4</div><div class="pct">1.8%</div></div>
+      <div class="row"><div class="name">Greater Brisbane</div><div class="count">4</div><div class="pct">1.8%</div></div>
+      <div class="row"><div class="name">Sydney (city)</div><div class="count">3</div><div class="pct">1.4%</div></div>
+      <div class="row"><div class="name">Melbourne (city)</div><div class="count">3</div><div class="pct">1.4%</div></div>
+      <div class="row"><div class="name">London</div><div class="count">3</div><div class="pct">1.4%</div></div>
+      <div class="row"><div class="name">Paris</div><div class="count">2</div><div class="pct">&lt; 1%</div></div>
+      <div class="row"><div class="name">Chennai</div><div class="count">2</div><div class="pct">&lt; 1%</div></div>
+      <div class="row"><div class="name">St Leonards</div><div class="count">2</div><div class="pct">&lt; 1%</div></div>
+    </div>
+
+    <div class="list-card">
+      <h4>New follower roles in May (sample)</h4>
+      <div class="person"><div class="pname">Principal DevOps Engineer</div><div class="prole">Aerial-imagery scale-up</div></div>
+      <div class="person"><div class="pname">Lead AWS Consultant</div><div class="prole">IaC, Cloud Reliability, AI-enabled solutions</div></div>
+      <div class="person"><div class="pname">Engineering Leader</div><div class="prole">Automation &amp; AI-driven ops, ex-AWS</div></div>
+      <div class="person"><div class="pname">Director, Build</div><div class="prole">Software, AI &amp; Cloud Engineering</div></div>
+      <div class="person"><div class="pname">AI &amp; Product Leader</div><div class="prole">Generative AI in Insurance</div></div>
+      <div class="person"><div class="pname">SecDevOps / Cloud SRE</div><div class="prole">Storage and reliability</div></div>
+      <div class="person"><div class="pname">Principal Consultant</div><div class="prole">Cloud and digital advisory</div></div>
+      <div class="person"><div class="pname">Senior Database Administrator</div><div class="prole">Data platform operations</div></div>
+      <div class="person"><div class="pname">Growth Marketing Strategist</div><div class="prole">SEO &amp; PPC</div></div>
+      <div class="person"><div class="pname">Technologist, AI certified</div><div class="prole">People-first leadership</div></div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================
+       Section 5: What's working
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <h2 class="section-title">What's Working</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>Three patterns. Do more of these.</p>
+
+  <div class="presenter-box">
+    <div class="presenter-label">Pattern 1, News + a take wins</div>
+    <p><strong>Best format on the page:</strong> AWS announcement, the problem it solves, what to do about it.</p>
+    <p>Top three posts by engagement all use it. Cost Explorer: <strong>646 impressions</strong>. OpenSearch: <strong>7.8%</strong>. Redshift RG: <strong>9.43%</strong>.</p>
+  </div>
+
+  <div class="presenter-box">
+    <div class="presenter-label">Pattern 2, Leadership voices outperform</div>
+    <p><strong>Posts published under leadership names beat the page average.</strong></p>
+    <p>Advanced Tier milestone: 504 impressions, 7.54% engagement. AWS Summit coffee post (50 words of text): 150 impressions. Three of the top six posts overall are leadership-authored.</p>
+    <p>Keep mixing them in. Reserve founder-authored posts for company moments.</p>
+  </div>
+
+  <div class="presenter-box">
+    <div class="presenter-label">Pattern 3, The right people are following</div>
+    <p><strong>New followers = the Google Ads ICP.</strong> Principal DevOps Engineers, Lead AWS Consultants, AI Product Leaders, Engineering Directors.</p>
+    <p>This audience is now warm for the same offers running on Google Ads. Same buyer pool, two channels.</p>
+  </div>
+
+  <!-- ============================================================
+       Section 6: What I'd do next
+       ============================================================ -->
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <h2 class="section-title">What I'd Do Next</h2>
+    <div class="section-rule"></div>
+  </div>
+
+  <p>The posting rhythm is working and the right people are following. Now we turn views into conversations. Ideas for the next 60 days:</p>
+
+  <ul class="rec-list">
+    <li><strong>Send people somewhere.</strong> Most posts end with "worth a look" but don't link anywhere. Add a link to the matching landing page (cost, migration, or security) so readers have a clear next step.</li>
+    <li><strong>Keep posting AWS news with a take.</strong> Pick a fresh AWS announcement, say what problem it solves, say who should care. That's the format winning right now.</li>
+    <li><strong>Bring more leadership voices in.</strong> Posts under a leadership name do better than the page average. Add one each month, plus a founder post for big company moments.</li>
+    <li><strong>Put a small budget behind the best post.</strong> A$50 to A$100 of Boost on the top post each month gets it in front of more of the same audience. Better than spreading small amounts everywhere.</li>
+    <li><strong>Talk to the new followers.</strong> 53 of the right kind of people followed in May. Reach out directly through Sales Navigator. They've already shown interest.</li>
+    <li><strong>Aim for 350 followers by end of Q3.</strong> Current pace gets us close. Inviting connections and boosting one post a month would push us over.</li>
+    <li><strong>Track form submissions from LinkedIn.</strong> Right now we can't see who comes from a post to a landing page and submits a form. Setting up the tracking closes that gap.</li>
+  </ul>
+
+</div>
+
+<div class="doc-footer">
+  <div><strong>Kubiieo</strong>, LinkedIn Organic Report, April &amp; May 2026</div>
+  <div>Prepared by Caruso Martech, 2 June 2026</div>
+</div>
+
+</body>
+</html>
