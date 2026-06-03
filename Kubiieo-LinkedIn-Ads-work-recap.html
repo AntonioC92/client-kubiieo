@@ -323,7 +323,7 @@ body {
       <div class="section-rule"></div>
     </div>
 
-    <p class="intro">The LinkedIn ads strategy is finalised and live. The doc is brand-aligned, hosted on GitHub Pages, and ready to walk Baz through. The plan layers LinkedIn on top of the Google Ads activity already running for Kubiieo, and the campaigns lead with <strong>AWS Cost Optimisation</strong> as the primary offer. Security stays in the mix as a secondary angle, tested at a smaller share of impressions.</p>
+    <p class="intro">The LinkedIn ads strategy is finalised and live. The doc is brand-aligned, hosted on GitHub Pages, and ready to walk Baz through. The plan layers LinkedIn on top of the Google Ads activity already running for Kubiieo, and the campaigns lead with <strong>AWS Cost Optimisation</strong> as the primary offer. <strong>Security</strong> and an <strong>onshore-vs-offshore vendor</strong> angle (built on the sourcing-reality-check artefact Baz shared on 23 May) run alongside it at smaller shares of impressions, so Phase 1 reads which of the three messages the audience moves on.</p>
 
     <p class="intro">Strategy doc: <a href="https://antonioc92.github.io/client-kubiieo/Kubiieo-LinkedIn-Ads-Strategy.html">antonioc92.github.io/client-kubiieo/Kubiieo-LinkedIn-Ads-Strategy.html</a>. Source in <code>AntonioC92/client-kubiieo</code> on the Projects branch.</p>
   </section>
@@ -340,14 +340,16 @@ body {
 
     <ul class="intro-list">
       <li><strong>Three-phase funnel mapped:</strong> audience build (Weeks 1-6), lead capture (Weeks 4-10), conversion (Week 8 onward).</li>
-      <li><strong>Lead angle set:</strong> AWS Cost Optimisation as the primary message across all three phases, with security tested underneath it.</li>
-      <li><strong>Audience targeting recipe defined:</strong> roughly <strong>80,000 to 120,000 active members</strong> across Australia, New Zealand, and Singapore, leaning toward FinOps, platform, and infrastructure leaders plus the engineering managers who answer for the AWS bill.</li>
-      <li><strong>Lead magnets named:</strong> "The 2026 AWS Cost Reduction Playbook" as the primary, "AWS Security Posture Checklist" kept ready as the secondary.</li>
+      <li><strong>Lead angle set:</strong> AWS Cost Optimisation as the primary message, with <strong>security</strong> and the <strong>onshore-vs-offshore vendor</strong> angle tested underneath it at smaller shares of impressions. TPG Telecom is the live proof point for the offshore pain, and the creative names the pattern without naming specific vendors.</li>
+      <li><strong>Audience targeting recipe defined:</strong> roughly <strong>60,000 to 90,000 active members</strong> across Australia and New Zealand only (no Singapore by default), leaning toward <strong>Head of Cloud</strong>, FinOps, platform, and infrastructure leaders plus the engineering managers who answer for the AWS bill.</li>
+      <li><strong>Audience exclusions locked in:</strong> Cloudec and Aureon Advisory staff are excluded from paid campaigns, alongside the 16-company Cloudec partner-client list Baz sent on 1 June (Australia Post, Qantas, Chubb, Nine, ST Engineering, GROW Inc, Cover-More, Montu, PEXA, IDP Education, RACV, Village Roadshow, Griffith University, CHU Insurance, Land Services SA/WA partial, Infomedia). Exclusion applies to lead-magnet marketing only, not daily organic posts.</li>
+      <li><strong>Lead magnets named:</strong> "The 2026 AWS Cost Reduction Playbook" as the primary. Two follow-on magnets stand ready: "AWS Security Posture Checklist" for the security angle and "Sourcing Reality Check" for the onshore-vs-offshore angle (built on Baz's artefact).</li>
       <li><strong>Kill rules and KPIs set per phase:</strong> CPM, cost per follower, video completion, CPL, cost per landing-page submit, and Conversation Ads reply rate, each with a spending limit that triggers a pause.</li>
       <li><strong>90-day execution timeline drafted</strong>, with phase boundaries that move back by a week or two if the audience build is slower than expected.</li>
       <li><strong>Tracking plan scoped:</strong> LinkedIn Insight Tag to deploy via the existing GTM container <code>GTM-TV9VXWHD</code>, conversion events for follow, video view, lead-gen submit, and landing-page submit.</li>
       <li><strong>Reporting cadence aligned</strong> with the format already running for Google Ads: a weekly Slack post and a one-page HTML report every two weeks.</li>
-      <li><strong>Risks documented:</strong> Zoho admin access, Google verification, CPC running above band, Singapore audience size, and the Conversation Ads dependency on Baz's account.</li>
+      <li><strong>Lead routing while Zoho is pending:</strong> leads flow into the new <code>sales@kubiieo.com</code> inbox (through PagerDuty into the <code>#kubiieo-sales</code> Slack channel), with a parallel weekly export to a holding list so nothing is lost during the gap.</li>
+      <li><strong>Risks documented:</strong> Zoho admin access pending, Google verification still under review, CPC running above the quoted band, and the Conversation Ads dependency on Baz's account.</li>
     </ul>
   </section>
 
@@ -365,7 +367,7 @@ body {
       <div class="note-label">Three items needed from Baz</div>
       <p><strong>1. A small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience build is working.</p>
       <p><strong>2. The billing setup on LinkedIn Campaign Manager.</strong> If no billing method is attached at the campaign account level, Baz drops a card in. If something is already there, no action needed.</p>
-      <p><strong>3. The opening creative approval</strong> built from the AWS Cost Optimisation material already in use on the Google Ads channel and the cost-saving screenshots Baz shared on 8 May. One review cycle, written feedback in Slack is enough.</p>
+      <p><strong>3. The opening creative approval</strong> built from the AWS Cost Optimisation material already in use on the Google Ads channel, plus the smaller-share creatives for security and the onshore-vs-offshore angle (the sourcing-reality-check artefact Baz shared on 23 May informs the third). One review cycle, written feedback in Slack is enough.</p>
     </div>
   </section>
 
@@ -429,7 +431,9 @@ body {
         <tr><td>GTM container</td><td><code>GTM-TV9VXWHD</code>. Used for LinkedIn Insight Tag deployment and already wired for the Google Ads conversion stack.</td></tr>
         <tr><td>GA4 property</td><td><code>530485438</code> (measurement ID <code>G-CJS11Q3Y3Y</code>). Used for the cross-channel reporting layer.</td></tr>
         <tr><td>AWS Cost Optimisation creative</td><td>Folder from the Google Ads work, ready to be repurposed for the LinkedIn opening creative.</td></tr>
-        <tr><td>Zoho lead routing</td><td>Pending admin access from Baz. Phase 2 leads sit in a holding list (Google Sheet or Airtable) in the meantime.</td></tr>
+        <tr><td>Interim lead inbox</td><td><code>sales@kubiieo.com</code> routes through PagerDuty into the <code>#kubiieo-sales</code> Slack channel. Sean confirms his membership in that channel.</td></tr>
+        <tr><td>Zoho lead routing</td><td>Pending admin access from Baz. Phase 2 leads route to the <code>sales@kubiieo.com</code> inbox and to a parallel holding list (Google Sheet or Airtable) until Zoho is live.</td></tr>
+        <tr><td>Cloudec exclusion list</td><td>16-company Matched Audience exclusion loads at the campaign level. List in the strategy doc, section 04 note-box.</td></tr>
       </tbody>
     </table>
   </section>
@@ -445,7 +449,6 @@ body {
     <ul class="intro-list">
       <li><strong>Zoho admin access pending with Baz.</strong> Phase 2 leads route to a holding list weekly until access is in place, then load into the live Zoho flow with the right Lead Source tagging. Phase 3 retargeting needs Zoho live, but Phase 3 does not start until week 8 either way.</li>
       <li><strong>LinkedIn billing setup.</strong> The first campaign cannot launch until a billing method is attached at the campaign account level. Quick check with Baz once Sean is admin on the page.</li>
-      <li><strong>Singapore audience size.</strong> Tested in a separate ad set. If Singapore cannot spend its daily cap inside seven days, the ad set pauses and spend returns to Australia and New Zealand.</li>
       <li><strong>CPC running above band.</strong> If CPC sits <strong>30% above the upper band</strong> for two consecutive weeks, the targeting needs widening or the creative is wrong. Both responses sit inside the weekly optimisation block.</li>
       <li><strong>Conversation Ads dependency on Baz's account.</strong> Phase 3 Conversation Ads run from a named sender, defaulting to Baz. Replies route wherever Baz wants them to land.</li>
     </ul>
