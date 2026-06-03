@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo · LinkedIn Ads Work Recap</title>
+<style>
+:root {
+  --primary: #5B3FA8;
+  --primary-dk: #3d2a75;
+  --primary-lt: #f0ebff;
+  --accent: #7B5FCC;
+  --neutral: #e2d9f3;
+  --charcoal: #1a1a2e;
+  --bg: #f8f6ff;
+  --muted: #6b7280;
+  --white: #ffffff;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--charcoal);
+  background: var(--bg);
+  margin: 0;
+  padding: 0;
+}
+
+.site-header {
+  background: var(--primary-dk);
+  color: var(--white);
+  padding: 56px 0;
+}
+.header-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.brand-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 14px;
+}
+.header-title {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 0 0 18px;
+  line-height: 1.15;
+  color: var(--white);
+}
+.header-title span { color: var(--accent); display: block; font-weight: 400; font-size: 28px; margin-top: 6px; }
+.header-sub {
+  font-size: 15.5px;
+  color: rgba(255,255,255,0.92);
+  max-width: 760px;
+  margin: 0 0 28px;
+  line-height: 1.65;
+}
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 8px;
+}
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.meta-value { font-size: 14px; color: var(--white); font-weight: 500; }
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(248,246,255,0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--neutral);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.toolbar-title { font-size: 13px; color: var(--muted); }
+.toolbar-btn {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+.toolbar-btn:hover { background: var(--primary-dk); }
+
+.main { max-width: 1080px; margin: 0 auto; padding: 48px 32px 72px; }
+
+.section { margin-bottom: 56px; }
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.section-num {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.12em;
+}
+.section-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  margin: 0;
+}
+.section-rule { flex: 1; height: 1px; background: var(--neutral); }
+
+.intro {
+  font-size: 14.5px;
+  color: var(--charcoal);
+  line-height: 1.8;
+  margin-bottom: 22px;
+  max-width: 920px;
+}
+.intro:last-child { margin-bottom: 0; }
+.intro strong { color: var(--primary-dk); font-weight: 700; }
+.intro a { color: var(--primary); text-decoration: none; border-bottom: 1px solid var(--neutral); }
+.intro a:hover { border-bottom-color: var(--primary); }
+
+.intro-list { list-style: none; padding: 0; margin: 0 0 22px; max-width: 920px; }
+.intro-list li {
+  padding: 8px 0 8px 22px;
+  position: relative;
+  font-size: 14.5px;
+  color: var(--charcoal);
+  line-height: 1.8;
+}
+.intro-list li::before {
+  content: "\2192";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 13px;
+  top: 8px;
+}
+.intro-list li strong { color: var(--primary-dk); font-weight: 700; }
+
+.note-box {
+  background: var(--primary-lt);
+  border-left: 4px solid var(--primary);
+  padding: 22px 26px;
+  margin: 20px 0 28px;
+  border-radius: 0 6px 6px 0;
+}
+.note-label {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary-dk);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.note-box p { margin: 0 0 14px; line-height: 1.8; font-size: 14px; color: var(--charcoal); }
+.note-box p:last-child { margin-bottom: 0; }
+.note-box p strong { color: var(--primary-dk); font-weight: 700; }
+
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 8px;
+  font-size: 14px;
+  background: var(--white);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(91, 63, 168, 0.06);
+}
+.spec-table th, .spec-table td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--neutral);
+  vertical-align: top;
+}
+.spec-table thead th {
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.spec-table tbody tr:last-child td { border-bottom: none; }
+.spec-table td:first-child { font-weight: 600; color: var(--primary-dk); width: 30%; }
+.spec-table td strong { color: var(--primary-dk); }
+.spec-table code { background: var(--primary-lt); padding: 2px 6px; border-radius: 3px; font-size: 12.5px; color: var(--primary-dk); }
+
+.intro code, .note-box code { background: var(--primary-lt); padding: 2px 6px; border-radius: 3px; font-size: 13px; color: var(--primary-dk); }
+
+.owner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin: 16px 0 8px;
+}
+.owner-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 24px 26px;
+  box-shadow: 0 1px 2px rgba(91, 63, 168, 0.06);
+}
+.owner-card.lead { border-top: 4px solid var(--primary); }
+.owner-card.support { border-top: 4px solid var(--accent); }
+.owner-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.owner-name { font-size: 18px; font-weight: 700; color: var(--primary-dk); }
+.owner-role {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.owner-card ul { list-style: none; padding: 0; margin: 0; }
+.owner-card li {
+  font-size: 13.5px;
+  padding: 7px 0 7px 18px;
+  position: relative;
+  line-height: 1.65;
+  color: var(--charcoal);
+  border-bottom: 1px solid var(--neutral);
+}
+.owner-card li:last-child { border-bottom: none; }
+.owner-card li::before {
+  content: "\2192";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-size: 12px;
+  top: 7px;
+}
+
+.site-footer {
+  background: var(--primary-dk);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 22px 32px;
+  font-size: 13px;
+}
+.site-footer p { margin: 0; }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: var(--white); }
+  .site-header { background: var(--primary-dk) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .owner-card, .spec-table { box-shadow: none; }
+}
+
+@media (max-width: 720px) {
+  .owner-grid { grid-template-columns: 1fr; }
+  .header-title { font-size: 32px; }
+  .header-title span { font-size: 22px; }
+  .header-sub { font-size: 14.5px; }
+  .section-title { font-size: 22px; }
+  .main { padding: 32px 22px 52px; }
+  .header-inner { padding: 0 22px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">LinkedIn Ads &nbsp;·&nbsp; Work Recap</div>
+    <h1 class="header-title">Kubiieo <span>LinkedIn Ads Work Recap</span></h1>
+    <p class="header-sub">A short summary of the work to date on the LinkedIn ads test, the decisions taken so far, and the path to launch. Sits alongside the full strategy doc and the existing Google Ads activity already running for Kubiieo.</p>
+    <div class="header-meta">
+      <div class="meta-item">
+        <span class="meta-label">Client</span>
+        <span class="meta-value">Kubiieo (Baz Lalor)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Lead from here</span>
+        <span class="meta-value">Sean</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Pre-launch · ready for Baz</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Date</span>
+        <span class="meta-value">June 2026</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo &nbsp;·&nbsp; LinkedIn Ads Work Recap</span>
+  <button class="toolbar-btn" onclick="window.print()">Download / Print</button>
+</div>
+
+<main class="main">
+
+  <!-- 01 WHERE WE ARE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Where we are right now</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The LinkedIn ads strategy is finalised and live. The doc is brand-aligned, hosted on GitHub Pages, and ready to walk Baz through. The plan layers LinkedIn on top of the Google Ads activity already running for Kubiieo, and the campaigns lead with <strong>AWS Cost Optimisation</strong> as the primary offer. Security stays in the mix as a secondary angle, tested at a smaller share of impressions.</p>
+
+    <p class="intro">Strategy doc: <a href="https://antonioc92.github.io/client-kubiieo/Kubiieo-LinkedIn-Ads-Strategy.html">antonioc92.github.io/client-kubiieo/Kubiieo-LinkedIn-Ads-Strategy.html</a>. Source in <code>AntonioC92/client-kubiieo</code> on the Projects branch.</p>
+  </section>
+
+  <!-- 02 WHAT'S BEEN BUILT -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">What has been built so far</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The strategy doc covers each item below in full. This recap names them so the current state reads at a glance.</p>
+
+    <ul class="intro-list">
+      <li><strong>Three-phase funnel mapped:</strong> audience build (Weeks 1-6), lead capture (Weeks 4-10), conversion (Week 8 onward).</li>
+      <li><strong>Lead angle set:</strong> AWS Cost Optimisation as the primary message across all three phases, with security tested underneath it.</li>
+      <li><strong>Audience targeting recipe defined:</strong> roughly <strong>80,000 to 120,000 active members</strong> across Australia, New Zealand, and Singapore, leaning toward FinOps, platform, and infrastructure leaders plus the engineering managers who answer for the AWS bill.</li>
+      <li><strong>Lead magnets named:</strong> "The 2026 AWS Cost Reduction Playbook" as the primary, "AWS Security Posture Checklist" kept ready as the secondary.</li>
+      <li><strong>Kill rules and KPIs set per phase:</strong> CPM, cost per follower, video completion, CPL, cost per landing-page submit, and Conversation Ads reply rate, each with a spending limit that triggers a pause.</li>
+      <li><strong>90-day execution timeline drafted</strong>, with phase boundaries that move back by a week or two if the audience build is slower than expected.</li>
+      <li><strong>Tracking plan scoped:</strong> LinkedIn Insight Tag to deploy via the existing GTM container <code>GTM-TV9VXWHD</code>, conversion events for follow, video view, lead-gen submit, and landing-page submit.</li>
+      <li><strong>Reporting cadence aligned</strong> with the format already running for Google Ads: a weekly Slack post and a one-page HTML report every two weeks.</li>
+      <li><strong>Risks documented:</strong> Zoho admin access, Google verification, CPC running above band, Singapore audience size, and the Conversation Ads dependency on Baz's account.</li>
+    </ul>
+  </section>
+
+  <!-- 03 WHAT BAZ NEEDS TO CONFIRM -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">What Baz still needs to confirm to launch</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">No monthly commitment required to start. The launch ask is a small test over two or three weeks. The three items below are what Sean needs from Baz to get the first campaign live.</p>
+
+    <div class="note-box">
+      <div class="note-label">Three items needed from Baz</div>
+      <p><strong>1. A small test budget cap</strong> for the first two to three weeks. <strong>$500 to $1,000</strong> is enough to read whether the audience build is working.</p>
+      <p><strong>2. The billing setup on LinkedIn Campaign Manager.</strong> If no billing method is attached at the campaign account level, Baz drops a card in. If something is already there, no action needed.</p>
+      <p><strong>3. The opening creative approval</strong> built from the AWS Cost Optimisation material already in use on the Google Ads channel and the cost-saving screenshots Baz shared on 8 May. One review cycle, written feedback in Slack is enough.</p>
+    </div>
+  </section>
+
+  <!-- 04 OWNERSHIP FROM HERE -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Ownership from here</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Sean leads the LinkedIn ads work end-to-end from here. Antonio continues to run Google Ads, the GTM and GA4 stack, and the landing-page work, and is available as backup on technical setup and reporting.</p>
+
+    <div class="owner-grid">
+      <div class="owner-card lead">
+        <div class="owner-head">
+          <span class="owner-name">Sean</span>
+          <span class="owner-role">Lead from here</span>
+        </div>
+        <ul>
+          <li>Presenting the strategy to Baz and landing the green light</li>
+          <li>LinkedIn Campaign Manager setup and Insight Tag deployment</li>
+          <li>Creative direction, lead-gen form build, opening campaign launch</li>
+          <li>Weekly optimisation, reporting, and the LinkedIn-native newsletter</li>
+          <li>Owning the relationship with Baz on anything LinkedIn-related</li>
+        </ul>
+      </div>
+      <div class="owner-card support">
+        <div class="owner-head">
+          <span class="owner-name">Antonio</span>
+          <span class="owner-role">Support</span>
+        </div>
+        <ul>
+          <li>Google Ads continues to run as it is today</li>
+          <li>GTM container and GA4 property stewardship</li>
+          <li>Reporting template alignment so both channels read the same way</li>
+          <li>Backup on technical setup and tracking questions</li>
+          <li>Available for a walk-through before the Baz presentation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ACCESS AND ASSETS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Access and assets to hand over</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The list below covers everything Sean needs in place before the first campaign launches.</p>
+
+    <table class="spec-table">
+      <thead>
+        <tr><th>Item</th><th>Where it lives and what is needed</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Strategy doc</td><td>GitHub repo <code>AntonioC92/client-kubiieo</code>, Projects branch. Sean to be added as a collaborator.</td></tr>
+        <tr><td>LinkedIn page admin</td><td>Sean promoted to Admin on the Kubiieo company page, with access confirmed to Campaign Manager.</td></tr>
+        <tr><td>GTM container</td><td><code>GTM-TV9VXWHD</code>. Used for LinkedIn Insight Tag deployment and already wired for the Google Ads conversion stack.</td></tr>
+        <tr><td>GA4 property</td><td><code>530485438</code> (measurement ID <code>G-CJS11Q3Y3Y</code>). Used for the cross-channel reporting layer.</td></tr>
+        <tr><td>AWS Cost Optimisation creative</td><td>Folder from the Google Ads work, ready to be repurposed for the LinkedIn opening creative.</td></tr>
+        <tr><td>Zoho lead routing</td><td>Pending admin access from Baz. Phase 2 leads sit in a holding list (Google Sheet or Airtable) in the meantime.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 06 OPEN DEPENDENCIES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Open dependencies and what to watch</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <ul class="intro-list">
+      <li><strong>Zoho admin access pending with Baz.</strong> Phase 2 leads route to a holding list weekly until access is in place, then load into the live Zoho flow with the right Lead Source tagging. Phase 3 retargeting needs Zoho live, but Phase 3 does not start until week 8 either way.</li>
+      <li><strong>LinkedIn billing setup.</strong> The first campaign cannot launch until a billing method is attached at the campaign account level. Quick check with Baz once Sean is admin on the page.</li>
+      <li><strong>Singapore audience size.</strong> Tested in a separate ad set. If Singapore cannot spend its daily cap inside seven days, the ad set pauses and spend returns to Australia and New Zealand.</li>
+      <li><strong>CPC running above band.</strong> If CPC sits <strong>30% above the upper band</strong> for two consecutive weeks, the targeting needs widening or the creative is wrong. Both responses sit inside the weekly optimisation block.</li>
+      <li><strong>Conversation Ads dependency on Baz's account.</strong> Phase 3 Conversation Ads run from a named sender, defaulting to Baz. Replies route wherever Baz wants them to land.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Ads Work Recap &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Confidential</p>
+</footer>
+
+</body>
+</html>
