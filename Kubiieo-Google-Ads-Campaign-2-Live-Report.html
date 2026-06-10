@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo - Campaign #2 Launch Report</title>
+<style>
+:root {
+  --primary:     #5B3FA8;
+  --primary-dk:  #3d2a75;
+  --primary-lt:  #f0ebff;
+  --accent:      #7B5FCC;
+  --neutral:     #e2d9f3;
+  --charcoal:    #1a1a2e;
+  --muted:       rgba(0,0,0,0.55);
+  --white:       #ffffff;
+  --bg:          #f8f6ff;
+  --danger:      #8b3333;
+  --danger-bg:   #fff5f5;
+  --danger-bd:   #e0b0b0;
+  --success:     #2E7D32;
+  --warn-bg:     #fff8e1;
+  --warn-bd:     #f0c040;
+  --warn-text:   #7a5800;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--charcoal);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.doc-header {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--primary) 100%);
+  color: var(--white);
+  padding: 48px 40px 40px;
+  margin-bottom: 48px;
+  border-bottom: 4px solid rgba(255,255,255,0.3);
+}
+.doc-header-inner { max-width: 960px; margin: 0 auto; }
+.doc-header-meta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+.doc-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.doc-header .subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 28px;
+  max-width: 760px;
+  line-height: 1.5;
+}
+.header-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+.header-tag {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+.header-tag.live {
+  background: rgba(76,175,80,0.3);
+  border-color: rgba(76,175,80,0.6);
+}
+.header-tag.paused {
+  background: rgba(255,165,0,0.25);
+  border-color: rgba(255,165,0,0.5);
+}
+
+.page { max-width: 960px; margin: 0 auto; padding: 0 32px 32px; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 52px;
+}
+.section-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+  min-width: 28px;
+}
+.section-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  white-space: nowrap;
+}
+.section-rule { flex: 1; height: 2px; background: var(--neutral); }
+
+.subsection-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--neutral);
+}
+
+p { margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+.lead-paragraph {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--charcoal);
+}
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 13px;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-bottom: 20px; }
+th {
+  background: var(--primary);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+}
+td { padding: 10px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+tr:nth-child(even) td { background: rgba(91,63,168,0.04); }
+tr:last-child td { border-bottom: none; }
+.td-label { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.note-box {
+  background: var(--primary-lt);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.note-box .note-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.note-box p, .note-box li { margin-bottom: 10px; line-height: 1.75; }
+.note-box p:last-child, .note-box li:last-child { margin-bottom: 0; }
+
+.warn-box {
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-bd);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.warn-box .warn-label {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--warn-text);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+.warn-box p { margin-bottom: 10px; line-height: 1.75; }
+.warn-box p:last-child { margin-bottom: 0; }
+
+.block-done, .block-inprog, .block-blocked {
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+  background: var(--white);
+}
+.block-head {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.block-done .block-head { background: #2E7D32; color: #fff; }
+.block-inprog .block-head { background: #C87E00; color: #fff; }
+.block-blocked .block-head { background: #8b3333; color: #fff; }
+
+.block-title { font-size: 14.5px; font-weight: 600; }
+.block-tag {
+  font-size: 10px;
+  letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.95);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.block-body { padding: 16px 20px; font-size: 13.5px; line-height: 1.7; }
+.block-body p { margin-bottom: 10px; }
+.block-body p:last-child { margin-bottom: 0; }
+.block-body ul { list-style: none; padding: 0; margin-top: 10px; }
+.block-body ul li {
+  padding: 5px 0 5px 18px;
+  position: relative;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--neutral);
+  line-height: 1.6;
+}
+.block-body ul li:last-child { border-bottom: none; }
+.block-done .block-body ul li::before { content: "\2713"; position: absolute; left: 0; color: var(--success); font-weight: 700; }
+.block-inprog .block-body ul li::before { content: "\27F3"; position: absolute; left: 0; color: #C87E00; font-weight: 700; }
+.block-blocked .block-body ul li::before { content: "\25B2"; position: absolute; left: 0; color: var(--danger); font-weight: 700; }
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media (max-width: 640px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 6px;
+  padding: 16px;
+  text-align: center;
+}
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--primary-dk);
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.kw-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+@media (max-width: 640px) { .kw-grid { grid-template-columns: 1fr; } }
+.kw-pill {
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  border: 1px solid var(--neutral);
+  font-size: 12.5px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+}
+.kw-pill.neg {
+  background: #fff5f5;
+  border-color: #e0b0b0;
+  color: var(--danger);
+}
+.kw-pill.exact {
+  background: #f0f7ff;
+  border-color: #b0ccee;
+  color: #1a3a6e;
+}
+
+.adgroup-card {
+  background: var(--white);
+  border: 1px solid var(--neutral);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(91,63,168,0.06);
+}
+.adgroup-head {
+  background: var(--primary-dk);
+  color: var(--white);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.adgroup-name { font-size: 15px; font-weight: 700; }
+.adgroup-url {
+  font-size: 11px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.12);
+  padding: 3px 10px;
+  border-radius: 4px;
+}
+.adgroup-body { padding: 18px 20px; }
+.adgroup-body p { font-size: 13.5px; margin-bottom: 12px; }
+.adgroup-kws { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.adgroup-kw {
+  font-size: 12px;
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  background: var(--primary-lt);
+  color: var(--primary-dk);
+  border: 1px solid var(--neutral);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.adgroup-kw.exact {
+  background: #f0f7ff;
+  border-color: #b0ccee;
+  color: #1a3a6e;
+}
+.strength-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(46,125,50,0.12);
+  border: 1px solid rgba(46,125,50,0.35);
+  color: #2E7D32;
+}
+
+.timeline {
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: 14px;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-time {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+.timeline-text { font-size: 13.5px; line-height: 1.6; }
+
+.ready-banner {
+  background: linear-gradient(135deg, var(--primary-dk) 0%, var(--accent) 100%);
+  color: #fff;
+  padding: 24px 28px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 12px rgba(61,42,117,0.25);
+}
+.ready-banner-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: 6px;
+}
+.ready-banner h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.ready-banner p { color: rgba(255,255,255,0.9); }
+
+.footer-note {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--neutral);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="doc-header-inner">
+    <div class="doc-header-meta">Campaign Launch Report &nbsp;·&nbsp; 10 June 2026</div>
+    <h1>Campaign #2 is live</h1>
+    <p class="subtitle">Three AWS assessment funnels now running on Google Ads. Cost optimisation, migration planning, and cloud security posture, each with its own keywords, ad, and landing page.</p>
+    <div class="header-tags">
+      <span class="header-tag live">Status: Live</span>
+      <span class="header-tag">A$15/day</span>
+      <span class="header-tag">3 Ad Groups</span>
+      <span class="header-tag">AU geo</span>
+      <span class="header-tag">Search + Partners</span>
+    </div>
+  </div>
+</header>
+
+<div class="page">
+
+<div class="ready-banner">
+  <div class="ready-banner-label">Built and live · 10 June 2026</div>
+  <h2>Campaign #2 — Assessments</h2>
+  <p>This one took a bit longer to build than Campaign 1 because of the three-funnel structure, but that structure is exactly what makes it worth running. Each ad group speaks to a different pain point. The keywords are tight. The ads reached Good strength before going live.</p>
+</div>
+
+<p class="lead-paragraph">Campaign 1 was always about people already looking for a managed services partner. Campaign 2 is different. It goes after people in the middle of a specific problem: they want to know why their AWS bill is so high, they're thinking about a migration but can't quantify it, or they've got a security review on their plate. Those are all high-intent searches and they're all pointing at something we can solve with a free assessment.</p>
+
+<p>The rest of this document explains how the campaign was set up and what to watch as it starts spending.</p>
+
+
+<div class="section-header">
+  <span class="section-num">01</span>
+  <span class="section-title">Campaign at a glance</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="stat-grid">
+  <div class="stat-card"><span class="stat-num">3</span><span class="stat-label">Ad Groups</span></div>
+  <div class="stat-card"><span class="stat-num">39</span><span class="stat-label">Keywords</span></div>
+  <div class="stat-card"><span class="stat-num">12</span><span class="stat-label">Negatives</span></div>
+  <div class="stat-card"><span class="stat-num">3</span><span class="stat-label">Landing Pages</span></div>
+</div>
+
+<table>
+  <tr><td class="td-label" style="width: 35%;">Campaign name</td><td>Campaign #2 - Assessments</td></tr>
+  <tr><td class="td-label">Status</td><td><strong style="color: var(--success);">Live</strong></td></tr>
+  <tr><td class="td-label">Daily budget</td><td>A$15.00 / day</td></tr>
+  <tr><td class="td-label">Bid strategy</td><td>Maximise Clicks (capped at A$18 max CPC)</td></tr>
+  <tr><td class="td-label">Network</td><td>Google Search + Search Partners (Display off)</td></tr>
+  <tr><td class="td-label">Geo</td><td>Australia, English, all day</td></tr>
+  <tr><td class="td-label">Conversion goal</td><td>LP Form Submit only (fires on <code>/thank-you</code>)</td></tr>
+  <tr><td class="td-label">Start date</td><td>10 June 2026</td></tr>
+  <tr><td class="td-label">End date</td><td>None set, runs until paused or removed</td></tr>
+</table>
+
+<div class="note-box">
+  <div class="note-label">Why A$15/day</div>
+  <p>Campaign 1 runs at A$50/day because it covers a broad managed services audience and we had confidence in the conversion rate from day one. Campaign 2 is testing three specific assessment funnels. Starting at A$15/day lets the campaign collect real search term data without burning budget before we know which funnel converts best. Once we see which ad group is pulling qualified leads, we can shift budget toward it.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">02</span>
+  <span class="section-title">The three ad groups</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>Each ad group targets a distinct buyer intent. They share a campaign budget and the same conversion tracking, but everything else is separate: keywords, ad copy, and landing page. This is the right way to build it. Mixing all three into one ad group would mean Google picks which keywords to spend on, and the ad copy would have to cover all three pain points at once. Splitting them means the ads are relevant, the landing pages match, and Quality Score stays high.</p>
+
+<!-- Ad Group 1 -->
+<div class="adgroup-card">
+  <div class="adgroup-head">
+    <span class="adgroup-name">Cost Optimisation</span>
+    <span class="adgroup-url">kubiieo.com/aws-cost-assessment/</span>
+  </div>
+  <div class="adgroup-body">
+    <p>This catches people actively looking to cut their AWS bill. The intent is strong because these searches are specific: "aws cost audit", "aws cost analysis", "reduce aws spend". Anyone searching these phrases is past the "what is AWS" stage and already spending real money on it.</p>
+    <div class="subsection-title" style="margin-top: 6px;">Phrase match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw">"aws cost optimisation"</span>
+      <span class="adgroup-kw">"aws cost optimization"</span>
+      <span class="adgroup-kw">"aws cost reduction"</span>
+      <span class="adgroup-kw">"aws cost audit"</span>
+      <span class="adgroup-kw">"aws cost analysis"</span>
+      <span class="adgroup-kw">"aws bill analysis"</span>
+      <span class="adgroup-kw">"reduce aws spend"</span>
+      <span class="adgroup-kw">"aws cost assessment"</span>
+      <span class="adgroup-kw">"aws cost management consulting"</span>
+      <span class="adgroup-kw">"aws finops"</span>
+    </div>
+    <div class="subsection-title">Exact match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw exact">[aws cost optimisation assessment]</span>
+      <span class="adgroup-kw exact">[aws cost audit]</span>
+      <span class="adgroup-kw exact">[aws cost assessment]</span>
+    </div>
+    <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 13px; color: var(--muted);">RSA ad strength:</span>
+      <span class="strength-badge">Good</span>
+    </div>
+  </div>
+</div>
+
+<!-- Ad Group 2 -->
+<div class="adgroup-card">
+  <div class="adgroup-head">
+    <span class="adgroup-name">Migration &amp; MAP</span>
+    <span class="adgroup-url">kubiieo.com/aws-cost-map-funding-analysis/</span>
+  </div>
+  <div class="adgroup-body">
+    <p>Migration searches are a longer sales cycle but higher value when they convert. The MAP funding angle is a strong hook because it's genuinely valuable: companies don't always know that Amazon pays for part of the migration assessment when you're working with an AWS Premier Partner. That's what Kubiieo can unlock for them.</p>
+    <div class="subsection-title" style="margin-top: 6px;">Phrase match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw">"aws migration assessment"</span>
+      <span class="adgroup-kw">"aws migration cost analysis"</span>
+      <span class="adgroup-kw">"aws migration tco"</span>
+      <span class="adgroup-kw">"aws map funding"</span>
+      <span class="adgroup-kw">"aws migration acceleration program"</span>
+      <span class="adgroup-kw">"aws migration roi"</span>
+      <span class="adgroup-kw">"aws migration readiness"</span>
+      <span class="adgroup-kw">"aws migration plan"</span>
+      <span class="adgroup-kw">"aws migration evaluator"</span>
+      <span class="adgroup-kw">"cloud migration cost analysis"</span>
+    </div>
+    <div class="subsection-title">Exact match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw exact">[aws migration assessment]</span>
+      <span class="adgroup-kw exact">[aws map funding]</span>
+      <span class="adgroup-kw exact">[aws migration tco]</span>
+    </div>
+    <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 13px; color: var(--muted);">RSA ad strength:</span>
+      <span class="strength-badge">Good</span>
+    </div>
+  </div>
+</div>
+
+<!-- Ad Group 3 -->
+<div class="adgroup-card">
+  <div class="adgroup-head">
+    <span class="adgroup-name">Cloud Security Posture</span>
+    <span class="adgroup-url">kubiieo.com/cloud-security-posture-assessment/</span>
+  </div>
+  <div class="adgroup-body">
+    <p>Security searches tend to be triggered by something: an incident, an audit requirement, a compliance deadline. That urgency makes them good converters. Keywords like "aws security assessment" and "aws cspm" are very specific and won't attract browsing traffic. Anyone searching these knows what they need.</p>
+    <div class="subsection-title" style="margin-top: 6px;">Phrase match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw">"aws security audit"</span>
+      <span class="adgroup-kw">"aws security assessment"</span>
+      <span class="adgroup-kw">"cloud security posture"</span>
+      <span class="adgroup-kw">"aws security review"</span>
+      <span class="adgroup-kw">"aws cspm"</span>
+      <span class="adgroup-kw">"cloud security audit"</span>
+      <span class="adgroup-kw">"aws security best practices audit"</span>
+      <span class="adgroup-kw">"aws cloud security review"</span>
+      <span class="adgroup-kw">"cloud security posture management"</span>
+      <span class="adgroup-kw">"aws compliance audit"</span>
+    </div>
+    <div class="subsection-title">Exact match keywords</div>
+    <div class="adgroup-kws">
+      <span class="adgroup-kw exact">[aws security assessment]</span>
+      <span class="adgroup-kw exact">[aws security audit]</span>
+      <span class="adgroup-kw exact">[cloud security posture assessment]</span>
+    </div>
+    <div style="margin-top: 14px; display: flex; align-items: center; gap: 10px;">
+      <span style="font-size: 13px; color: var(--muted);">RSA ad strength:</span>
+      <span class="strength-badge">Good</span>
+    </div>
+  </div>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">03</span>
+  <span class="section-title">Why the prospecting looks good</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>The traffic this campaign will attract is genuinely qualified. Here is why I think that.</p>
+
+<p>Every keyword in Campaign 2 contains a specific AWS intent: cost, migration, or security. There is no generic cloud traffic in here. If someone's Googling "aws cost audit" they are already an AWS customer with a real spend problem, not someone evaluating cloud providers for the first time. That narrows the audience in the right direction.</p>
+
+<p>Phrase and Exact match only means we only show when the search contains our phrase, not when Google guesses it might be related. The A$18 bid cap keeps us competitive on these high-intent queries without overpaying. For context, AWS services keywords in Australia typically cost A$5 to A$15 per click. At A$18 we are well covered for almost every relevant auction.</p>
+
+<p>The free assessment offer is the right hook at this stage of the funnel. Someone pricing up an AWS migration doesn't want to talk to sales; they want actual numbers. A free assessment from a senior AWS engineer is a direct answer to what they're searching for. Same logic applies to cost optimisation and security. We're not asking them to buy anything. We're offering to do the work that justifies the conversation.</p>
+
+<div class="note-box">
+  <div class="note-label">Campaign #2 vs Campaign #1</div>
+  <p>Campaign 1 catches people who already know they want a managed services partner and are comparing options. Campaign 2 goes earlier: it catches people who have a specific pain point and haven't necessarily started thinking about a partner yet. The two campaigns complement each other. Campaign 1 converts faster; Campaign 2 builds the pipeline at a lower budget and feeds into that same funnel once the assessment is done.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">04</span>
+  <span class="section-title">Campaign-level negatives</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>These 12 terms block ads from showing on searches we don't want to pay for. They're intentionally narrower than Campaign 1's negative list, because some of the terms we blocked there (like "migration evaluator") are actually valid assessment intent for this campaign.</p>
+
+<div class="kw-grid">
+  <div class="kw-pill neg">jobs</div>
+  <div class="kw-pill neg">salary</div>
+  <div class="kw-pill neg">career</div>
+  <div class="kw-pill neg">training</div>
+  <div class="kw-pill neg">course</div>
+  <div class="kw-pill neg">certification</div>
+  <div class="kw-pill neg">exam</div>
+  <div class="kw-pill neg">tutorial</div>
+  <div class="kw-pill neg">reddit</div>
+  <div class="kw-pill neg">documentation</div>
+  <div class="kw-pill neg">meme</div>
+  <div class="kw-pill neg">"free download"</div>
+</div>
+
+<p>The first batch (jobs through tutorial) blocks non-buyer intent: people looking for AWS training or employment. Reddit, documentation, and meme block informational searches where no business is looking to hire a consultant. The "free download" phrase match blocks any search asking for free resources. As the search terms report fills up over the first two weeks, more negatives will be added from real query data.</p>
+
+
+<div class="section-header">
+  <span class="section-num">05</span>
+  <span class="section-title">Assets attached to the campaign</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="subsection-title">4 sitelinks</div>
+<table>
+  <tr><th style="width: 25%;">Headline</th><th style="width: 40%;">Descriptions</th><th>URL</th></tr>
+  <tr>
+    <td><strong>AWS Cost Assessment</strong></td>
+    <td>Free assessment, senior engineer · 20%+ AWS spend reduction</td>
+    <td><code>/aws-cost-assessment/</code></td>
+  </tr>
+  <tr>
+    <td><strong>Migration &amp; MAP Funding</strong></td>
+    <td>Plan + MAP funding analysis · Onshore senior engineers</td>
+    <td><code>/aws-cost-map-funding-analysis/</code></td>
+  </tr>
+  <tr>
+    <td><strong>Security Posture Audit</strong></td>
+    <td>Prioritised hardening plan · Face-to-face read-out</td>
+    <td><code>/cloud-security-posture-assessment/</code></td>
+  </tr>
+  <tr>
+    <td><strong>Book a 30-min Call</strong></td>
+    <td>30 mins, no obligation · Talk direct with engineers</td>
+    <td><code>calendly.com/baz-lalor-kubiieo/30min</code></td>
+  </tr>
+</table>
+
+<div class="subsection-title">6 callouts</div>
+<div class="kw-grid">
+  <div class="kw-pill">Senior AWS Engineer</div>
+  <div class="kw-pill">Sydney Based</div>
+  <div class="kw-pill">Free Assessment</div>
+  <div class="kw-pill">AWS Premier Tier</div>
+  <div class="kw-pill">Read-Out Call Included</div>
+  <div class="kw-pill">Onshore Australia</div>
+</div>
+
+<div class="subsection-title">Structured snippet (Services)</div>
+<div class="kw-grid">
+  <div class="kw-pill">AWS Cost Optimisation</div>
+  <div class="kw-pill">Migration Planning</div>
+  <div class="kw-pill">Security Posture</div>
+  <div class="kw-pill">MAP Funding Analysis</div>
+  <div class="kw-pill">FinOps Engineering</div>
+  <div class="kw-pill">Compliance Audits</div>
+</div>
+
+<p>The structured snippet is worth highlighting because it appears as a "Services: ..." line under the ad. For someone searching "aws security assessment" and seeing our ad, that snippet immediately shows them the breadth of what we offer. It improves click-through and helps qualify the prospect before they even land on the page.</p>
+
+
+<div class="section-header">
+  <span class="section-num">06</span>
+  <span class="section-title">Conversion tracking</span>
+  <div class="section-rule"></div>
+</div>
+
+<p>Campaign 2 overrides the account-level conversion goal. It tracks one action only: LP Form Submit. This fires when someone lands on a URL containing <code>/thank-you</code> after completing a form, which is the confirmation page on each assessment landing page.</p>
+
+<table>
+  <tr><th>Detail</th><th>Value</th></tr>
+  <tr><td class="td-label">Conversion action</td><td>LP Form Submit</td></tr>
+  <tr><td class="td-label">Conversion ID</td><td><code>18096994923</code></td></tr>
+  <tr><td class="td-label">Fires on</td><td>Page path containing <code>/thank-you</code></td></tr>
+  <tr><td class="td-label">GTM version</td><td>v17, published 5 June 2026</td></tr>
+  <tr><td class="td-label">Latency</td><td>Real time</td></tr>
+</table>
+
+<div class="note-box">
+  <div class="note-label">Why LP Form Submit, not Consultation Request</div>
+  <p>Campaign 1 uses Consultation Request - Form Submit as its conversion signal. That tag fires specifically on the /active/ landing page form. Campaign 2 uses LP Form Submit, which fires on any /thank-you page and covers all three assessment landing pages.</p>
+  <p>Keeping these separate matters. If both campaigns attributed to the same conversion action, the data would blend and we'd lose visibility into which campaign and which funnel is actually generating leads. With separate conversion goals, we can see exactly what Campaign 2 is contributing on its own.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">07</span>
+  <span class="section-title">What to expect</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="timeline">
+  <div class="timeline-item">
+    <div class="timeline-time">First few hours</div>
+    <div class="timeline-text">Google reviews the ads. All three RSAs should clear review within 1 to 2 hours and start serving on relevant searches.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">First 24 to 48 hours</div>
+    <div class="timeline-text">First impressions and clicks across the three ad groups. At A$15/day expect around 1 to 3 clicks per day initially while Google builds impression share. CPC should stay well under the A$18 cap on most queries.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">First week</div>
+    <div class="timeline-text">Check the Search Terms report. You'll see exactly what queries triggered the ads. Add any irrelevant terms as negatives early. This is the most valuable week for learning what the audience actually searches for.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">Weeks 2 to 4</div>
+    <div class="timeline-text">Watch which ad group is spending and converting. Cost Optimisation tends to be the highest volume intent. Migration and Security may have lower click volume but higher deal value. First conversions expected by end of week 2 if the landing pages are converting cleanly.</div>
+  </div>
+  <div class="timeline-item">
+    <div class="timeline-time">After 30 conversions</div>
+    <div class="timeline-text">Move from Maximise Clicks to Maximise Conversions or Target CPA. Smart Bidding needs roughly 30 conversions in a 30 day window before it can optimise effectively. At A$15/day this might take 4 to 8 weeks depending on volume.</div>
+  </div>
+</div>
+
+<div class="warn-box">
+  <div class="warn-label">Budget note for early days</div>
+  <p>A$15/day across three ad groups means roughly A$5/day per funnel in the first few weeks. Google will spread this based on auction availability. If one ad group dominates spend early, that just means it has more matching search volume. Don't reallocate budget too quickly; let the data accumulate for at least 2 weeks before making changes.</p>
+</div>
+
+
+<div class="section-header">
+  <span class="section-num">08</span>
+  <span class="section-title">Open follow-ups</span>
+  <div class="section-rule"></div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Pull Search Terms report at day 7</span>
+    <span class="block-tag">Antonio · Week 1</span>
+  </div>
+  <div class="block-body">
+    <p>After a week live, pull the Search Terms report and add any junk queries as negatives. This is the single most impactful thing to do in the first two weeks. The starter negative list covers the obvious waste terms, but real query data will surface things we couldn't have anticipated.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Check which ad group spends first</span>
+    <span class="block-tag">Week 1 to 2</span>
+  </div>
+  <div class="block-body">
+    <p>Watch the ad group breakdown in the campaign view. If Cost Optimisation is taking most of the budget because it has higher search volume, that's expected. If Migration or Security aren't spending at all after 10 days, the bid cap may need adjusting for those specific ad groups.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Verify LP Form Submit fires on all three landing pages</span>
+    <span class="block-tag">First form submission</span>
+  </div>
+  <div class="block-body">
+    <p>When the first real lead comes in, check that the LP Form Submit conversion is recording against Campaign 2, not Campaign 1. It should, because the conversion goal override is set at campaign level, but worth confirming on the first one.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Increase budget after first conversions</span>
+    <span class="block-tag">After proof of conversion</span>
+  </div>
+  <div class="block-body">
+    <p>Once we see conversions coming through, there is a case for lifting the daily budget from A$15 to A$25 or A$30 on the ad group that's converting. This is a short conversation once the data supports it.</p>
+  </div>
+</div>
+
+<div class="block-inprog">
+  <div class="block-head">
+    <span class="block-title">Switch to Maximise Conversions after 30 conversions</span>
+    <span class="block-tag">~4 to 8 weeks out</span>
+  </div>
+  <div class="block-body">
+    <p>Maximise Clicks is the right starting strategy. Once we accumulate 30 conversions in a rolling 30 day window, switch to Maximise Conversions or set a Target CPA. Smart Bidding at that stage will outperform manual bidding significantly.</p>
+  </div>
+</div>
+
+
+<div class="footer-note">
+  Prepared by Antonio Caruso &nbsp;·&nbsp; Caruso Martech &nbsp;·&nbsp; caruso.martech@gmail.com
+</div>
+
+</div>
+</body>
+</html>
