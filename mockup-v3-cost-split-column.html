@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup v2 · AWS Cost Optimisation Assessment · Kubiieo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --kbi-purple:        #8343E8;
+    --kbi-purple-deep:   #5418C9;
+    --kbi-purple-darker: #3A0CA0;
+    --kbi-purple-soft:   #C7AAF5;
+    --kbi-purple-mist:   #F2EBFE;
+    --kbi-purple-tint:   #EEE5FE;
+    --kbi-navy:          #1A0D45;
+    --kbi-navy-deep:     #110830;
+    --kbi-ink:           #242424;
+    --kbi-mid:           #3F444B;
+    --kbi-grey:          #5F6567;
+    --kbi-body:          rgba(0,0,0,0.72);
+    --kbi-line:          rgba(0,0,0,0.10);
+    --kbi-line-strong:   rgba(0,0,0,0.16);
+    --bg:                #FFFFFF;
+    --bg-soft:           #F7F7F8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); font-family: 'Inter', Helvetica, sans-serif; color: var(--kbi-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4 { font-family: 'Inter Tight', 'Inter', Helvetica, sans-serif; color: var(--kbi-ink); letter-spacing: -0.018em; }
+  a { color: var(--kbi-purple); text-decoration: none; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  .review-banner { background: linear-gradient(90deg, #FFF7DC, #FFE7A8); color: #6B4900; text-align: center; padding: 10px 16px; font-size: 12.5px; font-weight: 600; border-bottom: 1px solid #E8C26A; }
+  .review-banner span.mono { font-family: 'JetBrains Mono', monospace; color: #8A5A00; }
+
+  /* ── HEADER (stripped) ── */
+  .lp-header { background: var(--bg); border-bottom: 1px solid var(--kbi-line); }
+  .lp-header-inner { max-width: 1280px; margin: 0 auto; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; }
+  .lp-logo { display: inline-flex; align-items: center; }
+  .lp-logo img { height: 36px; width: auto; display: block; }
+  .lp-header-right { display: flex; align-items: center; gap: 22px; font-size: 12.5px; color: var(--kbi-grey); }
+  .aws-badge { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; background: var(--bg-soft); border: 1px solid var(--kbi-line); border-radius: 999px; font-size: 11.5px; font-weight: 600; color: var(--kbi-ink); }
+  .aws-badge::before { content: ''; width: 10px; height: 10px; background: #FF9900; border-radius: 2px; }
+  .lp-header .phone { font-weight: 600; color: var(--kbi-ink); }
+
+  /* ── HERO (violet, split column) ── */
+  .hero {
+    background: var(--kbi-purple-deep);
+    background-image:
+      radial-gradient(1400px 700px at 110% -20%, rgba(199,170,245,0.32), transparent 55%),
+      radial-gradient(900px 600px at -10% 110%, rgba(255,255,255,0.07), transparent 55%),
+      linear-gradient(160deg, var(--kbi-purple-darker) 0%, var(--kbi-purple-deep) 55%, var(--kbi-purple) 100%);
+    color: #FFFFFF;
+    padding: 64px 40px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 64px; align-items: start; position: relative; }
+  .hero-left { padding-top: 8px; }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 7px 14px;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--kbi-purple-soft);
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before { content: ''; width: 6px; height: 6px; background: #FFCB66; border-radius: 50%; box-shadow: 0 0 0 4px rgba(255,203,102,0.25); }
+  .hero-h1 {
+    font-size: clamp(38px, 4.6vw, 60px);
+    font-weight: 800; line-height: 1.04; letter-spacing: -0.025em;
+    color: #FFFFFF; margin-bottom: 22px; text-wrap: balance;
+  }
+  .hero-h1 .accent { color: #FFCB66; }
+  .hero-sub {
+    font-size: 18.5px; line-height: 1.55;
+    color: rgba(255,255,255,0.82);
+    font-weight: 400; margin-bottom: 30px; max-width: 560px;
+  }
+  .hero-sub strong { color: #FFFFFF; font-weight: 600; }
+
+  .value-list { list-style: none; margin-bottom: 36px; }
+  .value-list li { display: grid; grid-template-columns: 22px 200px 1fr; column-gap: 16px; align-items: start; margin-bottom: 14px; font-size: 15px; line-height: 1.55; color: rgba(255,255,255,0.85); }
+  .value-list li::before {
+    content: '';
+    width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(255,255,255,0.13);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23FFCB66' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-repeat: no-repeat; background-position: center;
+    margin-top: 2px;
+  }
+  .value-list .vl-label { color: #FFFFFF; font-weight: 700; }
+  .value-list .vl-body { color: rgba(255,255,255,0.85); }
+
+  .cta-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 32px; }
+  .btn-primary, .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 26px;
+    border-radius: 12px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700; font-size: 15px;
+    cursor: pointer; transition: all 0.15s ease;
+    text-decoration: none;
+    border: 0;
+  }
+  .btn-primary { background: #FFFFFF; color: var(--kbi-purple-deep); box-shadow: 0 12px 24px -10px rgba(0,0,0,0.3); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 16px 32px -12px rgba(0,0,0,0.4); text-decoration: none; }
+  .btn-secondary { background: #FFFFFF; color: var(--kbi-purple-deep); border: 0; box-shadow: 0 12px 24px -10px rgba(0,0,0,0.3); }
+  .btn-secondary:hover { background: #FFFFFF; color: var(--kbi-purple-deep); transform: translateY(-1px); box-shadow: 0 16px 32px -12px rgba(0,0,0,0.4); text-decoration: none; }
+  .btn-secondary::after { content: '→'; transition: transform 0.15s ease; }
+  .btn-secondary:hover::after { transform: translateX(4px); }
+
+  .trust-line {
+    padding-top: 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+  }
+  .trust-line-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.14em;
+    color: rgba(199,170,245,0.85);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .trust-line-clients {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 20px;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 700; font-size: 15.5px; color: #FFFFFF;
+  }
+  .trust-line-clients span:not(:last-child)::after { content: '·'; margin-left: 20px; color: var(--kbi-purple-soft); font-weight: 400; }
+
+  /* Hero RIGHT — form */
+  .hero-form-card {
+    background: var(--bg);
+    border-radius: 18px;
+    padding: 0 0 32px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.12);
+    position: sticky; top: 24px;
+    overflow: hidden;
+  }
+  .form-header-strip {
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--kbi-navy), var(--kbi-purple-darker));
+    color: #FFFFFF;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12.5px; font-weight: 600;
+  }
+  .form-header-strip::before { content: ''; width: 8px; height: 8px; background: #4CC97A; border-radius: 50%; box-shadow: 0 0 0 4px rgba(76,201,122,0.25); }
+  .form-body { padding: 28px 32px 0; }
+  .form-title { font-family: 'Inter Tight', sans-serif; font-size: 22px; font-weight: 800; color: var(--kbi-ink); margin-bottom: 6px; letter-spacing: -0.018em; }
+  .form-subtitle { font-size: 14px; color: var(--kbi-grey); margin-bottom: 22px; line-height: 1.5; }
+  .form-grid { display: grid; gap: 13px; }
+  .form-row { display: grid; gap: 13px; grid-template-columns: 1fr 1fr; }
+  .form-field { display: flex; flex-direction: column; }
+  .form-field label { font-size: 12.5px; font-weight: 600; color: var(--kbi-ink); margin-bottom: 6px; }
+  .form-field input, .form-field select { padding: 11px 13px; border: 1px solid var(--kbi-line-strong); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--kbi-ink); background: var(--bg); }
+  .form-field input:focus, .form-field select:focus { outline: none; border-color: var(--kbi-purple); box-shadow: 0 0 0 3px rgba(131,67,232,0.15); }
+  .form-consent { display: flex; align-items: flex-start; gap: 9px; margin: 16px 0 6px; font-size: 12.5px; color: var(--kbi-grey); line-height: 1.45; }
+  .form-consent input { margin-top: 3px; }
+  .form-cta {
+    margin-top: 12px; padding: 16px 22px;
+    background: linear-gradient(135deg, var(--kbi-purple), var(--kbi-purple-deep));
+    color: #FFFFFF; border: 0; border-radius: 12px;
+    font-family: 'Inter Tight', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+  }
+  .form-cta:hover { transform: translateY(-1px); box-shadow: 0 12px 24px -10px rgba(131,67,232,0.6); }
+  .form-cta::after { content: '→'; font-size: 20px; }
+  .form-reassurance { margin-top: 14px; font-size: 12px; color: var(--kbi-grey); text-align: center; line-height: 1.5; }
+
+  /* ── REPORT IMAGE SECTION ── */
+  .report-section {
+    background: var(--bg-soft);
+    padding: 80px 40px 60px;
+    border-bottom: 1px solid var(--kbi-line);
+  }
+  .report-inner { max-width: 1180px; margin: 0 auto; text-align: center; }
+  .section-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--kbi-purple); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; margin-bottom: 14px; }
+  .section-title { font-size: clamp(28px, 3vw, 38px); font-weight: 800; letter-spacing: -0.022em; color: var(--kbi-ink); margin-bottom: 14px; max-width: 760px; margin-left: auto; margin-right: auto; text-wrap: balance; }
+  .section-lede { font-size: 17px; color: var(--kbi-mid); max-width: 720px; margin: 0 auto 44px; line-height: 1.6; }
+  .report-image-wrap {
+    max-width: 980px; margin: 0 auto;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px -30px rgba(58,12,160,0.45), 0 12px 30px rgba(0,0,0,0.12);
+    border: 1px solid rgba(131,67,232,0.18);
+  }
+
+  /* ── TRUSTED BY (dark navy, like live page) ── */
+  .trusted-section {
+    background: var(--kbi-navy-deep);
+    background-image: linear-gradient(180deg, var(--kbi-navy) 0%, var(--kbi-navy-deep) 100%);
+    color: #FFFFFF;
+    padding: 70px 40px 60px;
+  }
+  .trusted-inner { max-width: 1180px; margin: 0 auto; text-align: center; }
+  .trusted-heading {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #FFFFFF;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .trusted-names {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    font-style: italic;
+    margin-bottom: 50px;
+  }
+  .trusted-names span:not(:last-child)::after { content: ' · '; color: rgba(199,170,245,0.6); }
+  .trusted-logos { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; max-width: 880px; margin: 0 auto 0; }
+  .logo-tile { display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .logo-box {
+    width: 160px; height: 160px;
+    background: #1F46C4;
+    color: #FFFFFF;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 22px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  }
+  .logo-box.ulladulla { background: #FFFFFF; color: #2A9DD6; font-size: 18px; line-height: 1.1; }
+  .logo-box.ulladulla strong { color: #1A2942; }
+  .trust-card {
+    margin-top: 20px;
+    text-align: left;
+    max-width: 460px;
+  }
+  .trust-card p {
+    font-style: italic;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+  .trust-card-tag {
+    color: var(--kbi-purple-soft);
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .case-studies-link { margin-top: 44px; text-align: center; }
+  .case-studies-link a { color: var(--kbi-purple-soft); font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 15px; border-bottom: 1px solid rgba(199,170,245,0.4); padding-bottom: 2px; transition: color 0.15s ease, border-color 0.15s ease; }
+  .case-studies-link a:hover { color: #FFFFFF; border-color: #FFFFFF; text-decoration: none; }
+  .trust-strip-bottom {
+    margin-top: 50px;
+    padding-top: 36px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+  .trust-strip-bottom span:not(:last-child)::after { content: ' · '; color: var(--kbi-purple-soft); margin: 0 4px; }
+
+  /* ── WHY KUBIIEO slim band ── */
+  .why-strip { background: #FAF7FE; padding: 44px 40px; border-bottom: 1px solid var(--kbi-line); }
+  .why-strip-inner { max-width: 1180px; margin: 0 auto; }
+  .why-strip-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--kbi-purple); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; margin-bottom: 18px; }
+  .why-strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .why-col h4 { color: var(--kbi-purple-deep); font-size: 15px; font-weight: 700; margin: 0 0 5px; letter-spacing: -0.01em; }
+  .why-col p { font-size: 14px; color: var(--kbi-mid); line-height: 1.55; margin: 0; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { background: var(--bg); padding: 80px 40px; border-bottom: 1px solid var(--kbi-line); }
+  .testimonials-inner { max-width: 1180px; margin: 0 auto; }
+  .testimonials-eyebrow { text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--kbi-purple); text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; margin-bottom: 16px; }
+  .testimonials-heading { text-align: center; font-size: clamp(26px, 2.8vw, 34px); font-weight: 800; letter-spacing: -0.022em; color: var(--kbi-ink); margin-bottom: 44px; }
+  .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; max-width: 1000px; margin: 0 auto; }
+  .testimonial-card { background: var(--bg-soft); border: 1px solid var(--kbi-line); border-radius: 16px; padding: 32px 30px; position: relative; }
+  .testimonial-card::before { content: '"'; position: absolute; top: 14px; left: 22px; font-family: 'Inter Tight', serif; font-size: 60px; color: var(--kbi-purple-soft); line-height: 1; font-weight: 800; }
+  .testimonial-card p { font-style: italic; font-size: 15.5px; color: var(--kbi-mid); line-height: 1.7; margin: 22px 0 18px; }
+  .testimonial-tag { color: var(--kbi-purple); font-size: 13.5px; font-weight: 700; font-family: 'Inter Tight', sans-serif; }
+
+  /* ── CALENDLY SECTION (lavender, matches live page) ── */
+  .calendly-section {
+    background: var(--kbi-purple-tint);
+    padding: 80px 40px 100px;
+  }
+  .calendly-inner { max-width: 880px; margin: 0 auto; text-align: center; }
+  .calendly-h2 {
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800; letter-spacing: -0.022em;
+    color: var(--kbi-ink); margin-bottom: 16px;
+  }
+  .calendly-sub {
+    font-size: 17px; color: var(--kbi-mid);
+    max-width: 580px; margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+  .calendly-mock {
+    background: #FFFFFF;
+    border-radius: 16px;
+    box-shadow: 0 30px 50px -20px rgba(58,12,160,0.25);
+    padding: 36px 40px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 36px;
+    text-align: left;
+    border: 1px solid var(--kbi-line);
+  }
+  .calendly-left h3 { font-size: 21px; font-weight: 800; color: var(--kbi-ink); margin-bottom: 18px; }
+  .calendly-meta { font-size: 14px; color: var(--kbi-mid); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .calendly-right h4 { font-size: 17px; font-weight: 700; color: var(--kbi-ink); margin-bottom: 14px; }
+  .calendly-monthnav { font-size: 14px; color: var(--kbi-mid); display: flex; align-items: center; justify-content: center; gap: 18px; margin-bottom: 18px; font-weight: 600; }
+  .calendly-monthnav .arrow { color: var(--kbi-purple); font-size: 18px; }
+  .calendly-cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+  .calendly-cal .dow { font-size: 11px; color: var(--kbi-grey); text-align: center; font-weight: 600; padding: 4px 0; text-transform: uppercase; letter-spacing: 0.08em; }
+  .calendly-cal .day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--kbi-grey); border-radius: 50%; }
+  .calendly-cal .day.avail { background: rgba(131,67,232,0.12); color: var(--kbi-purple-deep); font-weight: 600; cursor: pointer; }
+  .calendly-cal .day.avail:hover { background: rgba(131,67,232,0.22); }
+  .calendly-cal .day.muted { color: rgba(0,0,0,0.18); }
+  .calendly-note { text-align: center; font-size: 13px; color: var(--kbi-grey); margin-top: 22px; }
+
+  /* ── FOOTER ── */
+  .lp-footer { padding: 28px 40px; background: var(--kbi-ink); color: rgba(255,255,255,0.5); text-align: center; font-size: 12.5px; }
+  .lp-footer a { color: rgba(255,255,255,0.75); margin: 0 14px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 980px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+    .hero-form-card { position: static; order: -1; }
+    .hero { padding: 36px 24px 60px; }
+    .hero-h1 { font-size: clamp(34px, 7vw, 44px); }
+    .cta-row .btn-primary, .cta-row .btn-secondary { flex: 1; justify-content: center; }
+    .value-list li { grid-template-columns: 22px 1fr; row-gap: 4px; }
+    .value-list li .vl-label, .value-list li .vl-body { grid-column: 2; }
+    .report-section, .trusted-section, .testimonials-section, .calendly-section { padding: 56px 24px; }
+    .testimonials-grid { grid-template-columns: 1fr; gap: 18px; }
+    .why-strip { padding: 36px 24px; }
+    .why-strip-grid { grid-template-columns: 1fr; gap: 22px; }
+    .trusted-logos { grid-template-columns: 1fr; gap: 40px; }
+    .calendly-mock { grid-template-columns: 1fr; padding: 24px; }
+    .form-row { grid-template-columns: 1fr; }
+    .lp-header-inner { padding: 14px 24px; }
+    .lp-header-right .phone { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="review-banner">MOCKUP <span class="mono">v3</span> · Trust strip simplified · For Sean &amp; Antonio review · Static preview, no form submissions go anywhere</div>
+
+<header class="lp-header">
+  <div class="lp-header-inner">
+    <a class="lp-logo" href="https://kubiieo.com/"><img src="https://kubiieo.com/wp-content/uploads/2023/03/KUBIIEO_WHITE_BG-resized2.png" alt="Kubiieo"></a>
+  </div>
+</header>
+
+<!-- ── HERO (violet, split column) ── -->
+<section class="hero">
+  <div class="hero-inner">
+
+    <div class="hero-left">
+      <span class="eyebrow">Free AWS Cost Optimisation Assessment</span>
+      <h1 class="hero-h1">See exactly where your AWS spend is leaking. Free.</h1>
+      <p class="hero-sub">Have your environment assessed by a cost optimisation expert. <strong>Real engineers with real technical knowledge of AWS costs</strong>, backed by our scanner that does the heavy data work for them.</p>
+
+      <ul class="value-list">
+        <li><span class="vl-label">Per-category breakdown</span><span class="vl-body">RIs, Savings Plans, right-sizing, idle resources, data transfer. Each finding sized in dollars.</span></li>
+        <li><span class="vl-label">Per-account view</span><span class="vl-body">See exactly which workloads carry the waste across your AWS estate.</span></li>
+        <li><span class="vl-label">Quick wins flagged</span><span class="vl-body">Searchable findings with the easy wins surfaced first. Your team knows what to ship this week.</span></li>
+        <li><span class="vl-label">30 / 60 / 90 action list</span><span class="vl-body">Prioritised by effort versus impact so the right work happens first.</span></li>
+        <li><span class="vl-label">45-minute read-out call</span><span class="vl-body">With the engineer who ran the assessment. Written report follows.</span></li>
+      </ul>
+
+      <div class="cta-row">
+        <a href="#report" class="btn-secondary">See what's in the report</a>
+      </div>
+    </div>
+
+    <aside class="hero-form-card" id="assessment-form">
+      <div class="form-body">
+        <h2 class="form-title">Get my free assessment plan</h2>
+        <p class="form-subtitle">Takes 60 seconds. A senior AWS engineer comes back to you inside one business day.</p>
+
+        <form class="form-grid" onsubmit="event.preventDefault(); alert('Mockup only — no submission goes anywhere.');">
+          <div class="form-field">
+            <label for="m-name">Full name</label>
+            <input type="text" id="m-name" placeholder="Jane Doe">
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="m-email">Work email</label>
+              <input type="email" id="m-email" placeholder="jane@company.com.au">
+            </div>
+            <div class="form-field">
+              <label for="m-company">Company</label>
+              <input type="text" id="m-company" placeholder="Company Pty Ltd">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="m-role">Role</label>
+              <select id="m-role">
+                <option>Select your role</option>
+                <option>CTO / Engineering Lead</option>
+                <option>Cloud / DevOps Engineer</option>
+                <option>Finance / FinOps</option>
+                <option>Founder / Operator</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="m-spend">Monthly AWS spend (USD)</label>
+              <select id="m-spend">
+                <option>Select range</option>
+                <option>Under $5K</option>
+                <option>$5K - $25K</option>
+                <option>$25K - $100K</option>
+                <option>$100K - $500K</option>
+                <option>$500K+</option>
+                <option>Not sure</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="form-consent">
+            <input type="checkbox">
+            <span>I'd like Kubiieo to follow up with my report and related cloud insights.</span>
+          </label>
+
+          <button type="submit" class="form-cta">Send me my assessment plan</button>
+          <p class="form-reassurance">You stay in control. We never deploy or change anything without written sign-off.</p>
+        </form>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<!-- ── WHAT'S IN THE REPORT (target of secondary CTA) ── -->
+<section class="report-section" id="report">
+  <div class="report-inner">
+    <div class="section-eyebrow">What's in the report</div>
+    <h2 class="section-title">An engineer-grade report you can actually navigate.</h2>
+    <p class="section-lede">Not a 200-slide deck of generic recommendations. A searchable, filterable breakdown of where your AWS spend is going, organised the way an engineering team works.</p>
+    <div class="report-image-wrap">
+      <img src="https://kubiieo.com/wp-content/uploads/2026/05/lp-hero-cost-assessment-2.png" alt="AWS Cost Assessment report — sample preview">
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY KUBIIEO slim band ── -->
+<section class="why-strip">
+  <div class="why-strip-inner">
+    <div class="why-strip-eyebrow">Why Kubiieo</div>
+    <div class="why-strip-grid">
+      <div class="why-col">
+        <h4>AWS Advanced Tier Partner.</h4>
+        <p>32 active certifications across the team.</p>
+      </div>
+      <div class="why-col">
+        <h4>50+ AWS migrations delivered.</h4>
+        <p>Real workloads shipped, not slideware. Around 20 years of cloud experience per engineer.</p>
+      </div>
+      <div class="why-col">
+        <h4>Onshore Australia.</h4>
+        <p>No 3am offshore handoffs. Founder-led, Sydney based.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUSTED BY (dark navy, matches live) ── -->
+<section class="trusted-section">
+  <div class="trusted-inner">
+    <div class="trusted-heading">Trusted by</div>
+    <div class="trusted-names">
+      <span>TPG Telecom</span>
+      <span>Cloudec</span>
+      <span>Satori Group</span>
+      <span>Right Place Geo</span>
+      <span>SQBible</span>
+      <span>Ulladulla Web Design</span>
+    </div>
+
+    <div class="trusted-logos">
+      <div class="logo-tile">
+        <div class="logo-box">SQBible</div>
+      </div>
+      <div class="logo-tile">
+        <div class="logo-box ulladulla">UWD <strong>Ulladulla<br>WebDesign</strong></div>
+      </div>
+    </div>
+
+    <div class="case-studies-link">
+      <a href="https://kubiieo.com/case-studies/" target="_blank" rel="noopener">See our case studies →</a>
+    </div>
+
+    <div class="trust-strip-bottom">
+      <span>AWS ADVANCED TIER</span>
+      <span>32 CERTIFICATIONS</span>
+      <span>ISO 27001-ALIGNED</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="testimonials-section">
+  <div class="testimonials-inner">
+    <div class="testimonials-eyebrow">Testimonials</div>
+    <h2 class="testimonials-heading">What our clients say.</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"Cloudec is Australia's first Managed FinOps Service Provider. Kubiieo built the custom cost-reporting platform behind it: multi-cloud data pipelines, reconciled invoice and run-rate dashboards, and proactive spend alerting."</p>
+        <div class="testimonial-tag">Cloudec · Custom FinOps Platform</div>
+      </div>
+      <div class="testimonial-card">
+        <p>"Right Place Geo runs Culturemap on an AWS foundation Kubiieo rebuilt: a multi-account landing zone, an end-to-end DevSecOps pipeline, and per-client data isolation enforced at the infrastructure layer."</p>
+        <div class="testimonial-tag">Right Place Geo · AWS Landing Zone &amp; DevSecOps</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CALENDLY (lavender, matches live "Book a 30-minute call") ── -->
+<section class="calendly-section">
+  <div class="calendly-inner">
+    <h2 class="calendly-h2">Book a 30-minute call — no obligation</h2>
+    <p class="calendly-sub">Talk directly with a senior AWS engineer. We'll listen to what you're dealing with and tell you what we'd actually do — no pitch deck required.</p>
+
+    <div class="calendly-mock">
+      <div class="calendly-left">
+        <h3>30 Minute Meeting</h3>
+        <div class="calendly-meta">⏱ 30 min</div>
+        <div class="calendly-meta">📹 Web conferencing details provided upon confirmation.</div>
+      </div>
+      <div class="calendly-right">
+        <h4>Select a Date &amp; Time</h4>
+        <div class="calendly-monthnav"><span class="arrow">‹</span> June 2026 <span class="arrow">›</span></div>
+        <div class="calendly-cal">
+          <div class="dow">Mon</div><div class="dow">Tue</div><div class="dow">Wed</div><div class="dow">Thu</div><div class="dow">Fri</div><div class="dow">Sat</div><div class="dow">Sun</div>
+          <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day muted">6</div><div class="day muted">7</div>
+          <div class="day">8</div><div class="day">9</div><div class="day">10</div><div class="day">11</div><div class="day">12</div><div class="day muted">13</div><div class="day muted">14</div>
+          <div class="day">15</div><div class="day">16</div><div class="day avail">17</div><div class="day avail">18</div><div class="day avail">19</div><div class="day muted">20</div><div class="day muted">21</div>
+          <div class="day avail">22</div><div class="day avail">23</div><div class="day avail">24</div><div class="day avail">25</div><div class="day avail">26</div><div class="day muted">27</div><div class="day muted">28</div>
+          <div class="day avail">29</div><div class="day avail">30</div>
+        </div>
+        <div class="calendly-note">Time zone: Central European Time (CEST)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer">
+  © 2026 Kubiieo Pty Ltd · Surry Hills NSW · <a href="https://kubiieo.com/">kubiieo.com</a> · <a href="#">Privacy</a>
+</footer>
+
+</body>
+</html>
