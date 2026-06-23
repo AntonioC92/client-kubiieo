@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo · LinkedIn Status Update — June 2026</title>
+<style>
+:root {
+  --primary:    #5B3FA8;
+  --primary-dk: #3d2a75;
+  --primary-lt: #f0ebff;
+  --accent:     #7B5FCC;
+  --neutral:    #e2d9f3;
+  --charcoal:   #1a1a2e;
+  --bg:         #f8f6ff;
+  --muted:      #6b7280;
+  --white:      #ffffff;
+  --green-bg:   #e0f0e8;
+  --green-text: #1a5c35;
+  --amber-bg:   #fdf0d5;
+  --amber-text: #7B4F00;
+  --red-bg:     #fde8e8;
+  --red-text:   #8b2020;
+}
+
+* { box-sizing: border-box; }
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--charcoal);
+  background: var(--bg);
+  margin: 0;
+}
+
+/* ── HEADER ── */
+.site-header { background: var(--primary-dk); color: var(--white); padding: 52px 0; }
+.header-inner { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+.brand-eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+.header-title { font-size: 38px; font-weight: 700; margin: 0 0 14px; line-height: 1.15; color: var(--white); }
+.header-title span { color: var(--accent); display: block; font-weight: 400; font-size: 22px; margin-top: 6px; }
+.header-sub { font-size: 15px; color: rgba(255,255,255,0.92); max-width: 760px; margin: 0 0 24px; line-height: 1.6; }
+.header-meta { display: flex; flex-wrap: wrap; gap: 26px; }
+.meta-item { display: flex; flex-direction: column; gap: 4px; }
+.meta-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+.meta-value { font-size: 13.5px; color: var(--white); font-weight: 500; }
+
+/* ── TOOLBAR ── */
+.toolbar {
+  position: sticky; top: 0; z-index: 10;
+  background: rgba(248,246,255,0.96);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--neutral);
+  padding: 12px 32px; display: flex; align-items: center; justify-content: space-between;
+}
+.toolbar-title { font-size: 13px; color: var(--muted); }
+.toolbar-btn {
+  background: var(--primary); color: var(--white); border: none;
+  padding: 8px 18px; font-size: 13px; font-family: inherit;
+  border-radius: 4px; cursor: pointer; font-weight: 500;
+}
+.toolbar-btn:hover { background: var(--primary-dk); }
+
+/* ── MAIN ── */
+.main { max-width: 1040px; margin: 0 auto; padding: 44px 32px 64px; }
+.section { margin-bottom: 52px; }
+
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 22px; }
+.section-num { font-size: 13px; font-weight: 700; color: var(--primary); letter-spacing: 0.12em; }
+.section-title { font-size: 24px; font-weight: 700; color: var(--primary-dk); margin: 0; }
+.section-rule { flex: 1; height: 1px; background: var(--neutral); }
+
+.intro { font-size: 14.5px; color: var(--charcoal); line-height: 1.75; margin-bottom: 18px; max-width: 880px; }
+.intro strong { color: var(--primary-dk); font-weight: 700; }
+.intro code { background: var(--primary-lt); padding: 2px 6px; border-radius: 3px; font-size: 13px; color: var(--primary-dk); }
+
+.subhead { font-size: 16px; font-weight: 700; color: var(--primary-dk); margin: 28px 0 10px; }
+
+.intro-list { list-style: none; padding: 0; margin: 0 0 20px; max-width: 880px; }
+.intro-list li {
+  padding: 7px 0 7px 22px; position: relative; font-size: 14.5px;
+  color: var(--charcoal); line-height: 1.75;
+}
+.intro-list li::before { content: "\2192"; position: absolute; left: 0; color: var(--primary); font-size: 13px; top: 7px; }
+.intro-list li strong { color: var(--primary-dk); font-weight: 700; }
+
+/* ── STATUS PILLS ── */
+.status-live   { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--green-bg); color: var(--green-text); }
+.status-draft  { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--amber-bg); color: var(--amber-text); }
+.status-done   { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--green-bg); color: var(--green-text); }
+.status-action { display: inline-block; padding: 3px 10px; border-radius: 3px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; background: var(--red-bg); color: var(--red-text); }
+
+/* ── CAMPAIGN CARDS ── */
+.campaign-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin: 16px 0 24px; }
+.campaign-card {
+  background: var(--white); border: 1px solid var(--neutral); border-radius: 6px;
+  padding: 20px; box-shadow: 0 1px 2px rgba(91,63,168,0.06);
+  border-top: 4px solid var(--primary);
+}
+.campaign-card.draft { border-top-color: var(--amber-text); }
+.campaign-name { font-size: 15px; font-weight: 700; color: var(--primary-dk); margin: 0 0 6px; }
+.campaign-meta { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.campaign-meta strong { color: var(--charcoal); }
+.campaign-detail { font-size: 13px; color: var(--charcoal); margin-top: 12px; line-height: 1.6; border-top: 1px solid var(--neutral); padding-top: 10px; }
+.campaign-detail li { margin-bottom: 4px; }
+
+/* ── AD COPY BLOCKS ── */
+.ad-block {
+  background: var(--white); border: 1px solid var(--neutral); border-radius: 6px;
+  padding: 22px 24px; margin-bottom: 16px; box-shadow: 0 1px 2px rgba(91,63,168,0.06);
+}
+.ad-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary); font-weight: 700; margin-bottom: 8px; }
+.ad-headline { font-size: 17px; font-weight: 700; color: var(--primary-dk); margin: 0 0 10px; }
+.ad-description { font-size: 11.5px; color: var(--muted); font-style: italic; margin: 6px 0 12px; }
+.ad-body { font-size: 14px; color: var(--charcoal); line-height: 1.75; border-top: 1px solid var(--neutral); padding-top: 12px; margin-top: 4px; }
+
+/* ── NOTE BOX ── */
+.note-box { background: var(--primary-lt); border-left: 4px solid var(--primary); padding: 20px 24px; margin: 16px 0 22px; border-radius: 0 6px 6px 0; }
+.note-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--primary-dk); font-weight: 700; margin-bottom: 12px; }
+.note-box p { margin: 0 0 10px; line-height: 1.75; font-size: 14px; }
+.note-box p:last-child { margin-bottom: 0; }
+.note-box p strong { color: var(--primary-dk); }
+
+.baz-quote {
+  background: var(--primary-lt); border-left: 4px solid var(--accent);
+  padding: 20px 24px; border-radius: 0 6px 6px 0; margin: 16px 0 22px;
+  font-size: 14px; line-height: 1.8; color: var(--charcoal);
+  font-style: italic;
+}
+.baz-quote cite { display: block; margin-top: 12px; font-size: 12px; font-style: normal; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ── TABLES ── */
+.spec-table { width: 100%; border-collapse: collapse; margin: 12px 0 8px; font-size: 14px; background: var(--white); border-radius: 6px; overflow: hidden; box-shadow: 0 1px 2px rgba(91,63,168,0.06); }
+.spec-table th, .spec-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--neutral); vertical-align: top; }
+.spec-table thead th { background: var(--primary-lt); color: var(--primary-dk); font-weight: 700; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+.spec-table tbody tr:last-child td { border-bottom: none; }
+.spec-table td:first-child { font-weight: 600; color: var(--primary-dk); width: 30%; }
+
+/* ── TRACKING CHECKLIST ── */
+.check-list { list-style: none; padding: 0; margin: 0 0 16px; }
+.check-list li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--neutral); font-size: 14px; line-height: 1.6; }
+.check-list li:last-child { border-bottom: none; }
+.check-icon { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--green-bg); color: var(--green-text); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; margin-top: 2px; }
+.check-text strong { color: var(--primary-dk); }
+
+/* ── STAT STRIP ── */
+.stat-strip { display: flex; gap: 14px; flex-wrap: wrap; margin: 8px 0 20px; }
+.stat-item { background: var(--primary-lt); border-radius: 6px; padding: 14px 18px; flex: 1; min-width: 160px; }
+.stat-num { font-size: 22px; font-weight: 700; color: var(--primary-dk); margin-bottom: 4px; }
+.stat-label { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+
+/* ── FOOTER ── */
+.site-footer { background: var(--primary-dk); color: rgba(255,255,255,0.8); text-align: center; padding: 20px 32px; font-size: 13px; }
+.site-footer p { margin: 0; }
+
+@media print {
+  .toolbar { display: none; }
+  body { background: var(--white); }
+  .site-header { background: var(--primary-dk) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+@media (max-width: 760px) {
+  .campaign-grid { grid-template-columns: 1fr; }
+  .header-title { font-size: 30px; }
+  .main { padding: 30px 22px 50px; }
+  .header-inner { padding: 0 22px; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand-eyebrow">LinkedIn Ads · Status Update</div>
+    <h1 class="header-title">Kubiieo LinkedIn Campaigns <span>What's live, what's changed, and where we're going</span></h1>
+    <p class="header-sub">Covers everything built and decided since the campaign launched on 16 June. Includes Baz's targeting feedback received 23 June, the ad copy produced for the three assessment pages, and the full tracking setup completed in the background.</p>
+    <div class="header-meta">
+      <div class="meta-item"><span class="meta-label">Client</span><span class="meta-value">Kubiieo (Baz Lalor)</span></div>
+      <div class="meta-item"><span class="meta-label">LinkedIn lead</span><span class="meta-value">Sean</span></div>
+      <div class="meta-item"><span class="meta-label">Support</span><span class="meta-value">Antonio (caruso.martech)</span></div>
+      <div class="meta-item"><span class="meta-label">Updated</span><span class="meta-value">23 June 2026</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <span class="toolbar-title">Kubiieo &nbsp;·&nbsp; LinkedIn Status Update &nbsp;·&nbsp; June 2026</span>
+  <button class="toolbar-btn" onclick="window.print()">Download / Print</button>
+</div>
+
+<main class="main">
+
+  <!-- 01 CAMPAIGNS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Campaigns: what exists right now</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">One active campaign with two live ad sets. A$235.18 spent to date, 0 leads so far.</p>
+
+    <div class="stat-strip">
+      <div class="stat-item"><div class="stat-num">A$235.18</div><div class="stat-label">Total spend to date (all from Ad Set 1)</div></div>
+      <div class="stat-item"><div class="stat-num">2,281</div><div class="stat-label">Impressions — A$103 CPM</div></div>
+      <div class="stat-item"><div class="stat-num">5 clicks</div><div class="stat-label">0.22% CTR · A$47 CPC</div></div>
+      <div class="stat-item"><div class="stat-num">0 leads</div><div class="stat-label">No form submissions yet</div></div>
+    </div>
+
+    <!-- Campaign 1 -->
+    <h3 class="subhead">Campaign 1: "June 2026 Native Lead Gen - Assessments" (ID: 1041902376) · Active</h3>
+    <p class="intro">Contains two active ad sets. A$1,000 lifetime budget. Ends 15 July 2026.</p>
+
+    <div class="campaign-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 12px;">
+      <div class="campaign-card">
+        <div style="margin-bottom:10px"><span class="status-live">Live · Spending</span></div>
+        <div class="campaign-name">Ad Set 1: Native Lead Gen</div>
+        <div class="campaign-meta">
+          ID: 856602596 · Sean's original ad set.<br>
+          Active since 16 June. Leads objective.<br>
+          A$235.18 spent · 2,281 impressions · 5 clicks · 0 leads.
+        </div>
+        <ul class="campaign-detail">
+          <li>"Find your AWS waste with a free cost assessment" — A$125.92 · 1,257 imp · 0.08% CTR</li>
+          <li>"Could AWS fund your migration? Find out free" — A$41.51 · 435 imp · 0.46% CTR</li>
+          <li>"Get your free AWS security scorecard" — A$67.76 · 589 imp · 0.34% CTR</li>
+          <li>LinkedIn native lead gen form. Leads email to <code>sales@kubiieo.com</code>.</li>
+          <li>Audience: ~220,000 (gaps below)</li>
+        </ul>
+      </div>
+
+      <div class="campaign-card">
+        <div style="margin-bottom:10px"><span class="status-live">Live · No spend yet</span></div>
+        <div class="campaign-name">Ad Set 2: LP Conversion</div>
+        <div class="campaign-meta">
+          ID: 858301346 · Added 22 June.<br>
+          Active. Conversions objective.<br>
+          A$0 spent · just activated, no impressions yet.
+        </div>
+        <ul class="campaign-detail">
+          <li>"Your AWS bill is growing. Nobody internally owns it." (Cost Opt)</li>
+          <li>"Moving to AWS? Get the real cost before you commit." (Migration TCO)</li>
+          <li>"Is your AWS environment secure? Get a straight answer." (Security)</li>
+          <li>Clicks through to assessment landing pages. Full copy in Section 05.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-label">Ad Set 1 gaps identified (audit, 22 June) — fix before 15 July</div>
+      <p>New Zealand is missing from the geo. Audience is 220,000+ because company size and industry filters are absent and Audience Expansion is ON. FinOps titles are not in the targeting. Cloudec and Aureon Advisory staff have not been excluded. <code>utm_campaign</code> is not set. These apply to Ad Set 1 (ID: 856602596) specifically — Ad Set 2 was built with tighter targeting.</p>
+    </div>
+  </section>
+
+  <!-- 02 TRACKING -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Tracking: what's been set up</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">End-to-end tracking from ad click to Zoho CRM lead is now wired up. Every form submission on the assessment pages will arrive in Zoho with the source campaign tagged. This was done without requiring admin access to WordPress.</p>
+
+    <ul class="check-list">
+      <li>
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>UTM capture snippet (WordPress Snippet #6).</strong> JavaScript runs on every page load, reads URL parameters, and populates hidden form fields automatically. Covers utm_source, utm_medium, utm_campaign, utm_id, and gclid (Google Click ID).</div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>Hidden form fields added to all 4 assessment pages.</strong> The /active/ page and all three new assessment pages (AWS Cost, Migration TCO, Cloud Security) now have hidden fields for utm_source, utm_medium, utm_campaign, utm_id, and gclid alongside the visible form fields.</div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>Zoho CRM fields created.</strong> Three new text fields added to the Leads module: UTM_Source, UTM_Medium, and UTM_ID. GCLID and Ad_Campaign_Name were already present.</div>
+      </li>
+      <li>
+        <div class="check-icon">✓</div>
+        <div class="check-text"><strong>WP Contact Form Zoho: 4 feeds configured.</strong> Each assessment page now has its own feed mapping form fields to Zoho. Lead_Source is set automatically per page: "Kubiieo Active" for the /active/ page, and "LP - AWS Cost Assessment", "LP - Migration Readiness", "LP - Cloud Security Posture" for the three assessment pages. No admin access was needed — done via database directly.</div>
+      </li>
+    </ul>
+
+    <table class="spec-table">
+      <thead><tr><th>Form field</th><th>Zoho CRM field</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>name</td><td>Last_Name</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>email</td><td>Email</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>phone</td><td>Phone</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>message</td><td>Description</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>gclid</td><td>GCLID</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>utm_campaign</td><td>Ad_Campaign_Name</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>utm_source</td><td>UTM_Source</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>utm_medium</td><td>UTM_Medium</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>utm_id</td><td>UTM_ID</td><td><span class="status-done">Done</span></td></tr>
+        <tr><td>(auto per page)</td><td>Lead_Source</td><td><span class="status-done">Done</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 03 BAZ FEEDBACK -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Baz's targeting feedback — 23 June 2026</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Baz shared a detailed note on 23 June clarifying the ideal customer profile and the types of companies he wants to reach. The full direction is below, followed by what it changes in the campaign targeting.</p>
+
+    <div class="baz-quote">
+      <p>Avoid large enterprise. They almost always have a plethora of in-house engineering or consultancy incumbents which are very hard to dethrone. Procurement will ask "Why can't we do this internally, or an existing vendor of ours do it?" Onboarding can take up to 6 months and it is very time consuming. We only got into TPG because Eugene and I used to work there and had contacts.</p>
+      <p>Ideally we should filter based on enterprise size and go for small to medium — likely small initially — with less red tape and less decision makers and internal politics, as I would like to hit up founders directly and have a much better chance in the smaller enterprise space.</p>
+      <p>Avoid companies in tech, fintech, banking, unless they are small. Almost always have some engineering capacity internally already. Banks are slow, slow AF, and again, will take ages to onboard.</p>
+      <p>Industries outside of tech or completely unrelated to tech are more likely to outsource. Myself and the guys have worked with enterprise that deal in entertainment, raw materials, constructions, manufacturing. I would almost say that non-tech companies are better because they have less engineering internally and are more reliant on tech consultancies.</p>
+      <p>No reason to correlate or map existing clients or case studies to prospects. Public cloud is public cloud no matter what industry you are in. AWS infrastructure is agnostic of their industry. Our guys have worked with clients in almost every industry and honestly it is all the same shit to us.</p>
+      <p>I want to focus on getting clients outside of the industries we are already dealing with to give us more exposure. Looking for quick wins, quick logos, quick small pieces of work to harvest reviews, testimonials, case studies to beef up our marketing material. Hence I want to start with small enterprise. Definitely think outside the box regarding the type of enterprises.</p>
+      <cite>Baz Lalor, 23 June 2026</cite>
+    </div>
+  </section>
+
+  <!-- 04 TARGETING CHANGES -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">What this changes in the targeting</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Baz's feedback shifts the ICP significantly. The current live targeting is built around cloud and engineering leaders at mid-to-large companies. The revised direction targets founders and small-company decision makers at businesses that run on AWS but have no internal cloud team.</p>
+
+    <table class="spec-table">
+      <thead><tr><th>Setting</th><th>Current (Campaign 1)</th><th>Revised direction</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Company size</td>
+          <td>No filter applied (~220k audience)</td>
+          <td><strong>50–500 employees</strong> as the primary band. Less procurement, fewer decision makers, founders reachable directly.</td>
+        </tr>
+        <tr>
+          <td>Industries</td>
+          <td>Technology, Financial Services, Telecommunications, Energy, Government</td>
+          <td><strong>Non-tech first:</strong> Construction, Manufacturing, Entertainment, Retail, Logistics, Food and Beverage, Professional Services (legal, accounting). Tech stays as secondary only for small companies.</td>
+        </tr>
+        <tr>
+          <td>Job titles</td>
+          <td>Head of Cloud, DevOps, SRE, Infrastructure, FinOps</td>
+          <td>Add <strong>Founder, Co-Founder, CEO</strong> as primary targets for small companies. The Founder at a 100-person construction firm is the person who signed the AWS contract and answers the bill.</td>
+        </tr>
+        <tr>
+          <td>Avoid</td>
+          <td>Not explicitly excluded</td>
+          <td>Large enterprise (1,000+ employees as primary), tech companies, fintech, banking. These have internal engineering, slow procurement, or both.</td>
+        </tr>
+        <tr>
+          <td>Creative angle</td>
+          <td>Technical — speaks to engineers and cloud leaders</td>
+          <td>Shift to <strong>business owner language</strong> for the founder-facing ad set: "the bill goes up and nobody internally owns it" rather than technical jargon about overprovisioned capacity.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <div class="note-label">Recommended approach</div>
+      <p>Keep Campaign 1 running as-is until the budget runs out on 15 July. In parallel, build a new ad set targeting Founder/CEO/Co-Founder titles at 50–500 employee companies in non-tech industries, using the founder-facing ad copy in Section 05. Run both and compare CPL at the two-week mark. The winning audience determines the Phase 2 build.</p>
+    </div>
+  </section>
+
+  <!-- 05 AD COPY -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Ad copy: three assessment ads</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">The copy below is for the LP Conversion ads in Ad Set 2 (ID: 858301346), which routes clicks to the assessment landing pages. These ads are live but not yet spending. Sean's Ad Set 1 runs shorter headlines ("Find your AWS waste with a free cost assessment", "Could AWS fund your migration? Find out free", "Get your free AWS security scorecard") and routes to a LinkedIn native lead gen form.</p>
+    <p class="intro">Each LP conversion ad follows the same structure: state the problem clearly, explain what the assessment does about it, confirm it is free. The optional description field is included for placements that show it.</p>
+
+    <h3 class="subhead">AWS Cost Optimisation Assessment</h3>
+
+    <div class="ad-block">
+      <div class="ad-label">Headline</div>
+      <div class="ad-headline">Your AWS bill is growing. Nobody internally owns it.</div>
+      <div class="ad-label" style="margin-top:14px">Optional description</div>
+      <div class="ad-description">Written report. Read-out call. No lock in.</div>
+      <div class="ad-label" style="margin-top:14px">Intro text</div>
+      <div class="ad-body">A lot of businesses run on AWS without a dedicated cloud team. The bill goes up, nobody's sure why, and fixing it keeps getting pushed.<br><br>Kubiieo's free cost assessment tells you exactly what you're spending and what you're wasting. The assessment is done by senior AWS engineers who'll get you a written report that breaks down where every dollar is going, what's safe to cut, and what to fix first.<br><br>There's a read-out call included so you can ask questions and understand the findings, with no commitment to go further. Click below to learn more!</div>
+    </div>
+
+    <h3 class="subhead">AWS Migration TCO &amp; Funding Assessment</h3>
+
+    <div class="ad-block">
+      <div class="ad-label">Headline</div>
+      <div class="ad-headline">Moving to AWS? Get the real cost before you commit.</div>
+      <div class="ad-label" style="margin-top:14px">Optional description</div>
+      <div class="ad-description">Three-year cost model, MAP funding check, written output.</div>
+      <div class="ad-label" style="margin-top:14px">Intro text</div>
+      <div class="ad-body">Most migration budgets are wrong because they're built on guesswork.<br><br>If you're planning a move to AWS and don't have a clear three-year cost model, you're making a big decision blind.<br><br>Kubiieo's free TCO and funding assessment maps your current environment, models what AWS will actually cost per workload over three years, and checks whether AWS MAP funding can offset a chunk of the migration cost.<br><br>A lot of companies don't know MAP exists, or don't know if they qualify. Kubiieo's senior engineers do the analysis, put it in writing, and walk you through it on a call. Click below to learn more!</div>
+    </div>
+
+    <h3 class="subhead">Cloud Security Posture Assessment</h3>
+
+    <div class="ad-block">
+      <div class="ad-label">Headline</div>
+      <div class="ad-headline">Is your AWS environment secure? Get a straight answer.</div>
+      <div class="ad-label" style="margin-top:14px">Optional description</div>
+      <div class="ad-description">Five-page scorecard. CIS, NIST, Well-Architected. Yours to keep.</div>
+      <div class="ad-label" style="margin-top:14px">Intro text</div>
+      <div class="ad-body">Most businesses running on AWS don't have a clear picture of their security posture until an audit or an incident forces the question.<br><br>By then it's too late to make it easy. Kubiieo's free security assessment scans your AWS environment and produces a written scorecard benchmarked against CIS, NIST, and the AWS Well-Architected Framework.<br><br>You get a free five-page report covering your actual gaps and what to fix, in plain language. It's done by senior security engineers who've been inside AWS environments across dozens of companies.<br><br>One scan, one call to walk you through it. Click below to learn more!</div>
+    </div>
+  </section>
+
+  <!-- 06 NEXT STEPS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Next steps</h2>
+      <div class="section-rule"></div>
+    </div>
+
+    <p class="intro">Build a broader brand awareness campaign targeting non-tech founders and small business decision makers across AU and NZ, using the ICP shift from Section 04 as the audience brief.</p>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>Kubiieo &nbsp;·&nbsp; LinkedIn Ads Status Update &nbsp;·&nbsp; June 2026 &nbsp;·&nbsp; Confidential</p>
+</footer>
+
+</body>
+</html>
