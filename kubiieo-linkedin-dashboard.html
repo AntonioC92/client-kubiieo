@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo · LinkedIn Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root {
+  color-scheme: light;
+  --primary: #1E1548;
+  --accent: #5C38D2;
+  --light: #8A5AFF;
+  --bg: #F0EFF9;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b6b8a;
+  --border: #e2e0f0;
+  --green: #166534; --green-bg: #dcfce7; --green-border: #86efac;
+  --red: #991b1b; --red-bg: #fee2e2; --red-border: #fca5a5;
+  --yellow: #92400e; --yellow-bg: #fef3c7; --yellow-border: #fcd34d;
+  --purple-bg: #ede9fe; --purple-border: #c4b5fd; --purple-text: #4c1d95;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system,'Segoe UI','Inter',sans-serif; background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.5; }
+
+/* HEADER */
+.hdr { background: var(--primary); padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+.hdr-brand { font-size: 14px; font-weight: 800; color: white; letter-spacing: 0.05em; }
+.hdr-brand span { color: var(--light); }
+.hdr-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+.refresh-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.15s; font-family: inherit; }
+.refresh-btn:hover { background: rgba(255,255,255,0.18); }
+.refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.spin { display: inline-block; }
+.spin.go { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* STATUS BAR */
+.sbar { background: #0f0b2a; padding: 6px 20px; display: flex; gap: 24px; font-size: 11px; color: rgba(255,255,255,0.45); flex-wrap: wrap; }
+.sbar strong { color: white; }
+.sdot { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; display: inline-block; margin-right: 4px; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+/* LOADING OVERLAY */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(20,14,60,0.75); z-index: 200; align-items: center; justify-content: center; flex-direction: column; gap: 14px; backdrop-filter: blur(4px); }
+.overlay.on { display: flex; }
+.loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.15); border-top-color: var(--light); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.loader-text { color: white; font-size: 13px; font-weight: 600; }
+.loader-step { color: rgba(255,255,255,0.5); font-size: 11px; max-width: 300px; text-align: center; }
+
+/* CONTAINER */
+.wrap { max-width: 1120px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ALERTS */
+.alert { border-radius: 8px; padding: 11px 14px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.alert.red { background: var(--red-bg); border: 1px solid var(--red-border); }
+.alert.yellow { background: var(--yellow-bg); border: 1px solid var(--yellow-border); }
+.alert.purple { background: var(--purple-bg); border: 1px solid var(--purple-border); }
+.alert-ico { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.alert-ttl { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.alert.red .alert-ttl { color: var(--red); }
+.alert.yellow .alert-ttl { color: var(--yellow); }
+.alert.purple .alert-ttl { color: var(--purple-text); }
+.alert-body { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+/* SECTION LABEL */
+.sec-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); margin-top: 22px; }
+
+/* CAMPAIGN CARDS */
+.camp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.camp-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-top: 3px solid var(--accent); }
+.camp-card.red-top { border-top-color: #ef4444; }
+.camp-card.yellow-top { border-top-color: #f59e0b; }
+.camp-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 3px; }
+.camp-name { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 13px; line-height: 1.3; }
+.met-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.met-val { font-size: 21px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+.met-val.g { color: var(--green); }
+.met-val.r { color: #dc2626; }
+.met-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; margin-top: 1px; }
+.camp-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+.badge { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+.b-live { background: var(--green-bg); color: var(--green); }
+.b-issue { background: var(--red-bg); color: var(--red); }
+.b-warn { background: var(--yellow-bg); color: var(--yellow); }
+.camp-spend { font-size: 11px; color: var(--muted); }
+.camp-spend strong { color: var(--text); }
+
+/* AB COMPARISON */
+.ab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ab-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 15px; }
+.ab-card.win { border-color: var(--green-border); }
+.ab-card.lose { border-color: var(--red-border); }
+.ab-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; gap: 8px; }
+.ab-name { font-size: 12px; font-weight: 700; color: var(--primary); }
+.ab-verdict { font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; flex-shrink: 0; }
+.ab-verdict.win { background: var(--green-bg); color: var(--green); }
+.ab-verdict.lose { background: var(--red-bg); color: var(--red); }
+.ab-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.ab-row:last-child { border-bottom: none; }
+.ab-metric { color: var(--muted); }
+.ab-val { font-weight: 700; }
+.ab-val.g { color: var(--green); }
+.ab-val.r { color: #dc2626; }
+
+/* CHARTS */
+.chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.chart-ttl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+.chart-box { height: 200px; }
+
+/* TABLES */
+.tbl-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.tbl-hdr { background: #f6f5fc; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.tbl-hdr-name { font-size: 11px; font-weight: 700; color: var(--primary); }
+.tbl-hdr-meta { font-size: 11px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 7px 10px; font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); background: #fafaf8; white-space: nowrap; }
+td { padding: 10px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafaf8; }
+.td-n { font-weight: 600; color: var(--text); }
+.g { color: var(--green); font-weight: 700; }
+.r { color: #dc2626; font-weight: 700; }
+.y { color: #b45309; font-weight: 700; }
+.dim { color: var(--muted); }
+
+/* INSIGHT */
+.insight { background: var(--purple-bg); border: 1px solid var(--purple-border); border-radius: 8px; padding: 11px 14px; font-size: 12px; color: var(--purple-text); margin-bottom: 10px; line-height: 1.55; }
+.insight strong { font-weight: 700; }
+
+/* LOG */
+#log { font-size: 11px; color: var(--muted); padding: 8px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; margin-top: 16px; display: none; }
+#log.on { display: block; }
+</style>
+</head>
+<body>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="loader"></div>
+  <div class="loader-text">Fetching LinkedIn Campaign Manager…</div>
+  <div class="loader-step" id="lstep">Navigating to Campaign Manager</div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div>
+    <div class="hdr-brand">KUBIIEO<span>.</span> LinkedIn Campaigns</div>
+    <div class="hdr-sub" id="updated">Data as of 28 Jul 2026 · Account 542360121</div>
+  </div>
+  <button class="refresh-btn" id="rbtn" onclick="refresh()">
+    <span class="spin" id="sico">↻</span> Refresh from LinkedIn
+  </button>
+</div>
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <span><span class="sdot"></span>3 campaigns active</span>
+  <span>Total spent: <strong id="sb-spend">A$1,292.72</strong></span>
+  <span>Impressions: <strong id="sb-imp">45,849</strong></span>
+  <span>Clicks: <strong id="sb-clk">1,608</strong></span>
+  <span>Leads: <strong id="sb-leads">0</strong></span>
+  <span>Period: 29 Jun – 28 Jul 2026</span>
+</div>
+
+<div class="wrap">
+
+  <!-- ALERTS -->
+  <div style="margin-top:16px;">
+    <div class="alert red">
+      <div class="alert-ico">⚠️</div>
+      <div>
+        <div class="alert-ttl">Lead Gen Native — 20 form opens, 0 leads (0% form completion)</div>
+        <div class="alert-body">20 people clicked "Learn More" and saw the form. None submitted. Likely cause: cold audience hasn't watched enough of the video to trust the offer (avg dwell 3.75s). Also verify the form preview in Campaign Manager — confirm 3 fields only and LinkedIn pre-fill is enabled.</div>
+      </div>
+    </div>
+    <div class="alert yellow">
+      <div class="alert-ico">📊</div>
+      <div>
+        <div class="alert-ttl">LP Conversion v2 — 240 clicks to landing pages, 0 form fills</div>
+        <div class="alert-body">High-quality traffic (CTR 4.89%, 66% view rate, A$0.69 CPC) reaching the assessment pages. The landing page or its form is the bottleneck. Audit above-fold copy and form fields on kubiieo.com.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPAIGNS -->
+  <div class="sec-label" style="margin-top:20px;">Active campaigns — July 2026</div>
+  <div class="camp-grid">
+
+    <div class="camp-card" data-cid="859406546">
+      <div class="camp-lbl">Campaign 1 · Engagement</div>
+      <div class="camp-name">Video Ads + Page Following</div>
+      <div class="met-grid">
+        <div><div class="met-val g" id="c1-eng">764</div><div class="met-lbl">Engagements</div></div>
+        <div><div class="met-val" id="c1-ctr">7.33%</div><div class="met-lbl">CTR</div></div>
+        <div><div class="met-val" id="c1-vr">62%</div><div class="met-lbl">View rate</div></div>
+        <div><div class="met-val" id="c1-cpv">A$0.06</div><div class="met-lbl">CPV</div></div>
+      </div>
+      <div class="camp-foot">
+        <span class="badge b-live">● Live · A$20/day</span>
+        <span class="camp-spend">Spent: <strong id="c1-sp">A$401.88</strong></span>
+      </div>
+    </div>
+
+    <div class="camp-card yellow-top" data-cid="860997816">
+      <div class="camp-lbl">Campaign 2 · LP Conversion v2</div>
+      <div class="camp-name">Video → Assessment Landing Pages</div>
+      <div class="met-grid">
+        <div><div class="met-val g" id="c2-clk">240</div><div class="met-lbl">Clicks</div></div>
+        <div><div class="met-val g" id="c2-ctr">4.89%</div><div class="met-lbl">CTR</div></div>
+        <div><div class="met-val g" id="c2-vr">66%</div><div class="met-lbl">View rate</div></div>
+        <div><div class="met-val g" id="c2-cpc">A$0.69</div><div class="met-lbl">Cost/click</div></div>
+      </div>
+      <div class="camp-foot">
+        <span class="badge b-warn">● Live · A$15/day</span>
+        <span class="camp-spend">Spent: <strong id="c2-sp">A$164.55</strong></span>
+      </div>
+    </div>
+
+    <div class="camp-card red-top" data-cid="861057516">
+      <div class="camp-lbl">Campaign 3 · Lead Gen Native v2</div>
+      <div class="camp-name">Video → LinkedIn In-Feed Form</div>
+      <div class="met-grid">
+        <div><div class="met-val r" id="c3-leads">0 leads</div><div class="met-lbl">20 form opens</div></div>
+        <div><div class="met-val r" id="c3-ctr">0.68%</div><div class="met-lbl">CTR</div></div>
+        <div><div class="met-val r" id="c3-vr">24%</div><div class="met-lbl">View rate</div></div>
+        <div><div class="met-val r" id="c3-cpc">A$10.52</div><div class="met-lbl">Cost/click</div></div>
+      </div>
+      <div class="camp-foot">
+        <span class="badge b-issue">⚠ Issue · A$15/day</span>
+        <span class="camp-spend">Spent: <strong id="c3-sp">A$210.33</strong></span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- A/B TEST -->
+  <div class="sec-label">A/B test — same 3 videos, different CTA destination</div>
+  <div class="ab-grid">
+    <div class="ab-card win">
+      <div class="ab-hdr">
+        <div class="ab-name">LP Conversion v2 — Video → Landing Page</div>
+        <div class="ab-verdict win">Leading</div>
+      </div>
+      <div class="ab-row"><span class="ab-metric">Impressions</span><span class="ab-val">4,904</span></div>
+      <div class="ab-row"><span class="ab-metric">CTR</span><span class="ab-val g">4.89%</span></div>
+      <div class="ab-row"><span class="ab-metric">View rate</span><span class="ab-val g">66%</span></div>
+      <div class="ab-row"><span class="ab-metric">Avg dwell</span><span class="ab-val g">12.72s</span></div>
+      <div class="ab-row"><span class="ab-metric">Video completion</span><span class="ab-val g">40.7%</span></div>
+      <div class="ab-row"><span class="ab-metric">CPV</span><span class="ab-val g">A$0.05</span></div>
+      <div class="ab-row"><span class="ab-metric">Cost per click</span><span class="ab-val g">A$0.69</span></div>
+      <div class="ab-row"><span class="ab-metric">Conversions</span><span class="ab-val r">0 — LP bottleneck</span></div>
+    </div>
+    <div class="ab-card lose">
+      <div class="ab-hdr">
+        <div class="ab-name">Lead Gen Native v2 — Video → LinkedIn Form</div>
+        <div class="ab-verdict lose">Underperforming</div>
+      </div>
+      <div class="ab-row"><span class="ab-metric">Impressions</span><span class="ab-val">2,927</span></div>
+      <div class="ab-row"><span class="ab-metric">CTR</span><span class="ab-val r">0.68%</span></div>
+      <div class="ab-row"><span class="ab-metric">View rate</span><span class="ab-val r">24%</span></div>
+      <div class="ab-row"><span class="ab-metric">Avg dwell</span><span class="ab-val r">3.75s</span></div>
+      <div class="ab-row"><span class="ab-metric">Video completion</span><span class="ab-val r">2.36%</span></div>
+      <div class="ab-row"><span class="ab-metric">CPV</span><span class="ab-val r">A$0.30</span></div>
+      <div class="ab-row"><span class="ab-metric">Cost per click</span><span class="ab-val r">A$10.52</span></div>
+      <div class="ab-row"><span class="ab-metric">Leads</span><span class="ab-val r">0 — form abandon</span></div>
+    </div>
+  </div>
+
+  <!-- ENGAGEMENT -->
+  <div class="sec-label">Engagement campaign — 5 video ads</div>
+
+  <div class="insight">
+    <strong>Budget concentration alert:</strong> "Origin Story" is getting 47% of budget (A$187.77) because of its high CTR (10.05%). But it has the lowest completion rate (32.7%) and watch time (5.48s) — clicks happen early, before people finish watching. "Audit Data" has the highest completion (48.2%) and longest watch time (12.36s) but gets only 15% of budget. Consider manually boosting Audit Data — data hooks hold attention best.
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-ttl">Engagement ads — CTR % vs Video Completion %</div>
+    <div class="chart-box"><canvas id="engChart"></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">Engagement — 5 ads · A$20/day · ongoing</span>
+      <span class="tbl-hdr-meta">Total spent: A$401.88</span>
+    </div>
+    <table id="eng-table">
+      <thead><tr>
+        <th>Ad</th><th>Spend</th><th>Engagements</th><th>CTR</th><th>CPE</th><th>View Rate</th><th>Completion</th><th>Avg Watch</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">Origin Story</td><td>A$187.77</td><td><strong>356</strong></td><td class="g">10.05%</td><td>A$0.53</td><td>59%</td><td class="r">32.7%</td><td class="r">5.48s</td></tr>
+        <tr><td class="td-n">Audit Data</td><td>A$61.34</td><td>104</td><td>5.41%</td><td>A$0.59</td><td>58%</td><td class="g">48.2%</td><td class="g">12.36s</td></tr>
+        <tr><td class="td-n">Managed Services</td><td>A$50.10</td><td>96</td><td>5.81%</td><td>A$0.52</td><td class="g">66%</td><td class="r">30.9%</td><td class="dim">6.74s</td></tr>
+        <tr><td class="td-n">Case Study Positioning</td><td>A$55.01</td><td>109</td><td>6.40%</td><td class="g">A$0.50</td><td>64%</td><td>33.7%</td><td class="dim">6.99s</td></tr>
+        <tr><td class="td-n">Incident Response</td><td>A$47.67</td><td>99</td><td>6.17%</td><td class="g">A$0.48</td><td class="g">67%</td><td class="g">42.0%</td><td class="dim">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LP CONVERSION -->
+  <div class="sec-label">LP Conversion v2 — 3 assessment video ads → kubiieo.com</div>
+
+  <div class="insight">
+    <strong>Cost Optimisation leads on CTR (6.29%)</strong> — LinkedIn is correctly pushing most budget here (A$99.57 of A$164.55). Security and Migration have higher video completion rates (43–44%), meaning those videos build stronger conviction. All 3 ads at A$0.61–0.73/click — very efficient for B2B LinkedIn. Bottleneck is the landing page, not the ads.
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">LP Conversion v2 — video → assessment landing pages</span>
+      <span class="tbl-hdr-meta">A$164.55 spent · 240 clicks</span>
+    </div>
+    <table id="lp-table">
+      <thead><tr>
+        <th>Ad</th><th>Spend</th><th>Clicks</th><th>CTR</th><th>CPC</th><th>View Rate</th><th>Completion</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">Cost Optimisation</td><td>A$99.57</td><td><strong>137</strong></td><td class="g">6.29%</td><td>A$0.73</td><td>65%</td><td>37.1%</td></tr>
+        <tr><td class="td-n">Migration TCO</td><td>A$35.28</td><td>58</td><td>4.15%</td><td class="g">A$0.61</td><td>65%</td><td class="g">43.2%</td></tr>
+        <tr><td class="td-n">Cloud Security</td><td>A$29.71</td><td>45</td><td>3.39%</td><td>A$0.66</td><td class="g">68%</td><td class="g">44.1%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LEAD GEN NATIVE -->
+  <div class="sec-label">Lead Gen Native v2 — same videos, LinkedIn in-feed form</div>
+
+  <div class="alert red" style="margin-bottom:10px;">
+    <div class="alert-ico">🔴</div>
+    <div>
+      <div class="alert-ttl">Format problem, not creative problem</div>
+      <div class="alert-body">Same videos get 4.89% CTR in LP Conversion. In Lead Gen Native: 0.68% CTR. The in-feed form card signals "commitment required" before anyone watches the video — people scroll past. View rate 24% vs 66%. Completion rate 2.4% vs 40.7%. CPV A$0.30 vs A$0.05. This is structural to the native lead gen format on cold traffic.</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">Lead Gen Native v2 — video → in-feed form (3 fields)</span>
+      <span class="tbl-hdr-meta">A$210.33 spent · 20 clicks · 0 leads</span>
+    </div>
+    <table id="native-table">
+      <thead><tr>
+        <th>Ad</th><th>Spend</th><th>Clicks</th><th>CTR</th><th>CPC</th><th>View Rate</th><th>Completion</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">Cost Optimisation</td><td>A$85.80</td><td>10</td><td class="r">0.86%</td><td class="r">A$8.58</td><td class="r">27%</td><td class="r">2.6%</td></tr>
+        <tr><td class="td-n">Migration TCO</td><td>A$105.57</td><td>7</td><td class="r">0.47%</td><td class="r">A$15.08</td><td class="r">22%</td><td class="r">2.1%</td></tr>
+        <tr><td class="td-n">Cloud Security</td><td>A$18.98</td><td>3</td><td class="y">1.10%</td><td class="r">A$6.33</td><td class="r">24%</td><td class="r">2.6%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMPARISON CHART -->
+  <div class="sec-label">CTR comparison — all active ad sets</div>
+  <div class="chart-card">
+    <div class="chart-ttl">CTR % across campaigns (LinkedIn B2B benchmark: 0.4–0.5%)</div>
+    <div class="chart-box"><canvas id="ctrChart"></canvas></div>
+  </div>
+
+  <div id="log"></div>
+
+</div>
+
+<script>
+const ACCT = '542360121';
+const CIDS = { eng: '859406546', lp: '860997816', native: '861057516' };
+
+// ── CHARTS ────────────────────────────────────────────────────────────
+let engChart, ctrChart;
+
+function initCharts() {
+  const eng = document.getElementById('engChart').getContext('2d');
+  engChart = new Chart(eng, {
+    type: 'bar',
+    data: {
+      labels: ['Origin Story','Audit Data','Managed Services','Case Study','Incident Response'],
+      datasets: [
+        { label: 'CTR %', data: [10.05, 5.41, 5.81, 6.40, 6.17],
+          backgroundColor: 'rgba(92,56,210,0.75)', borderRadius: 4 },
+        { label: 'Completion %', data: [32.73, 48.18, 30.85, 33.65, 42.02],
+          backgroundColor: 'rgba(138,90,255,0.35)', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { size: 11 }, color: '#6b6b8a' } } },
+      scales: {
+        y: { beginAtZero: true, grid: { color: '#e2e0f0' },
+             ticks: { font: { size: 10 }, color: '#6b6b8a', callback: v => v + '%' } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#6b6b8a' } }
+      }
+    }
+  });
+
+  const ctr = document.getElementById('ctrChart').getContext('2d');
+  ctrChart = new Chart(ctr, {
+    type: 'bar',
+    data: {
+      labels: ['LI Benchmark','Lead Gen Native','Engagement','LP Conversion v2'],
+      datasets: [{
+        label: 'CTR %',
+        data: [0.45, 0.68, 7.33, 4.89],
+        backgroundColor: ['#e2e0f0','#fca5a5','rgba(92,56,210,0.75)','rgba(22,163,74,0.65)'],
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#e2e0f0' },
+             ticks: { font: { size: 10 }, color: '#6b6b8a', callback: v => v + '%' } },
+        y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#374151' } }
+      }
+    }
+  });
+}
+
+// ── REFRESH ────────────────────────────────────────────────────────────
+async function refresh() {
+  const btn = document.getElementById('rbtn');
+  const ico = document.getElementById('sico');
+  const ov = document.getElementById('overlay');
+  const step = document.getElementById('lstep');
+  const log = document.getElementById('log');
+
+  btn.disabled = true; ico.classList.add('go');
+  ov.classList.add('on'); log.classList.remove('on');
+
+  const steps = [];
+  const setStep = s => { step.textContent = s; steps.push(s); };
+
+  try {
+    // 1. Navigate to campaigns overview
+    setStep('Opening Campaign Manager…');
+    const nav = await window.cowork.callMcpTool(
+      'mcp__claude-in-chrome__navigate',
+      { url: `https://www.linkedin.com/campaignmanager/accounts/${ACCT}/campaigns?businessId=personal` }
+    );
+
+    // Parse tabId
+    const navStr = JSON.stringify(nav);
+    const tabMatch = navStr.match(/"tabId"\s*:\s*(\d+)/);
+    if (!tabMatch) throw new Error('Could not get tab ID. Is Claude in Chrome connected?');
+    const tabId = parseInt(tabMatch[1]);
+
+    // 2. Wait for SPA load
+    setStep('Waiting for LinkedIn to load…');
+    await new Promise(r => setTimeout(r, 4500));
+
+    // 3. Get overview
+    setStep('Reading campaign overview…');
+    const ovResult = await window.cowork.callMcpTool(
+      'mcp__claude-in-chrome__get_page_text', { tabId }
+    );
+    const ovText = (ovResult.content?.[0]?.text || '').substring(0, 6000);
+
+    // 4. Parse overview
+    setStep('Parsing campaign metrics…');
+    const parsedStr = await window.cowork.askClaude(
+      `Parse this LinkedIn Campaign Manager page text. Return ONLY valid JSON, no markdown.
+The page shows campaign rows. Each row has: name, ID (after "ID:"), status (Active/Completed/Paused), spend (A$XX.XX), impressions, plays, clicks, CTR (XX.XX%), dwell time (Xs), views, view rate (XX.XX%), CPV (A$X.XX), completion rate (XX.XX%), key results.
+Return: {"totalSpend":0,"campaigns":[{"name":"","id":"","status":"","spend":0,"impressions":0,"clicks":0,"ctr":0,"viewRate":0,"cpv":0,"completionRate":0,"dwell":0}]}`,
+      [{ type: 'text', text: ovText }]
+    );
+
+    let ovData;
+    try { ovData = JSON.parse(parsedStr.trim()); }
+    catch(e) {
+      const m = parsedStr.match(/\{[\s\S]*\}/);
+      if (m) ovData = JSON.parse(m[0]);
+      else throw new Error('Could not parse overview JSON');
+    }
+
+    // 5. Update summary bar
+    if (ovData.totalSpend) {
+      document.getElementById('sb-spend').textContent = 'A$' + Number(ovData.totalSpend).toFixed(2);
+    }
+    if (ovData.campaigns) {
+      const totImp = ovData.campaigns.reduce((s,c) => s + (c.impressions||0), 0);
+      const totClk = ovData.campaigns.reduce((s,c) => s + (c.clicks||0), 0);
+      if (totImp) document.getElementById('sb-imp').textContent = totImp.toLocaleString();
+      if (totClk) document.getElementById('sb-clk').textContent = totClk.toLocaleString();
+
+      // Update individual campaign cards
+      for (const c of ovData.campaigns) {
+        if (c.id === CIDS.eng) {
+          if (c.spend) document.getElementById('c1-sp').textContent = 'A$' + c.spend;
+          if (c.ctr) document.getElementById('c1-ctr').textContent = c.ctr + '%';
+          if (c.viewRate) document.getElementById('c1-vr').textContent = Math.round(c.viewRate) + '%';
+          if (c.cpv) document.getElementById('c1-cpv').textContent = 'A$' + c.cpv;
+        }
+        if (c.id === CIDS.lp) {
+          if (c.spend) document.getElementById('c2-sp').textContent = 'A$' + c.spend;
+          if (c.clicks) document.getElementById('c2-clk').textContent = c.clicks;
+          if (c.ctr) document.getElementById('c2-ctr').textContent = c.ctr + '%';
+          if (c.viewRate) document.getElementById('c2-vr').textContent = Math.round(c.viewRate) + '%';
+        }
+        if (c.id === CIDS.native) {
+          if (c.spend) document.getElementById('c3-sp').textContent = 'A$' + c.spend;
+          if (c.ctr) document.getElementById('c3-ctr').textContent = c.ctr + '%';
+          if (c.viewRate) document.getElementById('c3-vr').textContent = Math.round(c.viewRate) + '%';
+          if (c.clicks) {
+            const cpc = c.spend && c.clicks ? (c.spend / c.clicks).toFixed(2) : '—';
+            document.getElementById('c3-cpc').textContent = 'A$' + cpc;
+          }
+        }
+      }
+    }
+
+    // 6. Fetch ad-level data for LP Conversion
+    setStep('Fetching LP Conversion ads…');
+    await window.cowork.callMcpTool('mcp__claude-in-chrome__navigate', {
+      tabId,
+      url: `https://www.linkedin.com/campaignmanager/accounts/${ACCT}/creatives?businessId=personal&campaignIds=%5B${CIDS.lp}%5D`
+    });
+    await new Promise(r => setTimeout(r, 4000));
+    const lpRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__get_page_text', { tabId });
+    const lpText = (lpRes.content?.[0]?.text || '').substring(0, 4000);
+
+    // 7. Fetch Lead Gen Native ads
+    setStep('Fetching Lead Gen Native ads…');
+    await window.cowork.callMcpTool('mcp__claude-in-chrome__navigate', {
+      tabId,
+      url: `https://www.linkedin.com/campaignmanager/accounts/${ACCT}/creatives?businessId=personal&campaignIds=%5B${CIDS.native}%5D`
+    });
+    await new Promise(r => setTimeout(r, 4000));
+    const natRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__get_page_text', { tabId });
+    const natText = (natRes.content?.[0]?.text || '').substring(0, 4000);
+
+    // 8. Fetch Engagement ads
+    setStep('Fetching Engagement ads…');
+    await window.cowork.callMcpTool('mcp__claude-in-chrome__navigate', {
+      tabId,
+      url: `https://www.linkedin.com/campaignmanager/accounts/${ACCT}/creatives?businessId=personal&campaignIds=%5B${CIDS.eng}%5D&columnViews=%5B%22PERFORMANCE%22%5D`
+    });
+    await new Promise(r => setTimeout(r, 4000));
+    const engRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__get_page_text', { tabId });
+    const engText = (engRes.content?.[0]?.text || '').substring(0, 4000);
+
+    // 9. Parse all ad data
+    setStep('Parsing ad-level data…');
+    const adStr = await window.cowork.askClaude(
+      `Parse LinkedIn Campaign Manager ad tables from these three text blobs. Return ONLY valid JSON, no markdown.
+Each ad has a headline (short title text), spend (A$X), clicks or engagements (number), CTR (X.XX%), view rate (XX.XX%), CPV (A$X.XX), completion rate (XX.XX%).
+
+LP CONVERSION ADS (video → landing page):
+${lpText}
+
+LEAD GEN NATIVE ADS (video → LinkedIn form):
+${natText}
+
+ENGAGEMENT ADS (video → page follow):
+${engText}
+
+Return: {
+  "lp": [{"name":"","spend":0,"clicks":0,"ctr":0,"cpc":0,"viewRate":0,"completionRate":0}],
+  "native": [{"name":"","spend":0,"clicks":0,"ctr":0,"cpc":0,"viewRate":0,"completionRate":0}],
+  "eng": [{"name":"","spend":0,"engagements":0,"ctr":0,"cpe":0,"viewRate":0,"completionRate":0,"watchTime":0}]
+}`,
+      []
+    );
+
+    let adData;
+    try { adData = JSON.parse(adStr.trim()); }
+    catch(e) {
+      const m = adStr.match(/\{[\s\S]*\}/);
+      if (m) try { adData = JSON.parse(m[0]); } catch(e2) {}
+    }
+
+    if (adData) {
+      if (adData.lp?.length) renderTable('lp-table', adData.lp, 'lp');
+      if (adData.native?.length) renderTable('native-table', adData.native, 'native');
+      if (adData.eng?.length) {
+        renderTable('eng-table', adData.eng, 'eng');
+        // Update chart
+        if (engChart && adData.eng.length >= 3) {
+          engChart.data.datasets[0].data = adData.eng.map(a => a.ctr || 0);
+          engChart.data.datasets[1].data = adData.eng.map(a => a.completionRate || 0);
+          engChart.data.labels = adData.eng.map(a => a.name?.substring(0,16) || '');
+          engChart.update();
+        }
+        if (ctrChart) {
+          const lpCamp = ovData?.campaigns?.find(c => c.id === CIDS.lp);
+          const natCamp = ovData?.campaigns?.find(c => c.id === CIDS.native);
+          const engCamp = ovData?.campaigns?.find(c => c.id === CIDS.eng);
+          ctrChart.data.datasets[0].data = [
+            0.45,
+            natCamp?.ctr || 0.68,
+            engCamp?.ctr || 7.33,
+            lpCamp?.ctr || 4.89
+          ];
+          ctrChart.update();
+        }
+      }
+    }
+
+    // Done
+    const now = new Date();
+    document.getElementById('updated').textContent =
+      'Last updated: ' + now.toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) + ' · Account 542360121';
+    log.textContent = '✓ Refreshed at ' + now.toLocaleTimeString() + ' · ' + steps.join(' → ');
+    log.classList.add('on');
+    setStep('Done!');
+    setTimeout(() => ov.classList.remove('on'), 600);
+
+  } catch(err) {
+    setStep('Error: ' + err.message);
+    log.textContent = '✗ ' + err.message;
+    log.classList.add('on');
+    console.error(err);
+    setTimeout(() => ov.classList.remove('on'), 2500);
+  } finally {
+    btn.disabled = false; ico.classList.remove('go');
+  }
+}
+
+function colourVal(v, type) {
+  // returns class based on value and metric type
+  if (type === 'ctr') return v >= 3 ? 'g' : v >= 1 ? '' : 'r';
+  if (type === 'vr') return v >= 50 ? 'g' : v >= 30 ? '' : 'r';
+  if (type === 'cr') return v >= 30 ? 'g' : v >= 15 ? '' : 'r';
+  if (type === 'cpc_lp') return v <= 1.5 ? 'g' : v <= 3 ? '' : 'r';
+  if (type === 'cpc_native') return v <= 5 ? 'y' : 'r';
+  return '';
+}
+
+function renderTable(id, ads, type) {
+  const tbody = document.querySelector('#' + id + ' tbody');
+  if (!tbody || !ads.length) return;
+  tbody.innerHTML = ads.map(a => {
+    if (type === 'eng') {
+      const ctr = a.ctr ? a.ctr.toFixed(2) : '—';
+      const vr = a.viewRate ? Math.round(a.viewRate) : '—';
+      const cr = a.completionRate ? a.completionRate.toFixed(1) : '—';
+      const wt = a.watchTime ? a.watchTime.toFixed(2) + 's' : '—';
+      const cc = colourVal(a.ctr, 'ctr');
+      const crc = colourVal(a.completionRate, 'cr');
+      const vrc = colourVal(a.viewRate, 'vr');
+      return `<tr><td class="td-n">${a.name||'—'}</td><td>A$${a.spend||0}</td><td>${a.engagements||0}</td><td class="${cc}">${ctr}%</td><td>A$${a.cpe||0}</td><td class="${vrc}">${vr}%</td><td class="${crc}">${cr}%</td><td>${wt}</td></tr>`;
+    } else {
+      const ctr = a.ctr ? a.ctr.toFixed(2) : '—';
+      const vr = a.viewRate ? Math.round(a.viewRate) : '—';
+      const cr = a.completionRate ? a.completionRate.toFixed(1) : '—';
+      const cc = colourVal(a.ctr, 'ctr');
+      const crc = colourVal(a.completionRate, 'cr');
+      const vrc = colourVal(a.viewRate, 'vr');
+      const cpcType = type === 'native' ? 'cpc_native' : 'cpc_lp';
+      const cpcc = colourVal(a.cpc, cpcType);
+      return `<tr><td class="td-n">${a.name||'—'}</td><td>A$${a.spend||0}</td><td>${a.clicks||0}</td><td class="${cc}">${ctr}%</td><td class="${cpcc}">A$${(a.cpc||0).toFixed(2)}</td><td class="${vrc}">${vr}%</td><td class="${crc}">${cr}%</td></tr>`;
+    }
+  }).join('');
+}
+
+window.addEventListener('DOMContentLoaded', initCharts);
+</script>
+</body>
+</html>
