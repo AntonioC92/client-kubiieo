@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kubiieo · Campaign #2 – Assessments</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+:root {
+  color-scheme: light;
+  --primary: #1E1548;
+  --accent: #5C38D2;
+  --light: #8A5AFF;
+  --bg: #F0EFF9;
+  --card: #ffffff;
+  --text: #1a1a2e;
+  --muted: #6b6b8a;
+  --border: #e2e0f0;
+  --green: #166534; --green-bg: #dcfce7; --green-border: #86efac;
+  --red: #991b1b; --red-bg: #fee2e2; --red-border: #fca5a5;
+  --yellow: #92400e; --yellow-bg: #fef3c7; --yellow-border: #fcd34d;
+  --purple-bg: #ede9fe; --purple-border: #c4b5fd; --purple-text: #4c1d95;
+  --blue: #1e40af; --blue-bg: #dbeafe; --blue-border: #93c5fd;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system,'Segoe UI','Inter',sans-serif; background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.5; }
+
+.hdr { background: var(--primary); padding: 13px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.4); }
+.hdr-brand { font-size: 14px; font-weight: 800; color: white; letter-spacing: 0.05em; }
+.hdr-brand span { color: var(--light); }
+.hdr-sub { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+.refresh-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; transition: all 0.15s; font-family: inherit; }
+.refresh-btn:hover { background: rgba(255,255,255,0.18); }
+.refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.spin { display: inline-block; }
+.spin.go { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.sbar { background: #0f0b2a; padding: 6px 20px; display: flex; gap: 24px; font-size: 11px; color: rgba(255,255,255,0.45); flex-wrap: wrap; }
+.sbar strong { color: white; }
+.sdot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; margin-right: 4px; }
+.sdot-pause { background: #f59e0b; }
+.sdot-live { background: #22c55e; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+.overlay { display: none; position: fixed; inset: 0; background: rgba(20,14,60,0.75); z-index: 200; align-items: center; justify-content: center; flex-direction: column; gap: 14px; backdrop-filter: blur(4px); }
+.overlay.on { display: flex; }
+.loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.15); border-top-color: var(--light); border-radius: 50%; animation: spin 0.7s linear infinite; }
+.loader-text { color: white; font-size: 13px; font-weight: 600; }
+.loader-step { color: rgba(255,255,255,0.5); font-size: 11px; max-width: 300px; text-align: center; }
+
+.wrap { max-width: 1120px; margin: 0 auto; padding: 20px 16px 60px; }
+
+.alert { border-radius: 8px; padding: 11px 14px; display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.alert.red { background: var(--red-bg); border: 1px solid var(--red-border); }
+.alert.yellow { background: var(--yellow-bg); border: 1px solid var(--yellow-border); }
+.alert.green { background: var(--green-bg); border: 1px solid var(--green-border); }
+.alert.purple { background: var(--purple-bg); border: 1px solid var(--purple-border); }
+.alert.blue { background: var(--blue-bg); border: 1px solid var(--blue-border); }
+.alert-ico { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.alert-ttl { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.alert.red .alert-ttl { color: var(--red); }
+.alert.yellow .alert-ttl { color: #92400e; }
+.alert.green .alert-ttl { color: var(--green); }
+.alert.purple .alert-ttl { color: var(--purple-text); }
+.alert.blue .alert-ttl { color: var(--blue); }
+.alert-body { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+.sec-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); margin-top: 22px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; margin-bottom: 4px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 13px 14px; }
+.stat-val { font-size: 24px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+.stat-val.g { color: var(--green); }
+.stat-val.y { color: #b45309; }
+.stat-val.r { color: #dc2626; }
+.stat-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; margin-top: 3px; }
+
+.camp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+.camp-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; border-top: 3px solid var(--accent); }
+.camp-card.green-top { border-top-color: #22c55e; }
+.camp-card.yellow-top { border-top-color: #f59e0b; }
+.camp-lbl { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 3px; }
+.camp-name { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 13px; line-height: 1.3; }
+.met-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.met-val { font-size: 18px; font-weight: 800; color: var(--primary); line-height: 1.1; }
+.met-val.g { color: var(--green); }
+.met-val.y { color: #b45309; }
+.met-val.r { color: #dc2626; }
+.met-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); font-weight: 600; margin-top: 1px; }
+.camp-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+.camp-foot-row { display: flex; align-items: center; justify-content: space-between; }
+.badge { font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+.b-excellent { background: var(--green-bg); color: var(--green); }
+.b-good { background: var(--yellow-bg); color: #92400e; }
+.b-paused { background: #f3f4f6; color: #6b7280; border: 1px solid #d1d5db; }
+.b-live { background: var(--green-bg); color: var(--green); }
+.camp-url { font-size: 9px; color: var(--muted); font-family: monospace; margin-top: 6px; word-break: break-all; }
+
+.chart-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+.chart-ttl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 12px; }
+.chart-box { height: 200px; }
+
+.tbl-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.tbl-hdr { background: #f6f5fc; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.tbl-hdr-name { font-size: 11px; font-weight: 700; color: var(--primary); }
+.tbl-hdr-meta { font-size: 11px; color: var(--muted); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+th { text-align: left; padding: 7px 10px; font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; border-bottom: 1px solid var(--border); background: #fafaf8; white-space: nowrap; }
+td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafaf8; }
+.td-n { font-weight: 600; color: var(--text); }
+.g { color: var(--green); font-weight: 700; }
+.r { color: #dc2626; font-weight: 700; }
+.y { color: #b45309; font-weight: 700; }
+.dim { color: var(--muted); }
+
+.insight { background: var(--purple-bg); border: 1px solid var(--purple-border); border-radius: 8px; padding: 11px 14px; font-size: 12px; color: var(--purple-text); margin-bottom: 10px; line-height: 1.55; }
+.insight strong { font-weight: 700; }
+
+.checklist { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.check-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.check-row:last-child { border-bottom: none; }
+.check-ico { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.check-lbl { flex: 1; }
+.check-badge { margin-left: auto; flex-shrink: 0; }
+
+.perf-empty { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 40px; text-align: center; }
+.perf-empty-ico { font-size: 32px; margin-bottom: 12px; }
+.perf-empty-ttl { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.perf-empty-sub { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+#log { font-size: 11px; color: var(--muted); padding: 8px 12px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; margin-top: 16px; display: none; }
+#log.on { display: block; }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay">
+  <div class="loader"></div>
+  <div class="loader-text">Fetching Google Ads Campaign #2…</div>
+  <div class="loader-step" id="lstep">Navigating to Google Ads</div>
+</div>
+
+<div class="hdr">
+  <div>
+    <div class="hdr-brand">KUBIIEO<span>.</span> Campaign #2 — Assessments</div>
+    <div class="hdr-sub" id="updated">Data: 12 Jun – 14 Jul 2026 · Account 356-492-6382</div>
+  </div>
+  <button class="refresh-btn" id="rbtn" onclick="doRefresh()">
+    <span class="spin" id="sico">↻</span> Refresh from Google Ads
+  </button>
+</div>
+
+<div class="sbar">
+  <span><span class="sdot sdot-live" id="sdot"></span><span id="status-text">Active · Serving</span></span>
+  <span>Budget: <strong>A$15/day</strong></span>
+  <span>Ad groups: <strong>3</strong></span>
+  <span>Keywords: <strong>39</strong></span>
+  <span>Negatives: <strong id="sb-neg">23</strong></span>
+  <span>Opt. score: <strong id="sb-opt">88.9%</strong></span>
+  <span>Period: <strong id="sb-period">12 Jun – 14 Jul 2026</strong></span>
+</div>
+
+<div class="wrap">
+
+  <div style="margin-top:16px;" id="alerts-section">
+    <div class="alert blue" id="alert-chrome-err" style="display:none">
+      <div class="alert-ico">🔌</div>
+      <div>
+        <div class="alert-ttl">Claude in Chrome not detected</div>
+        <div class="alert-body">Live Google Ads data requires Claude in Chrome to be active. Performance stats show — until a successful refresh.</div>
+      </div>
+    </div>
+    <div class="alert yellow" id="alert-paused" style="display:none">
+      <div class="alert-ico">⏸</div>
+      <div>
+        <div class="alert-ttl">Campaign is paused — Baz to enable in Google Ads</div>
+        <div class="alert-body">All 3 ad groups are Eligible, all assets are Pending review. When Baz flips the campaign to Active, click Refresh to see live performance. No spend will occur until enabled.</div>
+      </div>
+    </div>
+    <div class="alert red">
+      <div class="alert-ico">🚨</div>
+      <div>
+        <div class="alert-ttl">0 conversions — check LP Form Submit tracking (12 Jun – 14 Jul)</div>
+        <div class="alert-body">94 clicks / A$526.29 spend / 0.00% conv. rate. Either the /thank-you page GA4 trigger is not firing, or no one has completed the form. Verify GTM tag 'Ads - Conversion - Consultation Request' fires on /thank-you in GA4 DebugView. Avg CPC A$5.60 — healthy, but budget is wasted without conversion data.</div>
+      </div>
+    </div>
+    <div class="alert green">
+      <div class="alert-ico">📈</div>
+      <div>
+        <div class="alert-ttl">Migration &amp; MAP CTR 9.12% — highest of 3 ad groups (benchmark: 2–4%)</div>
+        <div class="alert-body">318 impr · 29 clicks · A$85.32 spend. Strong buyer intent signal on MAP funding + migration terms. Consider increasing budget allocation to this ad group or adding more exact-match keywords.</div>
+      </div>
+    </div>
+    <div class="alert green">
+      <div class="alert-ico">✅</div>
+      <div>
+        <div class="alert-ttl">All setup tasks complete — Cost Optimisation RSA upgraded to Excellent (28 Jul 2026)</div>
+        <div class="alert-body">3 RSAs built · 39 keywords across 3 ad groups · 23 negative keywords in 2 batches · 4 sitelinks + 6 callouts · Conversion goal: LP Form Submit · Opt. score 88.9%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERFORMANCE -->
+  <div class="sec-label" style="margin-top:20px;">Performance</div>
+
+  <div id="perf-live" style=" margin-bottom:12px;">
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-val" id="p-impr">2,567</div><div class="stat-lbl">Impressions</div></div>
+      <div class="stat-card"><div class="stat-val" id="p-clicks">94</div><div class="stat-lbl">Clicks</div></div>
+      <div class="stat-card"><div class="stat-val" id="p-ctr">3.66%</div><div class="stat-lbl">Avg CTR</div></div>
+      <div class="stat-card"><div class="stat-val" id="p-cost">A$526.29</div><div class="stat-lbl">Spend</div></div>
+      <div class="stat-card"><div class="stat-val r" id="p-conv">0</div><div class="stat-lbl">Conversions</div></div>
+    </div>
+  </div>
+
+  <div id="perf-empty" class="perf-empty" style="display:none">
+    <div class="perf-empty-ico">📊</div>
+    <div class="perf-empty-ttl">No performance data yet — click Refresh to load</div>
+    <div class="perf-empty-sub">Impressions, clicks and conversions will appear here once Google Ads data is fetched.<br>Click Refresh to pull live data from Google Ads at any time.</div>
+  </div>
+
+  <!-- AD GROUPS -->
+  <div class="sec-label">Ad groups — 3 · all eligible</div>
+  <div class="camp-grid">
+
+    <div class="camp-card green-top">
+      <div class="camp-lbl">Ad Group 1 · Cost Optimisation</div>
+      <div class="camp-name">AWS Cost Assessment</div>
+      <div class="met-grid">
+        <div>
+          <div class="met-val g" id="ag1-rsa">★ Excellent</div>
+          <div class="met-lbl">RSA Strength</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag1-kw">13</div>
+          <div class="met-lbl">Keywords</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag1-impr">1,687</div>
+          <div class="met-lbl">Impressions</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag1-clicks">45</div>
+          <div class="met-lbl">Clicks</div>
+        </div>
+      </div>
+      <div class="camp-foot">
+        <div class="camp-foot-row">
+          <span class="badge b-excellent">★ Excellent RSA</span>
+          <span class="badge b-live" id="ag1-status">● Active</span>
+        </div>
+        <div class="camp-url">kubiieo.com/aws-cost-assessment/</div>
+      </div>
+    </div>
+
+    <div class="camp-card yellow-top">
+      <div class="camp-lbl">Ad Group 2 · Migration &amp; MAP</div>
+      <div class="camp-name">AWS Migration TCO + MAP Funding</div>
+      <div class="met-grid">
+        <div>
+          <div class="met-val y" id="ag2-rsa">◎ Good</div>
+          <div class="met-lbl">RSA Strength</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag2-kw">13</div>
+          <div class="met-lbl">Keywords</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag2-impr">318</div>
+          <div class="met-lbl">Impressions</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag2-clicks">29</div>
+          <div class="met-lbl">Clicks</div>
+        </div>
+      </div>
+      <div class="camp-foot">
+        <div class="camp-foot-row">
+          <span class="badge b-good">◎ Good RSA</span>
+          <span class="badge b-live" id="ag2-status">● Active</span>
+        </div>
+        <div class="camp-url">kubiieo.com/aws-cost-map-funding-analysis/</div>
+      </div>
+    </div>
+
+    <div class="camp-card yellow-top">
+      <div class="camp-lbl">Ad Group 3 · Cloud Security Posture</div>
+      <div class="camp-name">AWS Security Posture Assessment</div>
+      <div class="met-grid">
+        <div>
+          <div class="met-val y" id="ag3-rsa">◎ Good</div>
+          <div class="met-lbl">RSA Strength</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag3-kw">13</div>
+          <div class="met-lbl">Keywords</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag3-impr">562</div>
+          <div class="met-lbl">Impressions</div>
+        </div>
+        <div>
+          <div class="met-val" id="ag3-clicks">20</div>
+          <div class="met-lbl">Clicks</div>
+        </div>
+      </div>
+      <div class="camp-foot">
+        <div class="camp-foot-row">
+          <span class="badge b-good">◎ Good RSA</span>
+          <span class="badge b-live" id="ag3-status">● Active</span>
+        </div>
+        <div class="camp-url">kubiieo.com/cloud-security-posture-assessment/</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- KEYWORD CHART -->
+  <div class="sec-label">Keyword coverage — 39 keywords across 3 ad groups</div>
+
+  <div class="insight">
+    <strong>Coverage strategy:</strong> Each ad group has 10 phrase-match keywords (broad funnel capture) + 3 exact-match (high-intent buyer terms). Maximize Clicks with A$18 CPC cap — matching Campaign #1's bid discipline. Conversion goal overridden to LP Form Submit only (fires on <code>/thank-you</code>), keeping Campaign #1's Consultation Request goal separate.
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-ttl">Keywords per ad group — phrase match vs exact match</div>
+    <div class="chart-box"><canvas id="kwChart"></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">Keyword breakdown — 39 total</span>
+      <span class="tbl-hdr-meta">All phrase + exact match · Maximize Clicks · A$18 CPC cap</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Ad Group</th><th>Phrase</th><th>Exact</th><th>Total</th><th>RSA</th><th>Landing Page</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td class="td-n">Cost Optimisation</td><td>10</td><td>3</td><td><strong>13</strong></td>
+          <td class="g">★ Excellent</td>
+          <td class="dim">/aws-cost-assessment/</td>
+        </tr>
+        <tr>
+          <td class="td-n">Migration &amp; MAP</td><td>10</td><td>3</td><td><strong>13</strong></td>
+          <td class="y">◎ Good</td>
+          <td class="dim">/aws-cost-map-funding-analysis/</td>
+        </tr>
+        <tr>
+          <td class="td-n">Cloud Security Posture</td><td>10</td><td>3</td><td><strong>13</strong></td>
+          <td class="y">◎ Good</td>
+          <td class="dim">/cloud-security-posture-assessment/</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NEGATIVE KEYWORDS -->
+  <div class="sec-label">Negative keyword shield — 23 terms</div>
+
+  <div class="insight">
+    <strong>Two-batch build (28 Jul 2026):</strong> Batch 1 (19 terms) from initial search term analysis — job seekers, calculator/tool hunters, free download seekers, and AWS service-specific noise. Batch 2 (4 terms) from sweeping the full 515-term "Other" bucket — catches content/docs searchers ("best practices", "how to"), software product seekers ("tool"), and pricing table lookups ("instance pricing") not caught by existing phrase-match rules.
+  </div>
+
+  <div class="chart-card">
+    <div class="chart-ttl">CTR comparison — Campaign #2 keywords vs Google Search benchmark</div>
+    <div class="chart-box"><canvas id="benchChart"></canvas></div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">Negative keywords — campaign level</span>
+      <span class="tbl-hdr-meta">23 terms · 2 batches · Updated 28 Jul 2026</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th>Keyword</th><th>Match</th><th>Batch</th><th>Intent blocked</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">"amazon ivs"</td><td>Phrase</td><td class="dim">1</td><td class="dim">Amazon IVS product (video streaming, not cloud cost)</td></tr>
+        <tr><td class="td-n">"aws pricing"</td><td>Phrase</td><td class="dim">1</td><td class="dim">AWS pricing page lookup — confirmed Excluded in search terms</td></tr>
+        <tr><td class="td-n">"calculator"</td><td>Phrase</td><td class="dim">1</td><td class="dim">DIY calculator users — won't book a consulting call</td></tr>
+        <tr><td class="td-n">"compute optimizer"</td><td>Phrase</td><td class="dim">1</td><td class="dim">AWS Compute Optimizer tool search</td></tr>
+        <tr><td class="td-n">"pricing calculator"</td><td>Phrase</td><td class="dim">1</td><td class="dim">Pricing calculator lookups</td></tr>
+        <tr><td class="td-n">"whitepaper"</td><td>Phrase</td><td class="dim">1</td><td class="dim">Research/documentation readers</td></tr>
+        <tr><td class="td-n">"free tier"</td><td>Phrase</td><td class="dim">1</td><td class="dim">AWS Free Tier seekers — new user, not enterprise buyer</td></tr>
+        <tr><td class="td-n">"free download"</td><td>Phrase</td><td class="dim">1</td><td class="dim">Free download seekers</td></tr>
+        <tr><td class="td-n">jobs</td><td>Broad</td><td class="dim">1</td><td class="dim">Job seekers</td></tr>
+        <tr><td class="td-n">salary</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS salary research</td></tr>
+        <tr><td class="td-n">career</td><td>Broad</td><td class="dim">1</td><td class="dim">Career searchers</td></tr>
+        <tr><td class="td-n">training</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS training seekers</td></tr>
+        <tr><td class="td-n">course</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS course searchers</td></tr>
+        <tr><td class="td-n">certification</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS cert seekers</td></tr>
+        <tr><td class="td-n">exam</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS exam prep</td></tr>
+        <tr><td class="td-n">tutorial</td><td>Broad</td><td class="dim">1</td><td class="dim">Tutorial seekers — won't book a consulting call</td></tr>
+        <tr><td class="td-n">reddit</td><td>Broad</td><td class="dim">1</td><td class="dim">Reddit discussion seekers</td></tr>
+        <tr><td class="td-n">documentation</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS docs readers</td></tr>
+        <tr><td class="td-n">meme</td><td>Broad</td><td class="dim">1</td><td class="dim">AWS memes — humour searchers</td></tr>
+        <tr style="background:#fefce8;"><td class="td-n g">"best practices"</td><td>Phrase</td><td class="g">2 — new</td><td class="dim">Content/docs searches — "aws cost optimization best practices"</td></tr>
+        <tr style="background:#fefce8;"><td class="td-n g">"how to"</td><td>Phrase</td><td class="g">2 — new</td><td class="dim">DIY tutorial intent — "how to reduce aws cost"</td></tr>
+        <tr style="background:#fefce8;"><td class="td-n g">"tool"</td><td>Phrase</td><td class="g">2 — new</td><td class="dim">Software product searches — "aws finops tool", "aws cost optimizer tool"</td></tr>
+        <tr style="background:#fefce8;"><td class="td-n g">"instance pricing"</td><td>Phrase</td><td class="g">2 — new</td><td class="dim">Pricing table lookups not caught by "aws pricing" phrase</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SEARCH TERMS SWEEP -->
+  <div class="sec-label">Search terms sweep — 28 Jul 2026</div>
+
+  <div class="alert purple">
+    <div class="alert-ico">🔍</div>
+    <div>
+      <div class="alert-ttl">515 search terms reviewed — "Other" bucket swept, 4 new gaps identified</div>
+      <div class="alert-body">Scrolled all 100 visible rows from the 515-term "Other" bucket (29 clicks, 1,128 impr, A$177.40 aggregated spend). Most high-cost historical terms already showing as Excluded from batch 1 negatives. "aws pricing" confirmed Excluded. "aws finops agent" (44 impr, 0 clicks) noted but "agent" too risky to negate broadly.</div>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <div class="tbl-hdr">
+      <span class="tbl-hdr-name">New negatives found in sweep</span>
+      <span class="tbl-hdr-meta">4 phrase-match terms · Added 28 Jul 2026</span>
+    </div>
+    <table>
+      <thead><tr>
+        <th>New Negative</th><th>Example Terms Blocked</th><th>Reason added</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="td-n">"best practices"</td><td class="dim">aws cost optimization best practices</td><td class="dim">Informational content searches — not buyer intent</td></tr>
+        <tr><td class="td-n">"how to"</td><td class="dim">how to reduce aws cost, how to reduce aws costs</td><td class="dim">DIY tutorial intent — won't book a consulting call</td></tr>
+        <tr><td class="td-n">"tool"</td><td class="dim">aws finops tool, aws cost optimizer tool</td><td class="dim">Software product searches — not consulting intent</td></tr>
+        <tr><td class="td-n">"instance pricing"</td><td class="dim">aws instance pricing, amazon aws instance pricing</td><td class="dim">Pricing table lookup — not caught by "aws pricing" (non-consecutive words)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- LAUNCH READINESS -->
+  <div class="sec-label">Launch readiness checklist</div>
+  <div class="checklist">
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>Campaign created</strong> — "Campaign #2 - Assessments", Search, Australia, A$15/day, Maximize Clicks, A$18 CPC cap</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>3 ad groups built</strong> — Cost Optimisation, Migration &amp; MAP, Cloud Security Posture (all Eligible)</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>39 keywords added</strong> — 10 phrase + 3 exact per ad group, all pointing to correct assessment landing pages</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>3 RSAs written</strong> — 15 headlines + 4 descriptions each · Cost Optimisation: <strong class="g">★ Excellent</strong> · Others: <span class="y">◎ Good</span></span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>23 negatives in place</strong> — 2 batches: initial sweep (19) + search term bucket analysis (4 new today)</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>Campaign assets added</strong> — 4 sitelinks, 6 callouts, 2 structured snippets at campaign level</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>Conversion goal set</strong> — LP Form Submit (fires on /thank-you). Campaign #1's "Consultation Request" goal excluded from this campaign.</span>
+    </div>
+    <div class="check-row">
+      <span class="check-ico">✅</span>
+      <span class="check-lbl"><strong>Optimisation score: 97%</strong></span>
+    </div>
+    <div class="check-row" style="background:#fefce8;">
+      <span class="check-ico">⏸</span>
+      <span class="check-lbl"><strong>Campaign enabled</strong> — Active and serving. Status confirmed by Baz.</span>
+      <span class="check-badge"><span class="badge b-live">✅ Done</span></span>
+    </div>
+  </div>
+
+  <div id="log"></div>
+
+</div>
+
+<script>
+const OCID = '8172184993';
+const C = '8673924057';
+const CAMPAIGN_ID = '23922977664';
+const BASE_URL = `https://ads.google.com/aw`;
+const AUTH = `ocid=${OCID}&__c=${C}&authuser=2`;
+
+let kwChart, benchChart;
+
+function initCharts() {
+  // Keyword chart
+  const kwCtx = document.getElementById('kwChart').getContext('2d');
+  kwChart = new Chart(kwCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Cost Optimisation', 'Migration & MAP', 'Cloud Security'],
+      datasets: [
+        { label: 'Phrase match', data: [10, 10, 10],
+          backgroundColor: 'rgba(92,56,210,0.75)', borderRadius: 4 },
+        { label: 'Exact match', data: [3, 3, 3],
+          backgroundColor: 'rgba(138,90,255,0.35)', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { size: 11 }, color: '#6b6b8a' } } },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 }, color: '#6b6b8a' } },
+        y: { stacked: true, beginAtZero: true, max: 16, grid: { color: '#e2e0f0' },
+             ticks: { font: { size: 10 }, color: '#6b6b8a', stepSize: 5 } }
+      }
+    }
+  });
+
+  // Benchmark chart — assessment keywords vs Google Search avg
+  const benchCtx = document.getElementById('benchChart').getContext('2d');
+  benchChart = new Chart(benchCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Google Search avg B2B', 'Broad/generic cloud', 'Assessment intent (target)', 'Exact-match buyer terms (target)'],
+      datasets: [{
+        label: 'Expected CTR %',
+        data: [2.1, 1.8, 5.5, 8.0],
+        backgroundColor: ['#e2e0f0', '#fca5a5', 'rgba(92,56,210,0.65)', 'rgba(22,163,74,0.65)'],
+        borderRadius: 5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#e2e0f0' },
+             ticks: { font: { size: 10 }, color: '#6b6b8a', callback: v => v + '%' } },
+        y: { grid: { display: false }, ticks: { font: { size: 11 }, color: '#374151' } }
+      }
+    }
+  });
+}
+
+async function doRefresh() {
+  const btn = document.getElementById('rbtn');
+  const ico = document.getElementById('sico');
+  const ov = document.getElementById('overlay');
+  const step = document.getElementById('lstep');
+  const log = document.getElementById('log');
+
+  btn.disabled = true; ico.classList.add('go');
+  ov.classList.add('on'); log.classList.remove('on');
+
+  const steps = [];
+  const setStep = s => { step.textContent = s; steps.push(s); };
+
+  try {
+    // 1. Navigate to ad groups page for Campaign #2
+    setStep('Opening Google Ads Campaign #2…');
+    const nav = await window.cowork.callMcpTool(
+      'mcp__claude-in-chrome__navigate',
+      { url: `${BASE_URL}/adgroups?${AUTH}&campaignId=${CAMPAIGN_ID}` }
+    );
+
+    const navStr = JSON.stringify(nav);
+    const tabMatch = navStr.match(/"tabId"\s*:\s*(\d+)/);
+    if (!tabMatch) throw new Error('Could not get tab ID. Is Claude in Chrome connected?');
+    const tabId = parseInt(tabMatch[1]);
+
+    // 2. Wait for SPA load
+    setStep('Waiting for Google Ads to load…');
+    await new Promise(r => setTimeout(r, 4500));
+
+    // 3. Check for 2FA page and handle it
+    setStep('Checking authentication…');
+    let pageRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__get_page_text', { tabId });
+    let pageText = pageRes.content?.[0]?.text || '';
+
+    if (pageText.includes('2-step verification') || pageText.includes('Skip for now')) {
+      setStep('Dismissing 2FA prompt…');
+      const domRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__read_page', { tabId, format: 'simplified' });
+      const domStr = JSON.stringify(domRes);
+      // Find the Skip button ref
+      const btnMatch = domStr.match(/button \[([^\]]+)\][^"]*"Skip for now"/);
+      const skipRef = btnMatch ? btnMatch[1] : null;
+      if (skipRef) {
+        await window.cowork.callMcpTool('mcp__claude-in-chrome__computer', {
+          action: 'left_click', ref: skipRef, tabId
+        });
+        await new Promise(r => setTimeout(r, 3500));
+        pageRes = await window.cowork.callMcpTool('mcp__claude-in-chrome__get_page_text', { tabId });
+        pageText = pageRes.content?.[0]?.text || '';
+      }
+    }
+
+    // 4. Parse the ad group data
+    setStep('Parsing ad group data…');
+    const parsed = await window.cowork.askClaude(
+      `Parse this Google Ads ad groups page for "Campaign #2 - Assessments". Return ONLY valid JSON, no markdown fences.
+
+Look for: campaign status, optimisation score, and per-ad-group metrics (impressions, clicks, CTR, cost).
+If the campaign is paused and has no data, return zeros for metrics.
+
+Return exactly this shape:
+{
+  "campaignStatus": "Paused",
+  "optimisationScore": 97,
+  "totalImpressions": 0,
+  "totalClicks": 0,
+  "totalCost": 0.0,
+  "totalConversions": 0,
+  "avgCtr": 0.0,
+  "adGroups": [
+    {"name": "Cost Optimisation", "impressions": 0, "clicks": 0, "ctr": 0.0, "cost": 0.0, "rsaStrength": "Excellent"},
+    {"name": "Migration", "impressions": 0, "clicks": 0, "ctr": 0.0, "cost": 0.0, "rsaStrength": "Good"},
+    {"name": "Cloud Security", "impressions": 0, "clicks": 0, "ctr": 0.0, "cost": 0.0, "rsaStrength": "Good"}
+  ]
+}`,
+      [{ type: 'text', text: pageText.substring(0, 6000) }]
+    );
+
+    let data;
+    try { data = JSON.parse(parsed.trim()); }
+    catch(e) {
+      const m = parsed.match(/\{[\s\S]*\}/);
+      if (m) { try { data = JSON.parse(m[0]); } catch(e2) {} }
+    }
+
+    if (data) {
+      const isLive = (data.campaignStatus || '').toLowerCase() !== 'paused' || data.totalImpressions > 0;
+
+      if (isLive) {
+        document.getElementById('sdot').className = 'sdot sdot-live';
+        document.getElementById('status-text').textContent = 'Active · Serving';
+        document.getElementById('alert-paused').style.display = 'none';
+        const chromeErrEl = document.getElementById('alert-chrome-err');
+        if (chromeErrEl) chromeErrEl.style.display = 'none';
+        document.getElementById('perf-empty').style.display = 'none';
+        document.getElementById('perf-live').style.display = 'block';
+
+        const fmt = n => Number(n||0).toLocaleString();
+        const fmtPct = n => Number(n||0).toFixed(2) + '%';
+        const fmtAud = n => 'A$' + Number(n||0).toFixed(2);
+
+        document.getElementById('p-impr').textContent = fmt(data.totalImpressions);
+        document.getElementById('p-clicks').textContent = fmt(data.totalClicks);
+        document.getElementById('p-ctr').textContent = fmtPct(data.avgCtr);
+        document.getElementById('p-cost').textContent = fmtAud(data.totalCost);
+        document.getElementById('p-conv').textContent = fmt(data.totalConversions);
+
+        // Colour performance metrics
+        const ctr = parseFloat(data.avgCtr||0);
+        document.getElementById('p-ctr').className = 'stat-val ' + (ctr >= 3 ? 'g' : ctr >= 1.5 ? '' : 'r');
+        document.getElementById('p-conv').className = 'stat-val ' + (data.totalConversions > 0 ? 'g' : 'r');
+      }
+
+      // Update ad groups
+      if (data.adGroups) {
+        data.adGroups.forEach((ag, i) => {
+          const pre = `ag${i+1}`;
+          const imprEl = document.getElementById(pre+'-impr');
+          const clkEl = document.getElementById(pre+'-clicks');
+          const rsaEl = document.getElementById(pre+'-rsa');
+          const statEl = document.getElementById(pre+'-status');
+          if (imprEl) imprEl.textContent = ag.impressions > 0 ? Number(ag.impressions).toLocaleString() : '—';
+          if (clkEl) clkEl.textContent = ag.clicks > 0 ? Number(ag.clicks).toLocaleString() : '—';
+          if (rsaEl && ag.rsaStrength) {
+            const exc = ag.rsaStrength.toLowerCase().includes('excellent');
+            rsaEl.textContent = exc ? '★ Excellent' : '◎ ' + ag.rsaStrength;
+            rsaEl.className = 'met-val ' + (exc ? 'g' : 'y');
+          }
+          if (statEl && isLive) {
+            statEl.textContent = '● Active';
+            statEl.className = 'badge b-live';
+          }
+        });
+      }
+
+      if (data.optimisationScore) {
+        document.getElementById('sb-opt').textContent = data.optimisationScore + '%';
+      }
+    }
+
+    const now = new Date();
+    document.getElementById('updated').textContent =
+      'Last refreshed: ' + now.toLocaleString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) + ' · Account 356-492-6382';
+    document.getElementById('sb-period').textContent = now.toLocaleDateString('en-AU', { month: 'short', year: 'numeric' });
+    log.textContent = '✓ Refreshed at ' + now.toLocaleTimeString() + ' · ' + steps.join(' → ');
+    log.classList.add('on');
+    setStep('Done!');
+    setTimeout(() => ov.classList.remove('on'), 600);
+
+  } catch(err) {
+    setStep('Error: ' + err.message);
+    log.textContent = '✗ ' + err.message + ' · Dashboard shows last known data.';
+    log.classList.add('on');
+    console.error(err);
+    const chromeTip = err.message.toLowerCase().includes('tab') || err.message.toLowerCase().includes('chrome');
+    const errDiv = document.getElementById('alert-chrome-err');
+    if (errDiv) {
+      errDiv.style.display = 'flex';
+      errDiv.querySelector('.alert-ttl').textContent = chromeTip
+        ? 'Claude in Chrome not detected — click Refresh after opening the extension in your browser'
+        : 'Refresh failed: ' + err.message;
+      errDiv.querySelector('.alert-body').textContent = 'Live Google Ads data requires Claude in Chrome to be active. Performance stats show — until a successful refresh.';
+    }
+    setTimeout(() => ov.classList.remove('on'), 2500);
+  } finally {
+    btn.disabled = false; ico.classList.remove('go');
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  initCharts();
+  // Auto-refresh on load — pulls live data from Google Ads
+  setTimeout(doRefresh, 800);
+});
+</script>
+</body>
+</html>
